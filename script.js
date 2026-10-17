@@ -1,6 +1,7 @@
 /**
- * NHIEM VU BI MAT 20/10 — HOI CON TRAI 8B6
- * Interactive Experience Controller v3
+ * Pssst… Ngày mai là 20/10 rồi nhỉ? 🍀
+ * Món quà bí mật từ Hội Con Trai 8B6
+ * Interactive Experience Controller v4
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,11 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnAudioToggle = document.getElementById('btn-audio-toggle');
   const audioStatus = document.getElementById('audio-status');
   const btnRestart = document.getElementById('btn-restart');
-  const btnStart = document.getElementById('btn-start');
-  const btnMissionStart = document.getElementById('btn-mission-start');
-  const btnStage2Next = document.getElementById('btn-stage2-next');
-  const btnStage3Next = document.getElementById('btn-stage3-next');
-  const btnOpenClover = document.getElementById('btn-open-clover');
+
+  // Scene navigation buttons
+  const btnScene1Next = document.getElementById('btn-scene1-next');
+  const btnScene2Next = document.getElementById('btn-scene2-next');
+  const btnScene3Next = document.getElementById('btn-scene3-next');
+  const btnScene4Next = document.getElementById('btn-scene4-next');
+  const btnScene5Next = document.getElementById('btn-scene5-next');
+  const btnScene6Next = document.getElementById('btn-scene6-next');
+  const btnMakeWish = document.getElementById('btn-make-wish');
   const btnReplayClover = document.getElementById('btn-replay-clover');
 
   const viewport = document.getElementById('app-viewport');
@@ -28,23 +33,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvasBgStars = document.getElementById('canvas-bg-stars');
   const canvasCloverOrbit = document.getElementById('canvas-clover-orbit');
   const cloverFireflyField = document.getElementById('clover-firefly-field');
+  const cloverSvgElem = document.getElementById('clover-svg-elem');
+  const wishFeedbackToast = document.getElementById('wish-feedback-toast');
+  const glowingEnvelopeBox = document.getElementById('glowing-envelope-box');
 
   const lyricsZone = document.getElementById('lyrics-zone');
   const lyricLine1 = document.getElementById('lyric-line-1');
   const lyricLine2 = document.getElementById('lyric-line-2');
 
   const stages = [
-    document.getElementById('stage-intro'),      // 0
-    document.getElementById('stage-story-1'),    // 1
-    document.getElementById('stage-story-2'),    // 2
-    document.getElementById('stage-story-3'),    // 3
-    document.getElementById('stage-waguri'),      // 4
-    document.getElementById('stage-teaser'),     // 5
-    document.getElementById('stage-clover')      // 6
+    document.getElementById('stage-scene-1'), // 0: Cảnh 1 - Lời chào bí mật
+    document.getElementById('stage-scene-2'), // 1: Cảnh 2 - Bí mật của Blong
+    document.getElementById('stage-scene-3'), // 2: Cảnh 3 - Món quà giấu kín
+    document.getElementById('stage-scene-4'), // 3: Cảnh 4 - Gửi cô Phú kính mến
+    document.getElementById('stage-scene-5'), // 4: Cảnh 5 - Gửi những cô gái 8B6
+    document.getElementById('stage-scene-6'), // 5: Cảnh 6 - Một chút dịu dàng
+    document.getElementById('stage-scene-7')  // 6: Cảnh 7 - Điều ước cỏ bốn lá
   ];
 
-  // Stages where clicking the background advances to next scene
-  const clickableStages = new Set([0, 1, 4]);
+  // Stages where clicking empty space advances to next scene
+  const clickableStages = new Set([0, 1, 5]);
 
   let currentStageIndex = 0;
   let isTransitioning = false;
@@ -55,32 +63,39 @@ document.addEventListener('DOMContentLoaded', () => {
   let petalsAnimationId = null;
   let bgStarsAnimId = null;
   let cloverOrbitAnimId = null;
+  let audioFadeInterval = null;
   let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // --- Lyric Cues ---
+  // --- Lyric Cues (for Scene 6) ---
   const lyricCues = [
-    { time: 0.0, text: "chi biet noi cho em" },
-    { time: 1.7, text: "nghe vay thoi" },
-    { time: 3.4, text: "vi da lo yeu em roi" },
-    { time: 6.3, text: "chang dam hua xa xoi" },
-    { time: 9.7, text: "nguoi ta noi chang ai hieu" },
-    { time: 13.1, text: "ve hai tieng thuong yeu" },
-    { time: 16.0, text: "chang phai cu ben nhau" },
-    { time: 18.1, text: "lam nhau kho dau la tinh yeu?" },
-    { time: 22.8, text: "nhieu khi rat yeu nhau ma" },
-    { time: 26.0, text: "phai dung o rat xa" },
-    { time: 29.4, text: "nhin em hanh phuc ben ai chang phai minh" },
-    { time: 33.4, text: "vi minh co lam duoc dau" }
+    { time: 0.0, text: "chỉ biết nói cho em" },
+    { time: 1.7, text: "nghe vậy thôi" },
+    { time: 3.4, text: "vì đã lỡ yêu em rồi" },
+    { time: 6.3, text: "chẳng dám hứa xa xôi" },
+    { time: 9.7, text: "người ta nói chẳng ai hiểu" },
+    { time: 13.1, text: "về hai tiếng thương yêu" },
+    { time: 16.0, text: "chẳng phải cứ bên nhau" },
+    { time: 18.1, text: "làm nhau khổ đau là tình yêu?" },
+    { time: 22.8, text: "nhiều khi rất yêu nhau mà" },
+    { time: 26.0, text: "phải đứng ở rất xa" },
+    { time: 29.4, text: "nhìn em hạnh phúc bên ai chẳng phải mình" },
+    { time: 33.4, text: "vì mình có làm được đâu" }
   ];
 
-  // =================== AUDIO ===================
+  // =================== AUDIO ENGINE ===================
   function initAudio() {
     if (!audio) return;
+    if (audioPlaying) return;
     audio.volume = 0.65;
     const p = audio.play();
     if (p !== undefined) {
-      p.then(() => { audioPlaying = true; if (audioStatus) audioStatus.textContent = "Bat"; })
-       .catch(() => { audioPlaying = false; if (audioStatus) audioStatus.textContent = "Tat"; });
+      p.then(() => {
+        audioPlaying = true;
+        if (audioStatus) audioStatus.textContent = "Bật";
+      }).catch(() => {
+        audioPlaying = false;
+        if (audioStatus) audioStatus.textContent = "Tắt";
+      });
     }
   }
 
@@ -88,19 +103,41 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e) e.stopPropagation();
     if (!audio) return;
     if (audio.paused) {
-      audio.play().then(() => { audioPlaying = true; if (audioStatus) audioStatus.textContent = "Bat"; }).catch(() => {});
+      audio.play().then(() => {
+        audioPlaying = true;
+        if (audioStatus) audioStatus.textContent = "Bật";
+      }).catch(() => {});
     } else {
       audio.pause();
       audioPlaying = false;
-      if (audioStatus) audioStatus.textContent = "Tat";
+      if (audioStatus) audioStatus.textContent = "Tắt";
     }
   }
   if (btnAudioToggle) btnAudioToggle.addEventListener('click', toggleAudio);
 
+  function fadeAudioVolume(targetVol, durationMs = 800) {
+    if (!audio || !audioPlaying) return;
+    if (audioFadeInterval) clearInterval(audioFadeInterval);
+    const startVol = audio.volume;
+    const diff = targetVol - startVol;
+    const steps = 20;
+    const stepTime = durationMs / steps;
+    let curStep = 0;
+    audioFadeInterval = setInterval(() => {
+      curStep++;
+      const nextVol = startVol + diff * (curStep / steps);
+      audio.volume = Math.max(0, Math.min(1, nextVol));
+      if (curStep >= steps) {
+        clearInterval(audioFadeInterval);
+        audioFadeInterval = null;
+      }
+    }, stepTime);
+  }
+
   let lastLyricIndex = -1;
   if (audio) {
     audio.addEventListener('timeupdate', () => {
-      if (currentStageIndex !== 4) return;
+      if (currentStageIndex !== 5) return; // Scene 6
       const t = audio.currentTime;
       let activeIndex = -1;
       for (let i = lyricCues.length - 1; i >= 0; i--) {
@@ -117,14 +154,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =================== TINY BLINK ===================
+  // =================== TINY BLINK ENGINE ===================
   function startBlinking() {
     stopBlinking();
     if (reducedMotion) return;
     function triggerBlink() {
-      if (tinyFace && !tinyFace.classList.contains('mode-clover')) {
+      // Don't blink if winking or clover mode
+      if (tinyFace && !tinyFace.classList.contains('mode-clover') && !tinyFace.classList.contains('mode-wink')) {
         tinyFace.classList.add('blinking');
-        setTimeout(() => tinyFace.classList.remove('blinking'), 180);
+        setTimeout(() => {
+          if (tinyFace) tinyFace.classList.remove('blinking');
+        }, 180);
       }
       blinkTimer = setTimeout(triggerBlink, 2200 + Math.random() * 2600);
     }
@@ -140,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (index < 0 || index >= stages.length || isTransitioning) return;
     isTransitioning = true;
 
+    // Trigger audio on any stage transition
+    initAudio();
+
     const prevStage = stages[currentStageIndex];
     if (prevStage) prevStage.classList.remove('active-stage');
 
@@ -154,90 +197,93 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupSceneSpecifics(idx) {
-    // Reset shared states
-    if (idx !== 3) {
-      canvasPetals.classList.remove('active');
+    // Reset canvas petals if not Scene 5
+    if (idx !== 4) {
+      if (canvasPetals) canvasPetals.classList.remove('active');
       stopPetals();
     }
-    if (idx !== 4) {
-      lyricsZone.classList.remove('active');
+    // Reset lyrics if not Scene 6
+    if (idx !== 5) {
+      if (lyricsZone) lyricsZone.classList.remove('active');
     }
+    // Reset fireflies and clover orbit if not Scene 7
     if (idx !== 6) {
       stopFireflies();
       stopCloverOrbit();
     }
-    if (idx !== 4 && waguriVideo) {
+    // Pause Waguri if not Scene 6
+    if (idx !== 5 && waguriVideo) {
       waguriVideo.pause();
       if (idx === 0) waguriVideo.currentTime = 0;
     }
 
-    // STAGE 0: Intro — no Tiny, no particles
+    // SCENE 1 (Stage 0): Lời chào bí mật
     if (idx === 0) {
-      if (tinyFace) tinyFace.className = 'tiny-face';
-      stopBlinking();
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene1';
+      startBlinking();
       ambientBackdrop.classList.remove('clover-mode');
       cloverBlackout.classList.remove('active');
       goldFlash.classList.remove('active');
       if (interactionHint) interactionHint.classList.remove('visible');
+      fadeAudioVolume(0.65);
       startBgStars();
     }
 
-    // STAGE 1: Tiny greets — Tiny is at bottom-center, dialogue is right side
+    // SCENE 2 (Stage 1): Bí mật của Blong — Tiny nhắm 1 mắt, nghiêng đầu, đỏ mặt
     else if (idx === 1) {
-      initAudio();
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-stage1';
-      startBlinking();
+      stopBlinking(); // Stop blinking so the wink eye stays winked!
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 mode-wink head-tilt blushing show-mouth';
       if (interactionHint) interactionHint.classList.remove('visible');
       ambientBackdrop.classList.remove('clover-mode');
     }
 
-    // STAGE 2: Mission 01 Teacher — Tiny is small, bottom-left corner
+    // SCENE 3 (Stage 2): Món quà giấu kín — Phong thư phát sáng
     else if (idx === 2) {
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
+      startBlinking();
+      if (interactionHint) interactionHint.classList.remove('visible');
+    }
+
+    // SCENE 4 (Stage 3): Gửi cô Phú kính mến
+    else if (idx === 3) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing';
       startBlinking();
       goldFlash.classList.remove('active');
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // STAGE 3: Mission 02 Girls — petals fall, Tiny is small bottom-left
-    else if (idx === 3) {
+    // SCENE 5 (Stage 4): Gửi những cô gái 8B6 — Petals fall
+    else if (idx === 4) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing show-mouth';
       goldFlash.classList.add('active');
-      canvasPetals.classList.add('active');
+      if (canvasPetals) canvasPetals.classList.add('active');
       startPetals();
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // STAGE 4: Waguri — Tiny small at top-left of wish card area
-    else if (idx === 4) {
+    // SCENE 6 (Stage 5): Waguri — Một chút dịu dàng, giảm volume nhạc nhẹ
+    else if (idx === 5) {
       goldFlash.classList.remove('active');
       if (tinyFace) tinyFace.className = 'tiny-face visible in-waguri blushing mode-smile';
-      lyricsZone.classList.add('active');
+      if (lyricsZone) lyricsZone.classList.add('active');
       if (interactionHint) interactionHint.classList.add('visible');
+      fadeAudioVolume(0.42); // Intimate, gentle music dip
       if (waguriVideo) {
         waguriVideo.play().catch(e => {
-          console.log('Waguri play err:', e);
+          console.log('Waguri play notice:', e);
           const fb = document.querySelector('.waguri-fallback');
           if (fb) fb.classList.add('show');
         });
       }
     }
 
-    // STAGE 5: Teaser — Tiny is in middle, special position
-    else if (idx === 5) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-teaser blushing';
-      startBlinking();
-      cloverBlackout.classList.remove('active');
-      ambientBackdrop.classList.remove('clover-mode');
-      if (interactionHint) interactionHint.classList.remove('visible');
-    }
-
-    // STAGE 6: Clover finale — Tiny at safe top-right corner only
+    // SCENE 7 (Stage 6): Điều ước cỏ bốn lá 🍀
     else if (idx === 6) {
       ambientBackdrop.classList.add('clover-mode');
       cloverBlackout.classList.add('active');
       if (tinyFace) tinyFace.className = 'tiny-face visible in-clover blushing mode-clover';
       stopBlinking();
+      fadeAudioVolume(0.65);
       startFireflies();
       startCloverOrbit();
       if (interactionHint) interactionHint.classList.remove('visible');
@@ -252,7 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function restartExperience(e) {
     if (e) e.stopPropagation();
-    // Reset lyric state
     lastLyricIndex = -1;
     if (lyricLine1) { lyricLine1.textContent = ''; lyricLine1.style.opacity = '0'; }
     if (lyricLine2) { lyricLine2.textContent = ''; lyricLine2.style.opacity = '0'; }
@@ -277,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const starCount = W < 600 ? 60 : 120;
+    const starCount = W < 600 ? 55 : 110;
     const stars = Array.from({ length: starCount }, () => ({
       x: Math.random() * W, y: Math.random() * H,
       r: 0.5 + Math.random() * 1.5,
@@ -323,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const count = W <= 600 ? 28 : 55;
+    const count = W <= 600 ? 26 : 50;
     class Petal {
       constructor() { this.reset(true); }
       reset(init = false) {
@@ -383,8 +428,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const ff = document.createElement('div');
       ff.className = 'clover-firefly';
       const baseLeft = window.innerWidth > 900 ? 25 : 50;
-      ff.style.left = (baseLeft + (Math.random() - 0.5) * 28) + '%';
-      ff.style.top = (30 + Math.random() * 35) + '%';
+      ff.style.left = (baseLeft + (Math.random() - 0.5) * 30) + '%';
+      ff.style.top = (28 + Math.random() * 38) + '%';
       const sz = 3 + Math.random() * 5;
       ff.style.width = sz + 'px'; ff.style.height = sz + 'px';
       cloverFireflyField.appendChild(ff);
@@ -414,7 +459,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     resize();
 
-    // Clover center is roughly 25% from left on desktop, 50% on mobile
     const getCX = () => W > 900 ? W * 0.24 : W * 0.5;
     const getCY = () => H * 0.42;
 
@@ -463,40 +507,125 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cloverOrbitAnimId) { cancelAnimationFrame(cloverOrbitAnimId); cloverOrbitAnimId = null; }
     if (canvasCloverOrbit) {
       const ctx = canvasCloverOrbit.getContext('2d');
-      ctx.clearRect(0, 0, canvasCloverOrbit.width, canvasCloverOrbit.height);
+      if (ctx) ctx.clearRect(0, 0, canvasCloverOrbit.width, canvasCloverOrbit.height);
+    }
+  }
+
+  // =================== WISH BURST INTERACTION ===================
+  function triggerWishBurst() {
+    if (cloverSvgElem) {
+      cloverSvgElem.classList.remove('wishing-burst');
+      void cloverSvgElem.offsetWidth; // trigger reflow
+      cloverSvgElem.classList.add('wishing-burst');
+    }
+
+    // Spawn 32 flying sparks/hearts
+    const emojis = ['🍀', '💗', '✨', '🌸', '💖', '⭐', '🍀'];
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const startX = W > 900 ? W * 0.24 : W * 0.5;
+    const startY = H * 0.42;
+
+    for (let i = 0; i < 30; i++) {
+      const spark = document.createElement('div');
+      spark.className = 'flying-wish-spark';
+      spark.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      spark.style.left = (startX + (Math.random() - 0.5) * 60) + 'px';
+      spark.style.top = (startY + (Math.random() - 0.5) * 60) + 'px';
+
+      const tx = (Math.random() - 0.5) * 280;
+      const ty = - (120 + Math.random() * 220);
+      spark.style.setProperty('--tx', tx + 'px');
+      spark.style.setProperty('--ty', ty + 'px');
+
+      document.body.appendChild(spark);
+      setTimeout(() => { if (spark.parentNode) spark.parentNode.removeChild(spark); }, 2200);
+    }
+
+    // Show toast message
+    if (wishFeedbackToast) {
+      wishFeedbackToast.textContent = '✨ Điều ước may mắn đã được gửi đi! Chúc cô Phú và các bạn nữ 8B6 luôn hạnh phúc! 🍀';
+      wishFeedbackToast.classList.add('active');
+      setTimeout(() => {
+        if (wishFeedbackToast) wishFeedbackToast.classList.remove('active');
+      }, 4500);
+    }
+
+    // Button feedback state
+    if (btnMakeWish) {
+      const oldText = btnMakeWish.innerHTML;
+      btnMakeWish.innerHTML = 'Đã gửi điều ước! 💖';
+      setTimeout(() => {
+        if (btnMakeWish) btnMakeWish.innerHTML = 'Gửi thêm điều ước 🍀';
+      }, 3500);
     }
   }
 
   // =================== EVENT LISTENERS ===================
 
-  // Button: Start (Stage 0 -> 1)
-  if (btnStart) btnStart.addEventListener('click', (e) => { e.stopPropagation(); goToStage(1); });
+  // Cảnh 1 -> 2
+  if (btnScene1Next) btnScene1Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToStage(1);
+  });
 
-  // Button: Mission Start (Stage 1 -> 2)
-  if (btnMissionStart) btnMissionStart.addEventListener('click', (e) => { e.stopPropagation(); goToStage(2); });
+  // Cảnh 2 -> 3
+  if (btnScene2Next) btnScene2Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToStage(2);
+  });
 
-  // Button: Stage 2 Next (Stage 2 -> 3)
-  if (btnStage2Next) btnStage2Next.addEventListener('click', (e) => { e.stopPropagation(); goToStage(3); });
+  // Cảnh 3 -> 4 (Mở phong thư bí mật)
+  if (btnScene3Next) btnScene3Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (glowingEnvelopeBox) {
+      glowingEnvelopeBox.style.transform = 'scale(1.15)';
+      glowingEnvelopeBox.style.transition = 'transform 0.4s ease';
+    }
+    setTimeout(() => {
+      goToStage(3);
+    }, 350);
+  });
 
-  // Button: Stage 3 Next (Stage 3 -> 4)
-  if (btnStage3Next) btnStage3Next.addEventListener('click', (e) => { e.stopPropagation(); goToStage(4); });
+  // Cảnh 4 -> 5
+  if (btnScene4Next) btnScene4Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToStage(4);
+  });
 
-  // Button: Open Clover (Stage 5 -> 6)
-  if (btnOpenClover) btnOpenClover.addEventListener('click', (e) => { e.stopPropagation(); goToStage(6); });
+  // Cảnh 5 -> 6
+  if (btnScene5Next) btnScene5Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToStage(5);
+  });
 
-  // Button: Restart
+  // Cảnh 6 -> 7
+  if (btnScene6Next) btnScene6Next.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToStage(6);
+  });
+
+  // Gửi một điều ước
+  if (btnMakeWish) btnMakeWish.addEventListener('click', (e) => {
+    e.stopPropagation();
+    triggerWishBurst();
+  });
+
+  // Restart buttons
   if (btnRestart) btnRestart.addEventListener('click', restartExperience);
   if (btnReplayClover) btnReplayClover.addEventListener('click', restartExperience);
 
   // Viewport tap: only advance on tappable stages
   viewport.addEventListener('click', (e) => {
-    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col')) return;
+    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col, .scene-dialogue-card, .control-btn')) return;
+    initAudio(); // User tap starts audio
     if (clickableStages.has(currentStageIndex)) nextStage();
   });
 
-  // Keyboard
+  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (['Space', 'ArrowRight', 'Enter'].includes(e.code)) {
+      initAudio();
       if (clickableStages.has(currentStageIndex)) nextStage();
     }
   });
