@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Pssst… Ngày mai là 20/10 rồi nhỉ? 🍀 — Món quà bí mật từ Hội con trai 8B6</title>
+  <title>Ngày mai là 20/10 rồi đấy! 🍀 — Món quà bí mật từ Hội con trai 8B6</title>
   <meta name="description" content="Món quà bí mật và những lời chúc chân thành từ hội con trai 8B6 gửi cô Phú và các bạn nữ nhân ngày 20/10.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body class="theme-dark">
   <audio id="bg-soundtrack" src="assets/soundtrack.mp3" preload="auto" loop></audio>
@@ -27,6 +27,7 @@
   <div id="ambient-backdrop" class="ambient-backdrop">
     <div class="cosmos-stars"></div>
     <div class="cosmos-glow"></div>
+    <div class="morning-dawn-glow"></div>
     <canvas id="canvas-bg-stars" class="canvas-bg-stars"></canvas>
     <div id="gold-flash" class="gold-flash"></div>
     <div id="clover-blackout" class="clover-blackout"></div>
@@ -44,7 +45,7 @@
         <div class="blush-mark">////</div>
       </div>
       <div id="tiny-mouth" class="tiny-mouth" aria-hidden="true">
-        <div class="center-dot"></div>
+        <div class="center-dot tiny-core-orb"></div>
         <svg class="mouth-cat" viewBox="0 0 60 44" width="50" height="38">
           <g transform="rotate(270 30 22)">
             <path d="M 7 10 C 7 26 25 28 30 14 C 35 28 53 26 53 10" fill="none" stroke="#00f0ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
@@ -57,55 +58,75 @@
         <svg class="eye-chevron chevron-right" viewBox="0 0 160 160" aria-hidden="true"><path d="M 125 30 L 45 80 L 125 130" fill="none" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" /></svg>
         <div class="blush-mark">////</div>
       </div>
-      <div class="tiny-sparks" aria-hidden="true">
-        <span class="t-spark ts1">&#128151;</span>
-        <span class="t-spark ts2">&#10024;</span>
-        <span class="t-spark ts3">&#128151;</span>
+      <!-- Floating shy star field around Tiny -->
+      <div class="tiny-star-field" aria-hidden="true">
+        <span class="t-star ts1">&#10022;</span>
+        <span class="t-star ts2">&#10023;</span>
+        <span class="t-star ts3">&#10022;</span>
+        <span class="t-star ts4">&#8902;</span>
+        <span class="t-star ts5">&#10024;</span>
+        <span class="t-star ts6">&#10023;</span>
       </div>
     </div>
 
-    <!-- Lyrics Zone for Scene 6 -->
+    <!-- Lyrics Zone for Scene 7 -->
     <div id="lyrics-zone" class="lyrics-zone" aria-hidden="true">
       <div id="lyric-line-1" class="lyric-line"></div>
       <div id="lyric-line-2" class="lyric-line"></div>
     </div>
 
-    <!-- CẢNH 1 — MỘT LỜI CHÀO BÍ MẬT -->
+    <!-- CẢNH 1 — TINY XUẤT HIỆN VÀ GIỚI THIỆU -->
     <section id="stage-scene-1" class="story-stage active-stage" data-stage="0">
       <div class="stage-content center-content scene-stacked-layout">
         <div class="scene-greeting-badge">
-          <span class="badge-dot"></span> TỐI 19/10 &bull; LỜI CHÀO BÍ MẬT
+          <span class="badge-dot"></span> SÁNG 19/10 &bull; LỜI CHÀO TỪ TINY &#9728;&#65039;
         </div>
         <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line lead-line">Hellooo~ Xin chào mọi người! Tớ là Blong đây! &#128075;</p>
-          <p class="dialogue-line">Ủa mà… hôm nay đã là tối 19/10 rồi nhỉ?</p>
-          <p class="dialogue-line accent-line">Ngày mai có một ngày rất đặc biệt đấy. Mọi người có đoán ra là ngày gì không nè?</p>
+          <p class="dialogue-line lead-line">Xin chào cô và các bạn! Mình là Tiny – người dẫn chuyện hôm nay. &#128075;</p>
         </div>
         <button id="btn-scene1-next" class="primary-btn pulse-glow">
-          Để tớ đoán xem! &#10024;
+          Chào Tiny! &#10024;
         </button>
       </div>
     </section>
 
-    <!-- CẢNH 2 — BÍ MẬT CỦA BLONG -->
+    <!-- CẢNH 2 — NGÀY MAI LÀ 20/10 -->
     <section id="stage-scene-2" class="story-stage" data-stage="1">
       <div class="stage-content center-content scene-stacked-layout">
         <div class="scene-greeting-badge">
-          <span class="badge-dot"></span> BÍ MẬT ĐANG ĐƯỢC GIỮ KÍN &#128151;
+          <span class="badge-dot"></span> BẬT MÍ NGÀY ĐẶC BIỆT &#128151;
         </div>
         <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line lead-line">Đúng rồiii! Ngày mai là ngày Phụ nữ Việt Nam 20/10 đó! &#128151;</p>
-          <p class="dialogue-line">Mà nói nhỏ nè… tớ nghe nói hội con trai 8B6 đang chuẩn bị một điều gì đó đặc biệt lắm!</p>
-          <p class="dialogue-line accent-line shy-text">Nhưng mà… tớ không biết có nên bật mí không taaa~ &#128563;</p>
+          <p class="dialogue-line lead-line">Ngày mai đã là 20/10 rồi đấy!</p>
+          <p class="dialogue-line">Một dịp đặc biệt để gửi những lời chúc đến cô Phú và các bạn nữ lớp 8B6.</p>
+          <p class="dialogue-line accent-line">Và hình như hội con trai lớp mình đã chuẩn bị một điều bất ngờ rồi…</p>
         </div>
         <button id="btn-scene2-next" class="primary-btn pulse-glow">
-          Blong ơi, bật mí đi! &#128064;
+          Bất ngờ gì thế nhỉ? &#128064;
         </button>
       </div>
     </section>
 
-    <!-- CẢNH 3 — MÓN QUÀ ĐANG ĐƯỢC GIẤU KÍN -->
+    <!-- CẢNH 3 — TINY NGẠI NGÙNG, HIỆU ỨNG NGÔI SAO -->
     <section id="stage-scene-3" class="story-stage" data-stage="2">
+      <div class="stage-content center-content scene-stacked-layout">
+        <div class="scene-greeting-badge">
+          <span class="badge-dot"></span> TINY ĐANG GIẤU ĐIỀU GÌ ĐÓ? &#129325;
+        </div>
+        <div class="dialogue-box scene-dialogue-card">
+          <p class="dialogue-line">Ơ… có vẻ Tiny đang giấu điều gì đó thì phải?</p>
+          <div class="tiny-speech-bubble-mini">
+            Bí mật một chút nhé! &#129325;
+          </div>
+        </div>
+        <button id="btn-scene3-next" class="primary-btn pulse-glow">
+          Bật mí đi nào! &#10024;
+        </button>
+      </div>
+    </section>
+
+    <!-- CẢNH 4 — BẬT MÍ MÓN QUÀ -->
+    <section id="stage-scene-4" class="story-stage" data-stage="3">
       <div class="stage-content center-content scene-stacked-layout">
         <div class="glowing-envelope-wrap" id="glowing-envelope-box">
           <div class="envelope-halo"></div>
@@ -121,21 +142,20 @@
           </div>
         </div>
         <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line">Thật ra… món quà này không cần phải thật to hay thật đắt đâu.</p>
-          <p class="dialogue-line">Chỉ cần có những lời chúc chân thành dành cho cô giáo và các bạn nữ của lớp mình là đủ rồi!</p>
-          <p class="dialogue-line accent-line">Vậy nên tối nay, tớ sẽ giúp hội con trai 8B6 gửi món quà bí mật này đến mọi người nhé!</p>
+          <p class="dialogue-line lead-line">Bọn mình có một món quà muốn gửi tặng cô Phú và các bạn nữ 8B6!</p>
+          <p class="dialogue-line accent-line">Cùng mở ra xem nhé!</p>
         </div>
-        <button id="btn-scene3-next" class="primary-btn pulse-glow">
-          Mở phong thư bí mật &#9993;&#65039;
+        <button id="btn-open-envelope" class="primary-btn pulse-glow envelope-action-btn">
+          Mở phong thư &#128140;
         </button>
       </div>
     </section>
 
-    <!-- CẢNH 4 — GỬI CÔ PHÚ KÍNH MẾN -->
-    <section id="stage-scene-4" class="story-stage" data-stage="3">
+    <!-- CẢNH 5 — MỞ THƯ VÀ GỬI LỜI CHÚC ĐẾN CÔ PHÚ -->
+    <section id="stage-scene-5" class="story-stage" data-stage="4">
       <div class="mission-stage-wrap">
         <div class="mission-header">
-          <div class="mission-badge">MÓN QUÀ 01</div>
+          <div class="mission-badge">LÁ THƯ 01</div>
           <h1 class="mission-title">GỬI CÔ PHÚ KÍNH MẾN &#128144;</h1>
         </div>
         <div class="mission-content-split">
@@ -156,7 +176,7 @@
             </div>
           </div>
           <div class="mission-card-col">
-            <div class="wish-card teacher-card">
+            <div class="wish-card teacher-card letter-paper-unfold">
               <div class="envelope-burst" aria-hidden="true">
                 <span class="burst-petal bp1">&#10022;</span>
                 <span class="burst-petal bp2">&#10023;</span>
@@ -164,24 +184,23 @@
                 <span class="burst-petal bp4">&#10023;</span>
               </div>
               <p class="wish-salute">Cô Phú kính mến!</p>
-              <p class="wish-para">Cảm ơn cô vì đã luôn dạy dỗ, quan tâm và đồng hành cùng chúng em.</p>
-              <p class="wish-para">Nhân ngày 20/10, chúng em chúc cô luôn mạnh khỏe, vui vẻ, hạnh phúc và có thật nhiều niềm vui trong công việc cũng như cuộc sống.</p>
-              <p class="wish-para">Mong rằng mỗi ngày đến lớp, cô đều nhận được thật nhiều nụ cười và những điều tốt đẹp!</p>
-              <p class="wish-signature">— Hội con trai 8B6 gửi cô &#128151;</p>
+              <p class="wish-para">Nhân ngày 20/10, chúng em xin gửi đến cô những lời chúc tốt đẹp nhất. Cảm ơn cô vì đã luôn dạy dỗ, quan tâm và đồng hành cùng chúng em.</p>
+              <p class="wish-para">Chúng em chúc cô luôn mạnh khỏe, vui vẻ, hạnh phúc và có thật nhiều niềm vui trong công việc cũng như cuộc sống. Mong rằng mỗi ngày đến lớp, cô đều nhận được thật nhiều nụ cười và những điều tốt đẹp!</p>
+              <p class="wish-signature">Hội con trai 8B6 gửi cô &#128151;</p>
             </div>
-            <button id="btn-scene4-next" class="primary-btn btn-stage-next">
-              Gửi lời chúc đến các bạn nữ &#127800;
+            <button id="btn-scene5-next" class="primary-btn btn-stage-next">
+              Xem lá thư tiếp theo &#128140;
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CẢNH 5 — GỬI NHỮNG CÔ GÁI 8B6 -->
-    <section id="stage-scene-5" class="story-stage" data-stage="4">
+    <!-- CẢNH 6 — LỜI CHÚC CÁC BẠN NỮ 8B6 -->
+    <section id="stage-scene-6" class="story-stage" data-stage="5">
       <div class="mission-stage-wrap">
         <div class="mission-header">
-          <div class="mission-badge mission-badge-pink">MÓN QUÀ 02</div>
+          <div class="mission-badge mission-badge-pink">LÁ THƯ 02</div>
           <h1 class="mission-title">GỬI NHỮNG CÔ GÁI 8B6 &#127799;</h1>
         </div>
         <div class="mission-content-split">
@@ -196,36 +215,34 @@
             </div>
           </div>
           <div class="mission-card-col">
-            <div class="wish-card girls-card">
+            <div class="wish-card girls-card letter-paper-unfold">
               <p class="wish-salute">Gửi những cô gái của 8B6!</p>
               <p class="wish-para">Bình thường bọn mình có thể hay trêu nhau, đôi lúc chí chóe vì những chuyện chẳng đâu vào đâu. Nhưng nhân ngày 20/10, hội con trai muốn nghiêm túc một lần để gửi đến các bạn những lời chúc thật tử tế.</p>
-              <p class="wish-para">Chúc các bạn luôn vui vẻ, tự tin, học tập tiến bộ, làm được những điều mình yêu thích và luôn có những người bạn tốt ở bên.</p>
-              <p class="wish-para">Mong rằng các bạn sẽ luôn được tôn trọng, yêu thương và có thật nhiều kỷ niệm đẹp trong những năm tháng học trò.</p>
+              <p class="wish-para">Chúc các bạn luôn vui vẻ, tự tin, học tập tiến bộ, làm được những điều mình yêu thích và luôn có những người bạn tốt ở bên. Mong rằng các bạn sẽ luôn được tôn trọng, yêu thương và có thật nhiều kỷ niệm đẹp trong những năm tháng học trò.</p>
               <p class="wish-para">Cảm ơn vì đã góp phần làm cho những ngày ở 8B6 trở nên vui vẻ và đáng nhớ hơn!</p>
               <p class="wish-ps">P/S: Hôm nay bọn mình nghiêm túc thật đấy, không phải đang có âm mưu gì đâu nhé! &#128526;</p>
-              <p class="wish-signature">— Hội con trai 8B6</p>
+              <p class="wish-signature">Hội con trai 8B6</p>
             </div>
-            <button id="btn-scene5-next" class="primary-btn btn-stage-next">
-              Một điều bất ngờ nữa… &#10024;
+            <button id="btn-scene6-next" class="primary-btn btn-stage-next">
+              Còn điều gì nữa nhỉ? &#10024;
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CẢNH 6 — MỘT CHÚT DỊU DÀNG -->
-    <section id="stage-scene-6" class="story-stage" data-stage="5">
+    <!-- CẢNH 7 — VIDEO WAGURI VÀ KHOẢNH KHẮC DỄ THƯƠNG -->
+    <section id="stage-scene-7" class="story-stage" data-stage="6">
       <div class="waguri-stage-wrap">
         <div class="wish-card-container">
           <div class="mission-badge" style="margin-bottom:12px;">MỘT CHÚT DỊU DÀNG &#127800;</div>
-          <h2 class="wish-title">Lời nhắn gửi</h2>
+          <h2 class="wish-title">Khoảnh khắc dễ thương</h2>
           <div class="wish-body">
-            <p class="wish-para">Đôi khi, một lời cảm ơn hay một lời chúc nhỏ thôi cũng có thể khiến một ngày trở nên đặc biệt hơn.</p>
-            <p class="wish-para">Mong rằng khi xem đến đây, cô và các bạn sẽ cảm nhận được một chút niềm vui mà hội con trai muốn gửi gắm.</p>
-            <p class="wish-para">Vì những điều chân thành nhất đôi khi lại được gói trong những món quà giản dị nhất.</p>
+            <p class="wish-para">Đôi khi, chỉ một lời cảm ơn hay một nụ cười cũng đủ khiến ngày đặc biệt trở nên đáng nhớ hơn.</p>
+            <p class="wish-para">Hy vọng món quà nhỏ này sẽ mang đến cho cô và các bạn một chút niềm vui! &#128151;</p>
           </div>
-          <button id="btn-scene6-next" class="primary-btn btn-stage-next" style="margin-top: 18px;">
-            Đến điều ước cuối cùng &#127808;
+          <button id="btn-scene7-next" class="primary-btn btn-stage-next" style="margin-top: 18px;">
+            Đến món quà cỏ bốn lá &#127808;
           </button>
         </div>
 
@@ -290,8 +307,8 @@
       </div>
     </section>
 
-    <!-- CẢNH 7 — ĐIỀU ƯỚC CỎ BỐN LÁ 🍀 -->
-    <section id="stage-scene-7" class="story-stage" data-stage="6">
+    <!-- CẢNH 8 — KẾT THÚC VỚI CỎ BỐN LÁ -->
+    <section id="stage-scene-8" class="story-stage" data-stage="7">
       <div class="clover-stage-wrap">
         <div class="clover-ambient"></div>
         <div id="clover-firefly-field" class="clover-firefly-field" aria-hidden="true"></div>
@@ -330,11 +347,6 @@
         </div>
 
         <div class="clover-card-container">
-          <div class="clover-intro-speech">
-            <p class="speech-p1">Vậy là bí mật của tối 19/10 đã được bật mí rồi!</p>
-            <p class="speech-p2">Chúc cô Phú và tất cả các bạn nữ 8B6 luôn mạnh khỏe, hạnh phúc, gặp nhiều may mắn và có thật nhiều niềm vui nhé!</p>
-          </div>
-
           <div class="clover-header-badge">
             GỬI CÔ PHÚ VÀ CÁC BẠN NỮ 8B6 &#127808;
           </div>
@@ -343,7 +355,7 @@
           </div>
           <div class="clover-signature-wrap">
             <p class="final-greeting">Thương gửi từ hội con trai 8B6 &#128151;</p>
-            <p class="author-signature">Chúc mừng ngày Phụ nữ Việt Nam — 20/10</p>
+            <p class="author-signature">Chúc mừng ngày Phụ nữ Việt Nam – 20/10!</p>
           </div>
 
           <div class="clover-actions-wrap">
@@ -364,6 +376,6 @@
     </footer>
   </main>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
