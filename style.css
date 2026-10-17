@@ -1,6 +1,6 @@
 /* ==========================================================================
    NHIEM VU BI MAT 20/10 — HOI CON TRAI 8B6
-   Style v3 — Fixed Tiny overlap, Mission layout, Enhanced particles
+   Style v3.1 — Stage 1 centered vertical stack fix
    ========================================================================== */
 
 :root {
@@ -187,12 +187,12 @@ html, body {
 
 .tiny-face.visible { opacity: 1; }
 
-/* Stage 1: Tiny on the LEFT half, vertically centered — dialogue is on right */
+/* Stage 1: Tiny centered at top, dialogue is below */
 .tiny-face.in-stage1 {
-  left: 22%;
-  top: 52%;
-  transform: translate(-50%, -50%) scale(1);
-  gap: clamp(40px, 7vw, 95px);
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%) scale(0.88);
+  gap: clamp(44px, 7vw, 100px);
 }
 
 /* Stages 2 & 3: Tiny is tiny, tucked in bottom-left corner — content is right */
@@ -530,22 +530,25 @@ html, body {
 
 /* ================= STAGE 1: TINY INTRO LAYOUT ================= */
 /*
- * Layout: Tiny is on LEFT (via fixed positioning in CSS above)
- * Dialogue box is centered-right
+ * Layout: Tiny centered at top (via fixed pos),
+ * Dialogue box centered below, pushed down with padding-top.
+ * Both are horizontally centered. No overlap.
  */
 .tiny-intro-layout {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 8vw;
+  padding-bottom: clamp(60px, 10vh, 100px);
 }
 
 .tiny-dialogue-box {
-  width: min(500px, 52vw);
+  width: min(560px, 86vw);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 
@@ -560,18 +563,12 @@ html, body {
   flex-direction: column;
   gap: 14px;
   position: relative;
+  text-align: center;
+  width: 100%;
 }
 
-/* Arrow pointing left toward Tiny */
-.dialogue-bubble::before {
-  content: '';
-  position: absolute;
-  left: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 8px solid transparent;
-  border-right-color: rgba(244,198,220,0.22);
-}
+/* No arrow — Tiny is above, not beside */
+.dialogue-bubble::before { display: none; }
 
 .dialogue-line {
   font-family: var(--font-sans);
