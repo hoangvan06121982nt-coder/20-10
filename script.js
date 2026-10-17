@@ -1,6 +1,6 @@
 /**
- * CHÚC MỪNG NGÀY PHỤ NỮ VIỆT NAM 20/10
- * Interactive Experience Controller
+ * NHIEM VU BI MAT 20/10 — HOI CON TRAI 8B6
+ * Interactive Experience Controller v3
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioStatus = document.getElementById('audio-status');
   const btnRestart = document.getElementById('btn-restart');
   const btnStart = document.getElementById('btn-start');
+  const btnMissionStart = document.getElementById('btn-mission-start');
+  const btnStage2Next = document.getElementById('btn-stage2-next');
+  const btnStage3Next = document.getElementById('btn-stage3-next');
+  const btnOpenClover = document.getElementById('btn-open-clover');
   const btnReplayClover = document.getElementById('btn-replay-clover');
+
   const viewport = document.getElementById('app-viewport');
   const ambientBackdrop = document.getElementById('ambient-backdrop');
   const goldFlash = document.getElementById('gold-flash');
@@ -20,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tinyFace = document.getElementById('tiny-face');
   const waguriVideo = document.getElementById('waguri-video');
   const canvasPetals = document.getElementById('canvas-petals');
+  const canvasBgStars = document.getElementById('canvas-bg-stars');
+  const canvasCloverOrbit = document.getElementById('canvas-clover-orbit');
   const cloverFireflyField = document.getElementById('clover-firefly-field');
 
   const lyricsZone = document.getElementById('lyrics-zone');
@@ -27,14 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const lyricLine2 = document.getElementById('lyric-line-2');
 
   const stages = [
-    document.getElementById('stage-intro'),
-    document.getElementById('stage-story-1'),
-    document.getElementById('stage-story-2'),
-    document.getElementById('stage-story-3'),
-    document.getElementById('stage-waguri'),
-    document.getElementById('stage-teaser'),
-    document.getElementById('stage-clover')
+    document.getElementById('stage-intro'),      // 0
+    document.getElementById('stage-story-1'),    // 1
+    document.getElementById('stage-story-2'),    // 2
+    document.getElementById('stage-story-3'),    // 3
+    document.getElementById('stage-waguri'),      // 4
+    document.getElementById('stage-teaser'),     // 5
+    document.getElementById('stage-clover')      // 6
   ];
+
+  // Stages where clicking the background advances to next scene
+  const clickableStages = new Set([0, 1, 4]);
 
   let currentStageIndex = 0;
   let isTransitioning = false;
@@ -43,44 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
   let fireflyInterval = null;
   let petalsRunning = false;
   let petalsAnimationId = null;
+  let bgStarsAnimId = null;
+  let cloverOrbitAnimId = null;
+  let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // --- Synchronized Lyrics Cues ---
+  // --- Lyric Cues ---
   const lyricCues = [
-    { time: 0.0, text: "chỉ biết nói cho em" },
-    { time: 1.7, text: "nghe vậy thôi" },
-    { time: 3.4, text: "vì đã lỡ yêu em rồi" },
-    { time: 6.3, text: "chẳng dám hứa xa xôi" },
-    { time: 9.7, text: "người ta nói chẳng ai hiểu" },
-    { time: 13.1, text: "về hai tiếng thương yêu" },
-    { time: 16.0, text: "chẳng phải cứ bên nhau" },
-    { time: 18.1, text: "làm nhau khổ đau là tình yêu?" },
-    { time: 22.8, text: "nhiều khi rất yêu nhau mà" },
-    { time: 26.0, text: "phải đứng ở rất xa" },
-    { time: 29.4, text: "nhìn em hạnh phúc bên ai chẳng phải mình" },
-    { time: 33.4, text: "vì mình có làm được đâu" },
-    { time: 35.7, text: "nhường ai khác bên em là" },
-    { time: 38.5, text: "nhường đi hết tất cả" },
-    { time: 42.0, text: "yêu em chẳng khiến em được vui" },
-    { time: 44.9, text: "thế nên anh phải xa" },
-    { time: 48.7, text: "càng yêu chỉ thêm thất vọng" },
-    { time: 51.8, text: "càng tan nát cõi lòng" },
-    { time: 55.0, text: "không được như mong" }
+    { time: 0.0, text: "chi biet noi cho em" },
+    { time: 1.7, text: "nghe vay thoi" },
+    { time: 3.4, text: "vi da lo yeu em roi" },
+    { time: 6.3, text: "chang dam hua xa xoi" },
+    { time: 9.7, text: "nguoi ta noi chang ai hieu" },
+    { time: 13.1, text: "ve hai tieng thuong yeu" },
+    { time: 16.0, text: "chang phai cu ben nhau" },
+    { time: 18.1, text: "lam nhau kho dau la tinh yeu?" },
+    { time: 22.8, text: "nhieu khi rat yeu nhau ma" },
+    { time: 26.0, text: "phai dung o rat xa" },
+    { time: 29.4, text: "nhin em hanh phuc ben ai chang phai minh" },
+    { time: 33.4, text: "vi minh co lam duoc dau" }
   ];
 
-  // --- AUDIO CONTROLLER ---
+  // =================== AUDIO ===================
   function initAudio() {
     if (!audio) return;
-    audio.volume = 0.7;
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        audioPlaying = true;
-        if (audioStatus) audioStatus.textContent = "Bật";
-      }).catch(err => {
-        console.log("Audio autoplay prevented, will start on click:", err);
-        audioPlaying = false;
-        if (audioStatus) audioStatus.textContent = "Tắt";
-      });
+    audio.volume = 0.65;
+    const p = audio.play();
+    if (p !== undefined) {
+      p.then(() => { audioPlaying = true; if (audioStatus) audioStatus.textContent = "Bat"; })
+       .catch(() => { audioPlaying = false; if (audioStatus) audioStatus.textContent = "Tat"; });
     }
   }
 
@@ -88,173 +88,158 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e) e.stopPropagation();
     if (!audio) return;
     if (audio.paused) {
-      audio.play().then(() => {
-        audioPlaying = true;
-        if (audioStatus) audioStatus.textContent = "Bật";
-      }).catch(err => console.log(err));
+      audio.play().then(() => { audioPlaying = true; if (audioStatus) audioStatus.textContent = "Bat"; }).catch(() => {});
     } else {
       audio.pause();
       audioPlaying = false;
-      if (audioStatus) audioStatus.textContent = "Tắt";
+      if (audioStatus) audioStatus.textContent = "Tat";
     }
   }
+  if (btnAudioToggle) btnAudioToggle.addEventListener('click', toggleAudio);
 
-  if (btnAudioToggle) {
-    btnAudioToggle.addEventListener('click', toggleAudio);
-  }
-
-  // Sync Lyrics on audio timeupdate
   let lastLyricIndex = -1;
   if (audio) {
     audio.addEventListener('timeupdate', () => {
-      if (currentStageIndex !== 4) return; // Only show in Waguri scene
+      if (currentStageIndex !== 4) return;
       const t = audio.currentTime;
       let activeIndex = -1;
       for (let i = lyricCues.length - 1; i >= 0; i--) {
-        if (t >= lyricCues[i].time) {
-          activeIndex = i;
-          break;
-        }
+        if (t >= lyricCues[i].time) { activeIndex = i; break; }
       }
-
       if (activeIndex !== -1 && activeIndex !== lastLyricIndex) {
         lastLyricIndex = activeIndex;
         if (activeIndex % 2 === 0) {
-          lyricLine1.textContent = lyricCues[activeIndex].text;
-          lyricLine1.style.opacity = '1';
+          if (lyricLine1) { lyricLine1.textContent = lyricCues[activeIndex].text; lyricLine1.style.opacity = '1'; }
         } else {
-          lyricLine2.textContent = lyricCues[activeIndex].text;
-          lyricLine2.style.opacity = '1';
+          if (lyricLine2) { lyricLine2.textContent = lyricCues[activeIndex].text; lyricLine2.style.opacity = '1'; }
         }
       }
     });
   }
 
-  // --- TINY EYE SYSTEM ---
+  // =================== TINY BLINK ===================
   function startBlinking() {
     stopBlinking();
+    if (reducedMotion) return;
     function triggerBlink() {
-      if (!tinyFace.classList.contains('mode-clover')) {
+      if (tinyFace && !tinyFace.classList.contains('mode-clover')) {
         tinyFace.classList.add('blinking');
-        setTimeout(() => {
-          tinyFace.classList.remove('blinking');
-        }, 180);
+        setTimeout(() => tinyFace.classList.remove('blinking'), 180);
       }
-      const nextDelay = 2200 + Math.random() * 2600;
-      blinkTimer = setTimeout(triggerBlink, nextDelay);
+      blinkTimer = setTimeout(triggerBlink, 2200 + Math.random() * 2600);
     }
     blinkTimer = setTimeout(triggerBlink, 1500);
   }
 
   function stopBlinking() {
-    if (blinkTimer) {
-      clearTimeout(blinkTimer);
-      blinkTimer = null;
-    }
+    if (blinkTimer) { clearTimeout(blinkTimer); blinkTimer = null; }
   }
 
-  // --- STAGE SWITCHING LOGIC ---
+  // =================== STAGE MANAGEMENT ===================
   function goToStage(index) {
     if (index < 0 || index >= stages.length || isTransitioning) return;
     isTransitioning = true;
 
     const prevStage = stages[currentStageIndex];
-    const nextStage = stages[index];
-
-    // Fade out previous stage
-    if (prevStage) {
-      prevStage.classList.remove('active-stage');
-    }
+    if (prevStage) prevStage.classList.remove('active-stage');
 
     currentStageIndex = index;
-
-    // Apply scene-specific states
     setupSceneSpecifics(index);
 
     setTimeout(() => {
-      nextStage.classList.add('active-stage');
+      const nextStage = stages[index];
+      if (nextStage) nextStage.classList.add('active-stage');
       isTransitioning = false;
-    }, 400);
+    }, 420);
   }
 
-  function setupSceneSpecifics(stageIdx) {
-    // Stage 0: Intro
-    if (stageIdx === 0) {
-      tinyFace.className = 'tiny-face';
+  function setupSceneSpecifics(idx) {
+    // Reset shared states
+    if (idx !== 3) {
+      canvasPetals.classList.remove('active');
+      stopPetals();
+    }
+    if (idx !== 4) {
+      lyricsZone.classList.remove('active');
+    }
+    if (idx !== 6) {
+      stopFireflies();
+      stopCloverOrbit();
+    }
+    if (idx !== 4 && waguriVideo) {
+      waguriVideo.pause();
+      if (idx === 0) waguriVideo.currentTime = 0;
+    }
+
+    // STAGE 0: Intro — no Tiny, no particles
+    if (idx === 0) {
+      if (tinyFace) tinyFace.className = 'tiny-face';
       stopBlinking();
       ambientBackdrop.classList.remove('clover-mode');
       cloverBlackout.classList.remove('active');
       goldFlash.classList.remove('active');
-      canvasPetals.classList.remove('active');
-      stopPetals();
-      stopFireflies();
-      lyricsZone.classList.remove('active');
-      if (waguriVideo) {
-        waguriVideo.pause();
-        waguriVideo.currentTime = 0;
-      }
+      if (interactionHint) interactionHint.classList.remove('visible');
+      startBgStars();
+    }
+
+    // STAGE 1: Tiny greets — Tiny is at bottom-center, dialogue is right side
+    else if (idx === 1) {
+      initAudio();
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-stage1';
+      startBlinking();
+      if (interactionHint) interactionHint.classList.remove('visible');
+      ambientBackdrop.classList.remove('clover-mode');
+    }
+
+    // STAGE 2: Mission 01 Teacher — Tiny is small, bottom-left corner
+    else if (idx === 2) {
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing';
+      startBlinking();
+      goldFlash.classList.remove('active');
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // Stage 1: Storytelling 1 (Tiny awakens)
-    else if (stageIdx === 1) {
-      initAudio();
-      tinyFace.className = 'tiny-face visible';
-      startBlinking();
-      canvasPetals.classList.remove('active');
-      stopPetals();
-      if (interactionHint) interactionHint.classList.add('visible');
-    }
-
-    // Stage 2: Storytelling 2 (Cô giáo - Trái tim)
-    else if (stageIdx === 2) {
-      tinyFace.className = 'tiny-face visible in-split-left';
-      canvasPetals.classList.remove('active');
-      stopPetals();
-      goldFlash.classList.remove('active');
-    }
-
-    // Stage 3: Storytelling 3 (Các bạn nữ - Áo dài & Hoa đào rơi)
-    else if (stageIdx === 3) {
-      tinyFace.className = 'tiny-face visible in-split-left blushing show-mouth';
+    // STAGE 3: Mission 02 Girls — petals fall, Tiny is small bottom-left
+    else if (idx === 3) {
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing show-mouth';
       goldFlash.classList.add('active');
       canvasPetals.classList.add('active');
       startPetals();
+      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // Stage 4: Waguri & Main 20/10 Wish
-    else if (stageIdx === 4) {
+    // STAGE 4: Waguri — Tiny small at top-left of wish card area
+    else if (idx === 4) {
       goldFlash.classList.remove('active');
-      canvasPetals.classList.remove('active');
-      stopPetals();
-
-      tinyFace.className = 'tiny-face visible in-waguri blushing mode-smile';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-waguri blushing mode-smile';
       lyricsZone.classList.add('active');
-
+      if (interactionHint) interactionHint.classList.add('visible');
       if (waguriVideo) {
-        waguriVideo.play().catch(e => console.log('Waguri play err:', e));
+        waguriVideo.play().catch(e => {
+          console.log('Waguri play err:', e);
+          const fb = document.querySelector('.waguri-fallback');
+          if (fb) fb.classList.add('show');
+        });
       }
     }
 
-    // Stage 5: Clover Teaser
-    else if (stageIdx === 5) {
-      lyricsZone.classList.remove('active');
-      if (waguriVideo) waguriVideo.pause();
-
-      tinyFace.className = 'tiny-face visible blushing';
+    // STAGE 5: Teaser — Tiny is in middle, special position
+    else if (idx === 5) {
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-teaser blushing';
+      startBlinking();
       cloverBlackout.classList.remove('active');
       ambientBackdrop.classList.remove('clover-mode');
-      stopFireflies();
+      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // Stage 6: The Four-Leaf Clover Finale
-    else if (stageIdx === 6) {
+    // STAGE 6: Clover finale — Tiny at safe top-right corner only
+    else if (idx === 6) {
       ambientBackdrop.classList.add('clover-mode');
       cloverBlackout.classList.add('active');
-
-      tinyFace.className = 'tiny-face visible in-clover blushing mode-clover';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-clover blushing mode-clover';
+      stopBlinking();
       startFireflies();
-
+      startCloverOrbit();
       if (interactionHint) interactionHint.classList.remove('visible');
     }
   }
@@ -267,52 +252,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function restartExperience(e) {
     if (e) e.stopPropagation();
+    // Reset lyric state
+    lastLyricIndex = -1;
+    if (lyricLine1) { lyricLine1.textContent = ''; lyricLine1.style.opacity = '0'; }
+    if (lyricLine2) { lyricLine2.textContent = ''; lyricLine2.style.opacity = '0'; }
     goToStage(0);
   }
 
-  // --- CANVAS PETALS SIMULATION (Hoa đào rơi) ---
-  function startPetals() {
-    if (petalsRunning) return;
-    petalsRunning = true;
+  // =================== CANVAS: BG STARS ===================
+  function startBgStars() {
+    if (!canvasBgStars || reducedMotion) return;
+    stopBgStars();
+    const canvas = canvasBgStars;
+    const ctx = canvas.getContext('2d');
+    let W = window.innerWidth, H = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
 
-    const ctx = canvasPetals.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-
-    function resizeCanvas() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvasPetals.width = width;
-      canvasPetals.height = height;
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resize();
+    window.addEventListener('resize', resize);
 
-    const petals = [];
-    const petalCount = width <= 600 ? 30 : 60;
+    const starCount = W < 600 ? 60 : 120;
+    const stars = Array.from({ length: starCount }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.5 + Math.random() * 1.5,
+      alpha: 0.3 + Math.random() * 0.7,
+      speed: 0.001 + Math.random() * 0.003,
+      phase: Math.random() * Math.PI * 2
+    }));
 
-    class Petal {
-      constructor() {
-        this.reset(true);
+    let t = 0;
+    function draw() {
+      bgStarsAnimId = requestAnimationFrame(draw);
+      ctx.clearRect(0, 0, W, H);
+      t += 0.016;
+      for (const s of stars) {
+        const a = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed * 60 + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,240,220,${a})`;
+        ctx.fill();
       }
-      reset(initial = false) {
-        this.x = Math.random() * width;
-        this.y = initial ? Math.random() * height : -30;
-        this.size = 10 + Math.random() * 12;
-        this.speedY = 1.2 + Math.random() * 2;
-        this.speedX = -1 + Math.random() * 2;
+    }
+    draw();
+  }
+
+  function stopBgStars() {
+    if (bgStarsAnimId) { cancelAnimationFrame(bgStarsAnimId); bgStarsAnimId = null; }
+  }
+
+  // =================== CANVAS: FALLING PETALS ===================
+  function startPetals() {
+    if (petalsRunning || reducedMotion) return;
+    petalsRunning = true;
+    const ctx = canvasPetals.getContext('2d');
+    let W = window.innerWidth, H = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      canvasPetals.width = W * dpr; canvasPetals.height = H * dpr;
+      canvasPetals.style.width = W + 'px'; canvasPetals.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const count = W <= 600 ? 28 : 55;
+    class Petal {
+      constructor() { this.reset(true); }
+      reset(init = false) {
+        this.x = Math.random() * W;
+        this.y = init ? Math.random() * H : -30;
+        this.size = 8 + Math.random() * 12;
+        this.vy = 1.0 + Math.random() * 1.8;
+        this.vx = -0.8 + Math.random() * 1.6;
         this.angle = Math.random() * Math.PI * 2;
-        this.angleSpeed = (Math.random() - 0.5) * 0.04;
-        this.opacity = 0.5 + Math.random() * 0.45;
-        this.color = Math.random() > 0.4 ? 'rgba(255, 140, 190,' : 'rgba(255, 182, 193,';
+        this.spin = (Math.random() - 0.5) * 0.04;
+        this.opacity = 0.45 + Math.random() * 0.45;
+        this.color = Math.random() > 0.45 ? 'rgba(255,130,190,' : 'rgba(240,180,210,';
       }
       update() {
-        this.y += this.speedY;
-        this.x += this.speedX + Math.sin(this.angle) * 0.8;
-        this.angle += this.angleSpeed;
-        if (this.y > height + 20 || this.x < -40 || this.x > width + 40) {
-          this.reset();
-        }
+        this.y += this.vy;
+        this.x += this.vx + Math.sin(this.angle) * 0.7;
+        this.angle += this.spin;
+        if (this.y > H + 20 || this.x < -50 || this.x > W + 50) this.reset();
       }
       draw(c) {
         c.save();
@@ -327,105 +356,151 @@ document.addEventListener('DOMContentLoaded', () => {
         c.restore();
       }
     }
+    const petals = Array.from({ length: count }, () => new Petal());
 
-    for (let i = 0; i < petalCount; i++) {
-      petals.push(new Petal());
-    }
-
-    function animatePetals() {
+    function animate() {
       if (!petalsRunning) return;
-      ctx.clearRect(0, 0, width, height);
-      for (const p of petals) {
-        p.update();
-        p.draw(ctx);
-      }
-      petalsAnimationId = requestAnimationFrame(animatePetals);
+      ctx.clearRect(0, 0, W, H);
+      for (const p of petals) { p.update(); p.draw(ctx); }
+      petalsAnimationId = requestAnimationFrame(animate);
     }
-    animatePetals();
+    animate();
   }
 
   function stopPetals() {
     petalsRunning = false;
-    if (petalsAnimationId) {
-      cancelAnimationFrame(petalsAnimationId);
-      petalsAnimationId = null;
-    }
+    if (petalsAnimationId) { cancelAnimationFrame(petalsAnimationId); petalsAnimationId = null; }
+    const ctx = canvasPetals && canvasPetals.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvasPetals.width, canvasPetals.height);
   }
 
-  // --- FIREFLIES FOR CLOVER ---
+  // =================== FIREFLIES ===================
   function startFireflies() {
     stopFireflies();
-    if (!cloverFireflyField) return;
-
+    if (!cloverFireflyField || reducedMotion) return;
     fireflyInterval = setInterval(() => {
       if (currentStageIndex !== 6) return;
-      const firefly = document.createElement('div');
-      firefly.className = 'clover-firefly';
-
-      // Emit from around the clover
+      const ff = document.createElement('div');
+      ff.className = 'clover-firefly';
       const baseLeft = window.innerWidth > 900 ? 25 : 50;
-      const randomOffset = (Math.random() - 0.5) * 30;
-      const left = baseLeft + randomOffset;
-      const top = 35 + Math.random() * 30;
-
-      firefly.style.left = `${left}%`;
-      firefly.style.top = `${top}%`;
-      const size = 4 + Math.random() * 5;
-      firefly.style.width = `${size}px`;
-      firefly.style.height = `${size}px`;
-
-      cloverFireflyField.appendChild(firefly);
-
-      setTimeout(() => {
-        if (firefly && firefly.parentNode) {
-          firefly.parentNode.removeChild(firefly);
-        }
-      }, 4600);
-    }, 280);
+      ff.style.left = (baseLeft + (Math.random() - 0.5) * 28) + '%';
+      ff.style.top = (30 + Math.random() * 35) + '%';
+      const sz = 3 + Math.random() * 5;
+      ff.style.width = sz + 'px'; ff.style.height = sz + 'px';
+      cloverFireflyField.appendChild(ff);
+      setTimeout(() => { if (ff.parentNode) ff.parentNode.removeChild(ff); }, 4800);
+    }, 260);
   }
 
   function stopFireflies() {
-    if (fireflyInterval) {
-      clearInterval(fireflyInterval);
-      fireflyInterval = null;
+    if (fireflyInterval) { clearInterval(fireflyInterval); fireflyInterval = null; }
+    if (cloverFireflyField) cloverFireflyField.innerHTML = '';
+  }
+
+  // =================== CLOVER ORBIT PARTICLES ===================
+  function startCloverOrbit() {
+    if (!canvasCloverOrbit || reducedMotion) return;
+    stopCloverOrbit();
+    const canvas = canvasCloverOrbit;
+    const ctx = canvas.getContext('2d');
+    let W = window.innerWidth, H = window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
     }
-    if (cloverFireflyField) {
-      cloverFireflyField.innerHTML = '';
+    resize();
+
+    // Clover center is roughly 25% from left on desktop, 50% on mobile
+    const getCX = () => W > 900 ? W * 0.24 : W * 0.5;
+    const getCY = () => H * 0.42;
+
+    const orbitParticles = Array.from({ length: 28 }, (_, i) => ({
+      angle: (i / 28) * Math.PI * 2,
+      radius: 55 + Math.random() * 45,
+      speed: 0.003 + Math.random() * 0.005,
+      size: 1.5 + Math.random() * 2.5,
+      alpha: 0.4 + Math.random() * 0.5,
+      hue: 120 + Math.random() * 60
+    }));
+
+    let t = 0;
+    function draw() {
+      cloverOrbitAnimId = requestAnimationFrame(draw);
+      ctx.clearRect(0, 0, W, H);
+      t += 0.016;
+      const cx = getCX(), cy = getCY();
+
+      // Breathe glow
+      const breathe = 0.3 + 0.2 * Math.sin(t * 1.2);
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 120);
+      grad.addColorStop(0, `rgba(79,238,134,${breathe * 0.25})`);
+      grad.addColorStop(1, 'rgba(79,238,134,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 120, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Orbit particles
+      for (const p of orbitParticles) {
+        p.angle += p.speed;
+        const px = cx + Math.cos(p.angle) * p.radius;
+        const py = cy + Math.sin(p.angle) * p.radius * 0.55;
+        const a = p.alpha * (0.5 + 0.5 * Math.sin(t * 2 + p.angle));
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue},90%,70%,${a})`;
+        ctx.fill();
+      }
+    }
+    draw();
+  }
+
+  function stopCloverOrbit() {
+    if (cloverOrbitAnimId) { cancelAnimationFrame(cloverOrbitAnimId); cloverOrbitAnimId = null; }
+    if (canvasCloverOrbit) {
+      const ctx = canvasCloverOrbit.getContext('2d');
+      ctx.clearRect(0, 0, canvasCloverOrbit.width, canvasCloverOrbit.height);
     }
   }
 
-  // --- EVENT LISTENERS ---
-  if (btnStart) {
-    btnStart.addEventListener('click', (e) => {
-      e.stopPropagation();
-      goToStage(1);
-    });
-  }
+  // =================== EVENT LISTENERS ===================
 
-  if (btnRestart) {
-    btnRestart.addEventListener('click', restartExperience);
-  }
+  // Button: Start (Stage 0 -> 1)
+  if (btnStart) btnStart.addEventListener('click', (e) => { e.stopPropagation(); goToStage(1); });
 
-  if (btnReplayClover) {
-    btnReplayClover.addEventListener('click', restartExperience);
-  }
+  // Button: Mission Start (Stage 1 -> 2)
+  if (btnMissionStart) btnMissionStart.addEventListener('click', (e) => { e.stopPropagation(); goToStage(2); });
 
-  // Viewport tap / click progression
+  // Button: Stage 2 Next (Stage 2 -> 3)
+  if (btnStage2Next) btnStage2Next.addEventListener('click', (e) => { e.stopPropagation(); goToStage(3); });
+
+  // Button: Stage 3 Next (Stage 3 -> 4)
+  if (btnStage3Next) btnStage3Next.addEventListener('click', (e) => { e.stopPropagation(); goToStage(4); });
+
+  // Button: Open Clover (Stage 5 -> 6)
+  if (btnOpenClover) btnOpenClover.addEventListener('click', (e) => { e.stopPropagation(); goToStage(6); });
+
+  // Button: Restart
+  if (btnRestart) btnRestart.addEventListener('click', restartExperience);
+  if (btnReplayClover) btnReplayClover.addEventListener('click', restartExperience);
+
+  // Viewport tap: only advance on tappable stages
   viewport.addEventListener('click', (e) => {
-    // Ignore clicks on buttons or interactive cards
-    if (e.target.closest('button') || e.target.closest('.clover-card-container') || e.target.closest('.wish-card-container')) {
-      return;
-    }
-    nextStage();
+    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col')) return;
+    if (clickableStages.has(currentStageIndex)) nextStage();
   });
 
-  // Keyboard navigation (Space / Enter / ArrowRight)
+  // Keyboard
   document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' || e.code === 'ArrowRight' || e.code === 'Enter') {
-      nextStage();
+    if (['Space', 'ArrowRight', 'Enter'].includes(e.code)) {
+      if (clickableStages.has(currentStageIndex)) nextStage();
     }
   });
 
-  // Initial stage
+  // =================== INIT ===================
   goToStage(0);
 });

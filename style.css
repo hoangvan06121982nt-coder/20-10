@@ -1,6 +1,6 @@
 /* ==========================================================================
-   CHÚC MỪNG NGÀY PHỤ NỮ VIỆT NAM 20/10 - STYLESHEET
-   Aesthetic: Dark Velvet Cosmic Plum / Japanese Anime Elegance
+   NHIEM VU BI MAT 20/10 — HOI CON TRAI 8B6
+   Style v3 — Fixed Tiny overlap, Mission layout, Enhanced particles
    ========================================================================== */
 
 :root {
@@ -14,12 +14,16 @@
   --accent-cyan-glow: rgba(0, 242, 254, 0.75);
   --accent-clover: #4fee86;
   --accent-clover-glow: rgba(79, 238, 134, 0.7);
+  --accent-gold: #FFD97D;
 
   --font-typewriter: 'Courier Prime', monospace;
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --trans-smooth: all 0.75s cubic-bezier(0.22, 1, 0.36, 1);
   --trans-fade: opacity 0.8s ease-in-out;
+
+  /* Safe area for Tiny so it never overlaps content */
+  --tiny-corner-size: clamp(80px, 10vw, 120px);
 }
 
 * {
@@ -52,20 +56,20 @@ html, body {
 }
 
 .ambient-backdrop.clover-mode {
-  background: radial-gradient(ellipse 85% 75% at 40% 55%, rgba(20, 80, 45, 0.45) 0%, #101c15 48%, #090e0b 100%);
+  background: radial-gradient(ellipse 85% 75% at 40% 55%, rgba(20,80,45,0.45) 0%, #101c15 48%, #090e0b 100%);
 }
 
 .cosmos-stars {
   position: absolute;
   inset: 0;
-  background-image: 
-    radial-gradient(1.5px 1.5px at 15% 25%, rgba(255, 255, 255, 0.8) 50%, transparent),
-    radial-gradient(1px 1px at 45% 15%, rgba(255, 240, 216, 0.7) 50%, transparent),
-    radial-gradient(2px 2px at 75% 35%, rgba(255, 210, 230, 0.9) 50%, transparent),
-    radial-gradient(1.5px 1.5px at 85% 65%, rgba(255, 255, 255, 0.6) 50%, transparent),
-    radial-gradient(2px 2px at 25% 75%, rgba(255, 240, 216, 0.8) 50%, transparent),
-    radial-gradient(1px 1px at 60% 85%, rgba(255, 255, 255, 0.5) 50%, transparent),
-    radial-gradient(1.8px 1.8px at 35% 45%, rgba(255, 200, 225, 0.8) 50%, transparent);
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 25%, rgba(255,255,255,0.8) 50%, transparent),
+    radial-gradient(1px 1px at 45% 15%, rgba(255,240,216,0.7) 50%, transparent),
+    radial-gradient(2px 2px at 75% 35%, rgba(255,210,230,0.9) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 85% 65%, rgba(255,255,255,0.6) 50%, transparent),
+    radial-gradient(2px 2px at 25% 75%, rgba(255,240,216,0.8) 50%, transparent),
+    radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.5) 50%, transparent),
+    radial-gradient(1.8px 1.8px at 35% 45%, rgba(255,200,225,0.8) 50%, transparent);
   background-size: 550px 550px;
   opacity: 0.65;
   animation: starsTwinkle 6s ease-in-out infinite alternate;
@@ -77,36 +81,38 @@ html, body {
   100% { opacity: 0.45; transform: scale(1); }
 }
 
+.canvas-bg-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 .gold-flash {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 100%, rgba(255, 225, 120, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 100%, rgba(255,225,120,0.35) 0%, transparent 70%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.8s ease-out;
 }
-.gold-flash.active {
-  opacity: 1;
-}
+.gold-flash.active { opacity: 1; }
 
 .clover-blackout {
   position: absolute;
   inset: 0;
-  background: rgba(0, 5, 2, 0.85);
+  background: rgba(0,5,2,0.88);
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.4s ease-in-out;
 }
-.clover-blackout.active {
-  opacity: 1;
-}
+.clover-blackout.active { opacity: 1; }
 
 /* ================= HEADER CONTROLS ================= */
 .app-header {
   position: fixed;
   top: 16px;
   right: 18px;
-  z-index: 100;
+  z-index: 200;
   display: flex;
   gap: 10px;
 }
@@ -116,8 +122,8 @@ html, body {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  background: rgba(33, 23, 25, 0.72);
-  border: 1px solid rgba(244, 198, 220, 0.28);
+  background: rgba(33,23,25,0.75);
+  border: 1px solid rgba(244,198,220,0.28);
   border-radius: 20px;
   color: var(--accent-cream);
   font-family: var(--font-typewriter);
@@ -125,21 +131,18 @@ html, body {
   backdrop-filter: blur(12px);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+  z-index: 200;
 }
 
 .control-btn:hover {
-  background: rgba(72, 51, 68, 0.85);
+  background: rgba(72,51,68,0.88);
   border-color: var(--accent-pink);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(197, 109, 148, 0.3);
+  box-shadow: 0 6px 20px rgba(197,109,148,0.3);
 }
 
-.control-btn:active {
-  transform: translateY(0);
-}
-
-/* ================= MAIN VIEWPORT & STAGES ================= */
+/* ================= MAIN VIEWPORT ================= */
 .app-viewport {
   position: relative;
   width: 100vw;
@@ -157,83 +160,97 @@ html, body {
   opacity: 0;
   transition: opacity 1.2s ease-in-out;
 }
-.fx-canvas.active {
-  opacity: 1;
-}
+.fx-canvas.active { opacity: 1; }
 
-/* ================= TINY ROBOT EYES ================= */
+/* ================= TINY ROBOT FACE ================= */
+/*
+ * KEY RULE: Tiny is ALWAYS inside its own zone, never overlapping text/content.
+ * pointer-events: none always — Tiny is purely decorative.
+ * Each stage class defines a safe position that stays away from text areas.
+ */
 .tiny-face {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  transform: translate(-50%, -50%);
+  position: fixed; /* fixed so it doesn't scroll with content */
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(40px, 8vw, 100px);
-  z-index: 15;
+  gap: clamp(36px, 6vw, 88px);
   pointer-events: none;
   opacity: 0;
-  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.9s ease, left 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), top 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
+  transition: opacity 0.9s ease, left 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), top 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
 
-.tiny-face.visible {
-  opacity: 1;
-}
-
-/* In Stages 2 & 3: Place on Left Side */
-.tiny-face.in-split-left {
-  left: 28%;
-  top: 56%;
-  transform: translate(-50%, -50%) scale(0.85);
-  gap: 60px;
-}
-
-/* In Waguri Scene: Centered in gap between Card and Waguri */
-.tiny-face.in-waguri {
-  left: 45%;
-  top: 36%;
-  transform: translate(-50%, -50%) scale(0.72);
-  gap: 50px;
-}
-
-/* In Clover Scene: Positioned at top center above card and clover */
-.tiny-face.in-clover {
+  /* Default: hidden, off screen */
   left: 50%;
-  top: 9vh;
-  transform: translate(-50%, -50%) scale(0.62);
-  gap: 75px;
-  z-index: 30;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
 }
 
+.tiny-face.visible { opacity: 1; }
+
+/* Stage 1: Tiny on the LEFT half, vertically centered — dialogue is on right */
+.tiny-face.in-stage1 {
+  left: 22%;
+  top: 52%;
+  transform: translate(-50%, -50%) scale(1);
+  gap: clamp(40px, 7vw, 95px);
+}
+
+/* Stages 2 & 3: Tiny is tiny, tucked in bottom-left corner — content is right */
+.tiny-face.in-corner-bl {
+  left: var(--tiny-corner-size);
+  bottom: var(--tiny-corner-size);
+  top: auto;
+  transform: translate(-50%, 50%) scale(0.5);
+  gap: 40px;
+}
+
+/* Stage 4 (Waguri): Tiny is above wish card, small, does NOT float over card */
+.tiny-face.in-waguri {
+  left: 26%;
+  top: 12vh;
+  transform: translate(-50%, 0) scale(0.58);
+  gap: 44px;
+}
+
+/* Stage 5 (Teaser): Tiny above dialogue bubble — safe zone above the bubble */
+.tiny-face.in-teaser {
+  left: 50%;
+  top: 12vh;
+  transform: translate(-50%, 0) scale(0.7);
+  gap: 55px;
+}
+
+/* Stage 6 (Clover): Tiny tucked at top-right corner — clover + card take center */
+.tiny-face.in-clover {
+  right: 3vw;
+  left: auto;
+  top: 3vh;
+  transform: translate(0, 0) scale(0.48);
+  gap: 38px;
+}
+
+/* Eye Columns */
 .eye-col {
   position: relative;
-  width: clamp(100px, 15vw, 145px);
-  height: clamp(100px, 15vw, 145px);
+  width: clamp(90px, 13vw, 140px);
+  height: clamp(90px, 13vw, 140px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Default Glowing Cyan Rounded Eyes */
 .eye-capsule {
   width: 100%;
   height: 100%;
   background: #00f0ff;
   border-radius: 40px;
-  box-shadow: 
-    0 0 25px #00f0ff,
-    0 0 55px rgba(0, 240, 255, 0.65),
-    inset 0 0 18px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 25px #00f0ff, 0 0 55px rgba(0,240,255,0.65), inset 0 0 18px rgba(255,255,255,0.8);
   transition: transform 0.22s ease-in-out, opacity 0.4s ease;
   transform-origin: center center;
 }
 
-.tiny-face.blinking .eye-capsule {
-  transform: scaleY(0.06);
-}
+.tiny-face.blinking .eye-capsule { transform: scaleY(0.06); }
 
-/* Smiling Curved Eyes (SVG) */
 .eye-curve {
   position: absolute;
   width: 100%;
@@ -248,52 +265,36 @@ html, body {
   transition: opacity 0.4s ease;
 }
 
-/* Cute Chevrons (> <) */
 .eye-chevron {
   position: absolute;
   width: 100%;
   height: 100%;
   opacity: 0;
   visibility: hidden;
-  filter: drop-shadow(0 0 18px #00f0ff) drop-shadow(0 0 35px rgba(0, 240, 255, 0.6));
+  filter: drop-shadow(0 0 18px #00f0ff) drop-shadow(0 0 35px rgba(0,240,255,0.6));
   transition: opacity 0.4s ease;
 }
 
-/* Switch Eye Modes */
-.tiny-face.mode-smile .eye-capsule {
-  opacity: 0;
-}
-.tiny-face.mode-smile .eye-curve {
-  opacity: 1;
-  visibility: visible;
-}
+.tiny-face.mode-smile .eye-capsule { opacity: 0; }
+.tiny-face.mode-smile .eye-curve { opacity: 1; visibility: visible; }
 
-.tiny-face.mode-clover .eye-capsule {
-  opacity: 0;
-}
-.tiny-face.mode-clover .eye-chevron {
-  opacity: 1;
-  visibility: visible;
-}
+.tiny-face.mode-clover .eye-capsule { opacity: 0; }
+.tiny-face.mode-clover .eye-chevron { opacity: 1; visibility: visible; }
 
-/* Blush Lines (////) */
 .blush-mark {
   position: absolute;
-  bottom: -32px;
+  bottom: -30px;
   color: #ff85b8;
   font-family: var(--font-typewriter);
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(18px, 2.5vw, 28px);
   font-weight: bold;
   letter-spacing: 2px;
-  text-shadow: 0 0 14px rgba(255, 133, 184, 0.9);
+  text-shadow: 0 0 14px rgba(255,133,184,0.9);
   opacity: 0;
   transition: opacity 0.6s ease;
 }
-.tiny-face.blushing .blush-mark {
-  opacity: 1;
-}
+.tiny-face.blushing .blush-mark { opacity: 1; }
 
-/* Center Dot & Cat Mouth (ω) */
 .tiny-mouth {
   position: absolute;
   left: 50%;
@@ -314,19 +315,41 @@ html, body {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.tiny-face.mode-clover .center-dot {
-  opacity: 1;
-}
+.tiny-face.mode-clover .center-dot { opacity: 1; }
 
 .mouth-cat {
   position: absolute;
-  bottom: -38px;
+  bottom: -36px;
   opacity: 0;
   filter: drop-shadow(0 0 8px #00f0ff);
   transition: opacity 0.4s ease;
 }
-.tiny-face.show-mouth .mouth-cat {
-  opacity: 1;
+.tiny-face.show-mouth .mouth-cat { opacity: 1; }
+
+/* ================= LYRICS ZONE ================= */
+.lyrics-zone {
+  position: fixed;
+  left: 5vw;
+  bottom: 10vh;
+  width: 38%;
+  min-height: 48px;
+  z-index: 55;
+  pointer-events: none;
+  font-family: var(--font-typewriter);
+  text-align: left;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.lyrics-zone.active { opacity: 1; }
+
+.lyric-line {
+  color: #ffe8f2;
+  font-size: clamp(14px, 1.6vw, 20px);
+  font-weight: 500;
+  text-shadow: 0 0 16px rgba(255,170,210,0.7);
+  letter-spacing: 0.03em;
+  min-height: 24px;
+  transition: opacity 0.4s ease;
 }
 
 /* ================= STORY STAGES ================= */
@@ -339,7 +362,7 @@ html, body {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 1s;
+  transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.9s;
   z-index: 20;
 }
 
@@ -349,7 +372,7 @@ html, body {
   pointer-events: auto;
 }
 
-/* General Stage Content Layout */
+/* General centered stage content */
 .stage-content {
   width: 90%;
   max-width: 1100px;
@@ -360,94 +383,409 @@ html, body {
   justify-content: center;
 }
 
-.dialogue-text {
-  font-size: clamp(22px, 3.2vw, 35px);
-  font-weight: 500;
-  color: var(--accent-cream);
-  text-shadow: 0 0 20px rgba(255, 240, 216, 0.45);
-  line-height: 1.6;
-  letter-spacing: 0.03em;
+.center-content { text-align: center; }
+
+/* ================= STAGE 0: INTRO ================= */
+.intro-envelope {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  margin: 0 auto 28px;
+}
+
+.envelope-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197,109,148,0.4) 0%, transparent 70%);
+  animation: envelopeBreath 3s ease-in-out infinite alternate;
+}
+
+@keyframes envelopeBreath {
+  0% { opacity: 0.5; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+.envelope-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  filter: drop-shadow(0 0 20px rgba(197,109,148,0.8));
+  animation: envelopeFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes envelopeFloat {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.clover-seal {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  font-size: 30px;
+  animation: sealGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes sealGlow {
+  0% { filter: drop-shadow(0 0 6px rgba(79,238,134,0.4)); }
+  100% { filter: drop-shadow(0 0 18px rgba(79,238,134,0.9)); }
+}
+
+.intro-text-wrap {
+  margin-bottom: 32px;
 }
 
 .intro-lead {
-  font-size: clamp(24px, 3.6vw, 38px);
-  font-weight: 500;
+  font-size: clamp(22px, 3.2vw, 38px);
+  font-weight: 700;
   color: var(--accent-cream);
-  text-shadow: 0 0 24px rgba(255, 240, 216, 0.6);
-  margin-bottom: 35px;
-  line-height: 1.65;
+  text-shadow: 0 0 24px rgba(255,240,216,0.7);
+  margin-bottom: 14px;
+  line-height: 1.5;
+  animation: textReveal 0.8s ease-out both;
 }
 
+@keyframes textReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.intro-sublead {
+  font-size: clamp(16px, 2vw, 24px);
+  font-family: var(--font-sans);
+  color: var(--accent-pink);
+  opacity: 0.9;
+  line-height: 1.65;
+  animation: textReveal 0.8s ease-out 0.3s both;
+}
+
+/* ================= BUTTONS ================= */
 .primary-btn {
   padding: 14px 34px;
   font-family: var(--font-typewriter);
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(15px, 1.8vw, 19px);
   font-weight: 600;
   color: #fff;
   background: linear-gradient(135deg, #c56d94 0%, #7e4868 100%);
-  border: 1px solid rgba(255, 200, 225, 0.5);
+  border: 1px solid rgba(255,200,225,0.5);
   border-radius: 35px;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(197, 109, 148, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 25px rgba(197,109,148,0.5), inset 0 0 10px rgba(255,255,255,0.3);
   transition: all 0.35s ease;
+  position: relative;
+  z-index: 60;
 }
 
 .primary-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px rgba(244, 198, 220, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.6);
+  transform: scale(1.06);
+  box-shadow: 0 0 40px rgba(244,198,220,0.85), inset 0 0 15px rgba(255,255,255,0.6);
 }
+
+.primary-btn:active { transform: scale(0.98); }
 
 .pulse-glow {
   animation: pulseGlowBtn 2.8s ease-in-out infinite alternate;
 }
 
 @keyframes pulseGlowBtn {
-  0% { box-shadow: 0 0 18px rgba(197, 109, 148, 0.45); transform: scale(1); }
-  100% { box-shadow: 0 0 36px rgba(244, 198, 220, 0.85); transform: scale(1.03); }
+  0% { box-shadow: 0 0 18px rgba(197,109,148,0.45); transform: scale(1); }
+  100% { box-shadow: 0 0 36px rgba(244,198,220,0.85); transform: scale(1.04); }
 }
 
-/* ================= SPLIT STAGE LAYOUT (STAGES 2 & 3) ================= */
-.split-stage-wrap {
-  width: 100vw;
-  height: 100vh;
+.clover-btn {
+  background: linear-gradient(135deg, #1fcf5a, #0f7a38);
+  box-shadow: 0 0 25px rgba(79,238,134,0.45);
+}
+.clover-btn:hover { box-shadow: 0 0 45px rgba(79,238,134,0.8); }
+
+.secondary-btn {
+  padding: 12px 28px;
+  font-family: var(--font-typewriter);
+  font-size: clamp(13px, 1.5vw, 17px);
+  color: var(--accent-clover);
+  background: rgba(15,40,25,0.65);
+  border: 1px solid rgba(79,238,134,0.4);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  z-index: 60;
   position: relative;
+}
+.secondary-btn:hover {
+  background: rgba(25,70,40,0.85);
+  border-color: var(--accent-clover);
+  box-shadow: 0 0 20px rgba(79,238,134,0.4);
+  transform: translateY(-2px);
+}
+
+.btn-stage-next {
+  margin-top: 16px;
+  align-self: flex-end;
+}
+
+/* ================= STAGE 1: TINY INTRO LAYOUT ================= */
+/*
+ * Layout: Tiny is on LEFT (via fixed positioning in CSS above)
+ * Dialogue box is centered-right
+ */
+.tiny-intro-layout {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 6vw;
+  justify-content: flex-end;
+  padding-right: 8vw;
 }
 
-.left-col {
-  width: 48vw;
-  z-index: 25;
+.tiny-dialogue-box {
+  width: min(500px, 52vw);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: left;
+  gap: 20px;
 }
 
-.dialogue-box {
-  margin-bottom: 25px;
+.dialogue-bubble {
+  background: rgba(33,23,25,0.72);
+  border: 1px solid rgba(244,198,220,0.22);
+  border-radius: 20px;
+  padding: 24px 28px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 35px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
 }
 
-.sub-lead {
-  display: block;
-  font-size: clamp(16px, 1.8vw, 22px);
+/* Arrow pointing left toward Tiny */
+.dialogue-bubble::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 8px solid transparent;
+  border-right-color: rgba(244,198,220,0.22);
+}
+
+.dialogue-line {
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 400;
+  color: var(--accent-cream);
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+}
+
+.accent-line {
   color: var(--accent-pink);
-  margin-top: 14px;
-  opacity: 0.95;
-  text-shadow: 0 0 12px rgba(244, 198, 220, 0.5);
+  font-weight: 500;
 }
 
+/* ================= STAGE 2 & 3: MISSION LAYOUT ================= */
+.mission-stage-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 5vw 4vh;
+  gap: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.mission-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.mission-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: rgba(197,109,148,0.25);
+  border: 1px solid rgba(197,109,148,0.6);
+  border-radius: 20px;
+  font-family: var(--font-typewriter);
+  font-size: clamp(11px, 1.2vw, 14px);
+  font-weight: 700;
+  color: var(--accent-pink);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.mission-badge-pink {
+  background: rgba(180,100,220,0.22);
+  border-color: rgba(200,140,240,0.5);
+  color: #e0b8ff;
+}
+
+.mission-title {
+  font-family: var(--font-typewriter);
+  font-size: clamp(18px, 2.5vw, 30px);
+  font-weight: 700;
+  color: var(--accent-cream);
+  text-shadow: 0 0 20px rgba(255,240,216,0.5);
+  letter-spacing: 0.05em;
+}
+
+/* Content split: art left, card right */
+.mission-content-split {
+  display: flex;
+  flex: 1;
+  gap: 4vw;
+  align-items: flex-start;
+  min-height: 0;
+}
+
+/* Art column: 35% width, decorative only */
+.mission-art-col {
+  width: 32%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-height: 65vh;
+}
+
+.teacher-art-wrap, .girls-art-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.teacher-art-img {
+  max-height: 45vh;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(255,124,168,0.3));
+}
+
+.girls-art-img {
+  max-height: 50vh;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(255,230,150,0.3));
+}
+
+/* Card column: take remaining space */
+.mission-card-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+/* Mission wish card */
+.wish-card {
+  position: relative;
+  background: rgba(33,23,25,0.7);
+  border: 1px solid rgba(244,198,220,0.22);
+  border-radius: 18px;
+  padding: clamp(18px, 2.5vh, 30px) clamp(20px, 3vw, 32px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.teacher-card {
+  border-color: rgba(255,180,210,0.28);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 40px rgba(255,150,190,0.08) inset;
+}
+
+.girls-card {
+  border-color: rgba(200,150,255,0.28);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 40px rgba(180,120,255,0.08) inset;
+}
+
+/* Envelope burst particles inside card */
+.envelope-burst {
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  pointer-events: none;
+}
+
+.burst-petal {
+  position: absolute;
+  font-size: 18px;
+  color: #ffd97d;
+  text-shadow: 0 0 10px rgba(255,217,125,0.8);
+  animation: burstFloat 3.5s ease-in-out infinite alternate;
+}
+.bp1 { top: 10px; right: 15px; animation-delay: 0s; }
+.bp2 { top: 28px; right: 8px; animation-delay: 0.8s; }
+.bp3 { top: 6px; right: 40px; animation-delay: 1.4s; }
+.bp4 { top: 42px; right: 28px; animation-delay: 2.1s; }
+
+@keyframes burstFloat {
+  0% { opacity: 0.4; transform: scale(0.8) rotate(0deg); }
+  100% { opacity: 1; transform: scale(1.1) rotate(15deg); }
+}
+
+.wish-salute {
+  font-family: var(--font-typewriter);
+  font-size: clamp(15px, 1.8vw, 20px);
+  font-weight: 700;
+  color: var(--accent-pink);
+  text-shadow: 0 0 14px rgba(244,198,220,0.5);
+}
+
+.wish-para {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1.3vw, 16px);
+  font-weight: 400;
+  color: #fff2e0;
+  line-height: 1.7;
+  letter-spacing: 0.015em;
+}
+
+.wish-ps {
+  font-family: var(--font-typewriter);
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-style: italic;
+  color: var(--accent-pink);
+  opacity: 0.85;
+  border-top: 1px solid rgba(244,198,220,0.15);
+  padding-top: 10px;
+}
+
+.wish-signature {
+  font-family: var(--font-typewriter);
+  font-size: clamp(13px, 1.4vw, 16px);
+  font-weight: 700;
+  color: var(--accent-cream);
+  text-align: right;
+  opacity: 0.9;
+}
+
+/* ================= STAGE 2: Teacher Art extras ================= */
 .heartbeat-wrap {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .heartbeat-orb {
-  font-size: 32px;
+  font-size: 26px;
   color: #ff4d79;
   text-shadow: 0 0 20px #ff4d79;
   animation: heartPulse 1.2s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -459,7 +797,7 @@ html, body {
 }
 
 .ekg-svg {
-  width: 240px;
+  width: 180px;
   height: auto;
   filter: drop-shadow(0 0 8px #ff7ca8);
   stroke-dasharray: 400;
@@ -467,59 +805,54 @@ html, body {
   animation: ekgFlow 2.8s linear infinite;
 }
 
-@keyframes ekgFlow {
-  to { stroke-dashoffset: 0; }
-}
-
-.right-col {
-  position: absolute;
-  right: 4vw;
-  bottom: 0;
-  height: 85vh;
-  width: 42vw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.heart-silhouette {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 24px rgba(255, 124, 168, 0.35));
-}
-
-.aodai-silhouette {
-  height: 94%;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 24px rgba(255, 230, 150, 0.38));
-}
+@keyframes ekgFlow { to { stroke-dashoffset: 0; } }
 
 .flutter-butterflies {
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 10%;
   pointer-events: none;
 }
 
 .flutter-butterflies .bf {
   position: absolute;
-  font-size: 24px;
-  filter: drop-shadow(0 0 10px #f4c6dc);
+  font-size: 20px;
+  filter: drop-shadow(0 0 8px #f4c6dc);
   animation: flutterAnim 4s ease-in-out infinite alternate;
 }
-.bf1 { top: -20px; left: 10px; animation-delay: 0s; }
-.bf2 { top: 30px; left: 60px; animation-delay: 1.2s; }
-.bf3 { top: -50px; left: 80px; animation-delay: 2.1s; }
+.bf1 { top: -15px; left: 8px; animation-delay: 0s; }
+.bf2 { top: 25px; left: 55px; animation-delay: 1.2s; }
+.bf3 { top: -40px; left: 75px; animation-delay: 2.1s; }
 
 @keyframes flutterAnim {
-  0% { transform: translate(0, 0) rotate(-6deg); }
-  50% { transform: translate(12px, -18px) rotate(8deg); }
-  100% { transform: translate(-8px, -30px) rotate(-4deg); }
+  0% { transform: translate(0,0) rotate(-6deg); }
+  50% { transform: translate(10px,-15px) rotate(8deg); }
+  100% { transform: translate(-6px,-25px) rotate(-4deg); }
 }
 
-/* ================= STAGE 4: WAGURI SMILE & MAIN WISH ================= */
+/* ================= STAGE 3: Girls Art extras ================= */
+.petals-deco {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  pointer-events: none;
+}
+
+.fdeco {
+  position: absolute;
+  font-size: 22px;
+  animation: decoFloat 5s ease-in-out infinite alternate;
+}
+.fd1 { top: 0; left: 0; animation-delay: 0s; }
+.fd2 { top: 30px; left: 30px; animation-delay: 1.5s; }
+.fd3 { top: -20px; left: 55px; animation-delay: 2.8s; }
+
+@keyframes decoFloat {
+  0% { transform: translateY(0) rotate(-5deg); opacity: 0.7; }
+  100% { transform: translateY(-20px) rotate(5deg); opacity: 1; }
+}
+
+/* ================= STAGE 4: WAGURI ================= */
 .waguri-stage-wrap {
   position: relative;
   width: 100vw;
@@ -527,60 +860,52 @@ html, body {
   overflow: hidden;
 }
 
-/* Left: Heartfelt Wish Card */
+/* Left Wish Card */
 .wish-card-container {
   position: absolute;
   left: 5vw;
-  top: 14vh;
-  width: min(530px, 44vw);
+  top: 18vh;
+  width: min(460px, 42vw);
   z-index: 25;
-  background: rgba(33, 23, 25, 0.65);
-  border: 1px solid rgba(244, 198, 220, 0.24);
-  border-radius: 20px;
-  padding: clamp(20px, 2.8vh, 32px);
+  background: rgba(33,23,25,0.68);
+  border: 1px solid rgba(244,198,220,0.22);
+  border-radius: 18px;
+  padding: clamp(18px, 2.5vh, 28px);
   backdrop-filter: blur(14px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
-  animation: wishCardFadeIn 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  animation: wishCardFadeIn 1.2s cubic-bezier(0.2,0.8,0.2,1) forwards;
+  overflow-y: auto;
+  max-height: 65vh;
 }
 
 @keyframes wishCardFadeIn {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .wish-title {
   font-family: var(--font-typewriter);
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-size: clamp(18px, 2vw, 26px);
   font-weight: 700;
   color: var(--accent-cream);
-  text-shadow: 0 0 18px rgba(255, 200, 220, 0.65);
-  margin-bottom: 16px;
+  text-shadow: 0 0 16px rgba(255,200,220,0.6);
+  margin-bottom: 14px;
   letter-spacing: 0.04em;
 }
 
 .wish-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-.wish-para {
-  font-family: var(--font-sans);
-  font-size: clamp(14px, 1.35vw, 16.5px);
-  font-weight: 400;
-  color: #fff2e0;
-  line-height: 1.65;
-  letter-spacing: 0.015em;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-}
-
-/* Bottom Left: Retro Vinyl Record Player */
+/* Vinyl */
 .vinyl-player-wrap {
   position: absolute;
   left: 6vw;
   bottom: 4vh;
-  width: clamp(130px, 15vw, 175px);
-  height: clamp(130px, 15vw, 175px);
+  width: clamp(110px, 13vw, 160px);
+  height: clamp(110px, 13vw, 160px);
   z-index: 24;
   pointer-events: none;
 }
@@ -590,7 +915,7 @@ html, body {
   height: 100%;
   animation: spinVinyl 6s linear infinite;
   transform-origin: center center;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.6));
 }
 
 @keyframes spinVinyl {
@@ -599,7 +924,7 @@ html, body {
 }
 
 .disc-edge { fill: #1c1518; stroke: #3a2a32; stroke-width: 2; }
-.disc-shine { fill: none; stroke: rgba(255, 255, 255, 0.07); stroke-width: 14; }
+.disc-shine { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 14; }
 .groove { fill: none; stroke: #120e10; stroke-width: 1.2; }
 .label-disc { fill: url(#vinylGrad); }
 .label-heart { fill: #72344f; }
@@ -609,21 +934,17 @@ html, body {
   position: absolute;
   right: -10px;
   top: -15px;
-  width: 75px;
-  height: 75px;
+  width: 65px;
+  height: 65px;
   transform: rotate(-12deg);
   transform-origin: 86px 14px;
 }
 
-.music-notes {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
+.music-notes { position: absolute; inset: 0; pointer-events: none; }
 
 .music-notes .note {
   position: absolute;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--accent-pink);
   text-shadow: 0 0 10px var(--accent-rose);
   opacity: 0;
@@ -638,44 +959,16 @@ html, body {
   0% { transform: translateY(0) scale(0.7); opacity: 0; }
   35% { opacity: 0.9; }
   80% { opacity: 0.5; }
-  100% { transform: translateY(-75px) translateX(25px) scale(1.1); opacity: 0; }
+  100% { transform: translateY(-65px) translateX(20px) scale(1.1); opacity: 0; }
 }
 
-/* Floating Lyrics Zone (Courier Prime) */
-.lyrics-zone {
-  position: absolute;
-  left: 30%;
-  top: 68%;
-  width: 34%;
-  min-height: 50px;
-  z-index: 26;
-  pointer-events: none;
-  font-family: var(--font-typewriter);
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-.lyrics-zone.active {
-  opacity: 1;
-}
-
-.lyric-line {
-  color: #ffe8f2;
-  font-size: clamp(16px, 1.8vw, 24px);
-  font-weight: 500;
-  text-shadow: 0 0 16px rgba(255, 170, 210, 0.7);
-  letter-spacing: 0.03em;
-  min-height: 28px;
-  transition: opacity 0.4s ease;
-}
-
-/* Waguri Anime Character (Right Side) */
+/* Waguri */
 .waguri-container {
   position: absolute;
-  right: max(1vw, 10px);
+  right: max(1vw, 8px);
   bottom: -1vh;
   width: auto;
-  height: clamp(480px, 86vh, 880px);
+  height: clamp(440px, 84vh, 860px);
   aspect-ratio: 408 / 540;
   z-index: 22;
   pointer-events: none;
@@ -690,7 +983,7 @@ html, body {
   bottom: -8vh;
   width: 55vw;
   height: 80vh;
-  background: radial-gradient(ellipse 65% 65% at 60% 60%, rgba(197, 109, 148, 0.28) 0%, rgba(72, 51, 68, 0.15) 50%, transparent 80%);
+  background: radial-gradient(ellipse 65% 65% at 60% 60%, rgba(197,109,148,0.25) 0%, rgba(72,51,68,0.12) 50%, transparent 80%);
   filter: blur(40px);
   pointer-events: none;
   z-index: 1;
@@ -703,20 +996,29 @@ html, body {
   object-fit: contain;
   object-position: center bottom;
   z-index: 3;
-  filter: drop-shadow(0 0 25px rgba(255, 166, 209, 0.22));
+  filter: drop-shadow(0 0 25px rgba(255,166,209,0.2));
 }
 
-/* Waguri Sparkles & Twinkles */
+/* Waguri fallback */
+.waguri-fallback {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 80%, rgba(197,109,148,0.15) 0%, transparent 70%);
+  display: none;
+  z-index: 2;
+}
+.waguri-fallback.show { display: block; }
+
 .waguri-container .glimmer {
   position: absolute;
   z-index: 4;
   color: #fff6ea;
-  text-shadow: 0 0 14px rgba(255, 187, 223, 0.8);
+  text-shadow: 0 0 14px rgba(255,187,223,0.8);
   animation: glimmerShimmer 3s ease-in-out infinite alternate;
 }
-.g1 { left: 45%; top: 22%; font-size: 24px; animation-delay: 0s; }
-.g2 { left: 82%; top: 18%; font-size: 20px; animation-delay: 1.1s; }
-.g3 { left: 30%; top: 65%; font-size: 18px; animation-delay: 2.2s; }
+.g1 { left: 45%; top: 22%; font-size: 22px; animation-delay: 0s; }
+.g2 { left: 80%; top: 18%; font-size: 18px; animation-delay: 1.1s; }
+.g3 { left: 28%; top: 65%; font-size: 16px; animation-delay: 2.2s; }
 
 @keyframes glimmerShimmer {
   0% { opacity: 0.35; transform: scale(0.85); }
@@ -727,57 +1029,74 @@ html, body {
   position: absolute;
   z-index: 4;
   color: #ffa3cb;
-  text-shadow: 0 0 12px rgba(255, 120, 180, 0.8);
+  text-shadow: 0 0 12px rgba(255,120,180,0.8);
   animation: floatHeartAnim 4s ease-in-out infinite alternate;
 }
-.fh1 { left: 15%; top: 35%; font-size: 22px; animation-delay: 0.2s; }
-.fh2 { left: 88%; top: 40%; font-size: 18px; animation-delay: 1.5s; }
-.fh3 { left: 20%; top: 78%; font-size: 16px; animation-delay: 2.7s; }
-.fh4 { left: 75%; top: 72%; font-size: 24px; animation-delay: 3.4s; }
+.fh1 { left: 15%; top: 35%; font-size: 20px; animation-delay: 0.2s; }
+.fh2 { left: 86%; top: 42%; font-size: 16px; animation-delay: 1.5s; }
+.fh3 { left: 18%; top: 76%; font-size: 14px; animation-delay: 2.7s; }
+.fh4 { left: 73%; top: 70%; font-size: 22px; animation-delay: 3.4s; }
 
 @keyframes floatHeartAnim {
   0% { transform: translateY(0) rotate(-5deg); opacity: 0.5; }
-  100% { transform: translateY(-22px) rotate(8deg); opacity: 0.95; }
+  100% { transform: translateY(-20px) rotate(8deg); opacity: 0.95; }
 }
 
-/* Ornaments */
 .ornament {
   position: absolute;
-  width: 240px;
+  width: 220px;
   height: auto;
   z-index: 2;
-  opacity: 0.35;
+  opacity: 0.3;
   pointer-events: none;
 }
-.orn-left { left: -140px; bottom: 8vh; }
-.orn-right { right: -60px; bottom: 8vh; transform: scaleX(-1); }
+.orn-left { left: -130px; bottom: 8vh; }
+.orn-right { right: -55px; bottom: 8vh; transform: scaleX(-1); }
 
-.ornament .trail { fill: none; stroke: rgba(244, 198, 220, 0.4); stroke-width: 1.4; stroke-dasharray: 4 4; }
-.ornament .orn-heart { fill: none; stroke: rgba(255, 140, 190, 0.6); stroke-width: 1.5; }
-.ornament .orn-star { fill: rgba(255, 235, 180, 0.7); }
+.ornament .trail { fill: none; stroke: rgba(244,198,220,0.35); stroke-width: 1.4; stroke-dasharray: 4 4; }
+.ornament .orn-heart { fill: none; stroke: rgba(255,140,190,0.55); stroke-width: 1.5; }
+.ornament .orn-star { fill: rgba(255,235,180,0.7); }
 
-/* Glowing Blooming Neon Flower on Right */
 .kado-flower-frame {
   position: absolute;
   right: -1%;
   bottom: -2%;
-  width: 28%;
-  height: 75%;
+  width: 27%;
+  height: 73%;
   border: none;
   pointer-events: none;
   z-index: 23;
-  opacity: 0.92;
+  opacity: 0.9;
   transform-origin: bottom center;
   transition: opacity 1.5s ease-out;
 }
 
-/* ================= STAGE 5: CLOVER TEASER ================= */
-.highlight-lead {
-  color: #a8ffc6;
-  text-shadow: 0 0 24px rgba(79, 238, 134, 0.65);
+/* ================= STAGE 5: TEASER ================= */
+.teaser-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 20vh; /* push down so Tiny at top has space */
 }
 
-/* ================= STAGE 6: FOUR-LEAF CLOVER FINALE ================= */
+.teaser-dialogue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: min(560px, 85vw);
+}
+
+.teaser-bubble {
+  text-align: center;
+}
+
+.teaser-bubble::before { display: none; }
+
+/* ================= STAGE 6: CLOVER FINALE ================= */
 .clover-stage-wrap {
   position: relative;
   width: 100vw;
@@ -785,13 +1104,13 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8vw;
+  padding: 0 6vw;
 }
 
 .clover-ambient {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 35% 55%, rgba(31, 207, 90, 0.22) 0%, transparent 65%);
+  background: radial-gradient(circle at 32% 55%, rgba(31,207,90,0.2) 0%, transparent 62%);
   pointer-events: none;
 }
 
@@ -804,343 +1123,326 @@ html, body {
 
 .clover-firefly {
   position: absolute;
-  width: 6px;
-  height: 6px;
   border-radius: 50%;
-  background: #a8ffc6;
-  box-shadow: 0 0 12px #4fee86, 0 0 24px #1fcf5a;
-  pointer-events: none;
-  animation: fireflyRise 4.5s ease-out forwards;
+  background: radial-gradient(circle, #a8ffc6 0%, #4fee86 40%, transparent 100%);
+  box-shadow: 0 0 8px 3px rgba(79,238,134,0.6);
+  animation: fireflyRise 4.8s ease-out forwards;
 }
 
 @keyframes fireflyRise {
-  0% { opacity: 0; transform: translateY(0) scale(0.6); }
-  25% { opacity: 1; transform: translateY(-40px) translateX(12px) scale(1.2); }
-  80% { opacity: 0.7; }
-  100% { opacity: 0; transform: translateY(-160px) translateX(-20px) scale(0.4); }
+  0% { transform: translateY(0) scale(0); opacity: 0; }
+  15% { opacity: 1; transform: translateY(-10px) scale(1); }
+  70% { opacity: 0.8; }
+  100% { transform: translateY(-140px) translateX(var(--ff-dx, 20px)) scale(0.4); opacity: 0; }
 }
 
-/* Left: Clover Garden & SVG */
+/* Canvas for orbit particles */
+.canvas-clover-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* Clover garden */
 .clover-garden {
   position: relative;
-  width: clamp(280px, 34vw, 440px);
-  height: clamp(380px, 62vh, 620px);
-  z-index: 20;
+  flex-shrink: 0;
+  width: clamp(160px, 28vw, 340px);
+  height: clamp(280px, 55vh, 580px);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 .clover-glow-halo {
   position: absolute;
-  top: 15%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(79, 238, 134, 0.38) 0%, rgba(31, 207, 90, 0.12) 50%, transparent 75%);
-  filter: blur(28px);
-  animation: haloBreath 4s ease-in-out infinite alternate;
+  inset: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,238,134,0.35) 0%, transparent 70%);
+  animation: cloverHaloPulse 3s ease-in-out infinite alternate;
 }
 
-@keyframes haloBreath {
-  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
-  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+@keyframes cloverHaloPulse {
+  0% { opacity: 0.6; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1.08); }
+}
+
+.clover-burst-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(79,238,134,0.25);
+  pointer-events: none;
+  animation: ringExpand 4s ease-out infinite;
+}
+.clover-burst-ring-1 { width: 120px; height: 120px; animation-delay: 0s; }
+.clover-burst-ring-2 { width: 180px; height: 180px; animation-delay: 2s; }
+
+@keyframes ringExpand {
+  0% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 .clover-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 25px rgba(79, 238, 134, 0.45));
+  filter: drop-shadow(0 0 14px rgba(79,238,134,0.6));
+  animation: cloverSway 5s ease-in-out infinite alternate;
 }
 
-.clover-sway-group {
-  transform-origin: 126px 396px;
-  animation: cloverSampleSway 4.8s ease-in-out infinite alternate;
+@keyframes cloverSway {
+  0% { transform: rotate(-2deg); }
+  100% { transform: rotate(2.5deg); }
 }
 
-@keyframes cloverSampleSway {
-  0% { transform: rotate(-3.5deg); }
-  50% { transform: rotate(4deg); }
-  100% { transform: rotate(-3.5deg); }
-}
+.clover-sway-group { transform-origin: 120px 380px; }
 
 .leaf-unit {
   transform-origin: 0 0;
-  animation: leafBreath 3.5s ease-in-out infinite alternate;
+  animation: leafBloom 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-.l1 { animation-delay: 0s; }
-.l2 { animation-delay: -0.7s; }
-.l3 { animation-delay: -1.4s; }
-.l4 { animation-delay: -2.1s; }
+.l1 { animation-delay: 0.1s; }
+.l2 { animation-delay: 0.25s; }
+.l3 { animation-delay: 0.4s; }
+.l4 { animation-delay: 0.55s; }
 
-@keyframes leafBreath {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.08); }
+@keyframes leafBloom {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-/* Right: Clover Card & Message */
+/* Clover Card */
 .clover-card-container {
-  width: min(560px, 46vw);
-  margin-top: 6vh;
-  z-index: 25;
-  background: rgba(18, 28, 22, 0.72);
-  border: 1px solid rgba(168, 255, 198, 0.32);
-  border-radius: 24px;
-  padding: clamp(24px, 3.5vh, 40px);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.55), 0 0 35px rgba(79, 238, 134, 0.15);
-  text-align: center;
-  animation: cloverCardFadeIn 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes cloverCardFadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  flex: 1;
+  max-width: min(500px, 50vw);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-left: 4vw;
 }
 
 .clover-header-badge {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(10,50,25,0.75);
+  border: 1px solid rgba(79,238,134,0.45);
+  border-radius: 14px;
   font-family: var(--font-typewriter);
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-size: clamp(12px, 1.3vw, 16px);
   font-weight: 700;
-  color: #a8ffc6;
-  text-shadow: 0 0 16px rgba(79, 238, 134, 0.8);
-  margin-bottom: 20px;
-  letter-spacing: 0.03em;
+  color: var(--accent-clover);
+  text-shadow: 0 0 12px rgba(79,238,134,0.7);
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(10px);
 }
 
 .clover-body-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.clover-body-text p {
   font-family: var(--font-sans);
-  font-size: clamp(15px, 1.6vw, 19px);
-  color: #eafbee;
+  font-size: clamp(13px, 1.35vw, 17px);
+  font-weight: 400;
+  color: #d4fde4;
   line-height: 1.75;
-  margin-bottom: 24px;
-  letter-spacing: 0.015em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
 
 .clover-signature-wrap {
-  border-top: 1px solid rgba(168, 255, 198, 0.2);
-  padding-top: 18px;
-  margin-bottom: 24px;
+  border-top: 1px solid rgba(79,238,134,0.18);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .final-greeting {
   font-family: var(--font-typewriter);
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-size: clamp(14px, 1.6vw, 20px);
   font-weight: 700;
-  color: #ffd1e4;
-  text-shadow: 0 0 18px rgba(255, 140, 190, 0.85);
-  margin-bottom: 8px;
+  color: var(--accent-clover);
+  text-shadow: 0 0 16px rgba(79,238,134,0.65);
 }
 
 .author-signature {
   font-family: var(--font-sans);
-  font-size: clamp(12px, 1.2vw, 14px);
-  font-style: italic;
-  color: rgba(234, 251, 238, 0.72);
+  font-size: clamp(12px, 1.2vw, 15px);
+  color: rgba(212,253,228,0.7);
+  letter-spacing: 0.03em;
 }
 
-.secondary-btn {
-  padding: 11px 28px;
-  font-family: var(--font-typewriter);
-  font-size: 15px;
-  font-weight: 600;
-  color: #eafbee;
-  background: rgba(31, 207, 90, 0.25);
-  border: 1px solid #4fee86;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(79, 238, 134, 0.3);
-}
-
-.secondary-btn:hover {
-  background: rgba(79, 238, 134, 0.45);
-  box-shadow: 0 0 25px rgba(79, 238, 134, 0.65);
-  transform: translateY(-2px);
-}
-
-/* ================= BOTTOM INTERACTION HINT ================= */
+/* ================= INTERACTION HINT (footer) ================= */
 .interaction-hint {
   position: fixed;
-  bottom: 18px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 50;
+  z-index: 90;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.8s ease;
 }
-
-.interaction-hint.visible {
-  opacity: 0.85;
-  animation: hintBreathe 2.4s ease-in-out infinite alternate;
-}
-
-@keyframes hintBreathe {
-  0% { opacity: 0.45; transform: translateX(-50%) translateY(0); }
-  100% { opacity: 0.95; transform: translateX(-50%) translateY(-4px); }
-}
+.interaction-hint.visible { opacity: 1; }
 
 .hint-text {
   font-family: var(--font-typewriter);
-  font-size: 13px;
-  color: var(--accent-pink);
-  text-shadow: 0 0 12px rgba(244, 198, 220, 0.6);
-  letter-spacing: 0.05em;
-  padding: 6px 16px;
-  background: rgba(33, 23, 25, 0.6);
-  border-radius: 16px;
-  border: 1px solid rgba(244, 198, 220, 0.15);
-  backdrop-filter: blur(8px);
+  font-size: clamp(12px, 1.2vw, 15px);
+  color: rgba(255,240,216,0.55);
+  letter-spacing: 0.04em;
+  animation: hintPulse 3s ease-in-out infinite alternate;
 }
 
-/* ================= RESPONSIVE ADAPTATIONS ================= */
+@keyframes hintPulse {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.85; }
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablet: 768px */
 @media (max-width: 900px) {
-  .split-stage-wrap {
-    padding: 0 4vw;
-  }
-  .left-col {
-    width: 52vw;
-  }
-  .right-col {
-    width: 44vw;
-    height: 75vh;
-  }
-
-  .wish-card-container {
-    left: 4vw;
-    top: 8vh;
-    width: 48vw;
-    padding: 18px;
-  }
-  .waguri-container {
-    height: 72vh;
-    right: -2vw;
-  }
-  .kado-flower-frame {
-    display: none !important;
-  }
-  .vinyl-player-wrap {
-    left: 4vw;
-    bottom: 3vh;
-    width: 120px;
-    height: 120px;
-  }
-  .lyrics-zone {
-    left: 18%;
-    top: 58%;
-    width: 50%;
-  }
-
-  .clover-stage-wrap {
-    padding: 0 4vw;
-  }
-  .clover-card-container {
-    width: 50vw;
-  }
-  .clover-garden {
-    width: 38vw;
-  }
-}
-
-@media (max-width: 650px) {
-  .app-header {
-    top: 10px;
-    right: 12px;
-  }
-  .control-btn {
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-
-  .tiny-face {
-    top: 32%;
-    gap: 30px;
-  }
-  .tiny-face.in-split-left {
-    left: 50%;
-    top: 32%;
-    transform: translate(-50%, -50%) scale(0.75);
-  }
-  .tiny-face.in-waguri {
-    transform: translate(-50%, -50%) scale(0.72);
-    top: 16%;
-    left: 50%;
-  }
-  .tiny-face.in-clover {
-    top: 12%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.65);
-  }
-  .eye-col {
-    width: 85px;
-    height: 85px;
-  }
-  .eye-capsule {
-    border-radius: 28px;
-  }
-
-  .split-stage-wrap {
-    flex-direction: column-reverse;
-    justify-content: flex-end;
-    padding: 15vh 4vw 4vh 4vw;
-    gap: 15px;
-  }
-  .left-col {
-    width: 100%;
-    text-align: center;
-  }
-  .right-col {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    height: 38vh;
-  }
-  .heart-silhouette, .aodai-silhouette {
-    height: 100%;
-  }
-  .heartbeat-wrap {
+  /* Stage 1: Stack vertically on mobile */
+  .tiny-intro-layout {
     justify-content: center;
+    align-items: flex-end;
+    padding-right: 0;
+    padding-bottom: 5vh;
   }
 
-  .wish-card-container {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 92%;
-    margin: 15vh auto 0 auto;
-    padding: 16px;
-  }
-  .waguri-container {
-    height: 52vh;
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 0;
-  }
-  .vinyl-player-wrap {
-    display: none;
-  }
-  .lyrics-zone {
-    left: 5%;
-    width: 90%;
-    top: 72%;
+  .tiny-dialogue-box { width: 88vw; }
+
+  .tiny-face.in-stage1 {
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, 0) scale(0.75);
+    gap: 50px;
   }
 
-  .clover-stage-wrap {
+  /* Mission stages: stack art + card vertically */
+  .mission-content-split {
     flex-direction: column;
-    padding: 12vh 4vw 4vh 4vw;
-    justify-content: flex-start;
-    gap: 20px;
+    align-items: center;
     overflow-y: auto;
   }
-  .clover-garden {
-    width: 220px;
-    height: 260px;
+
+  .mission-art-col {
+    width: 70%;
+    max-height: 28vh;
   }
+
+  .mission-card-col {
+    width: 100%;
+    max-height: none;
+  }
+
+  .teacher-art-img, .girls-art-img {
+    max-height: 22vh;
+  }
+
+  /* Waguri stage: single column */
+  .waguri-stage-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10vh;
+  }
+
+  .wish-card-container {
+    position: static;
+    width: 88vw;
+    max-height: 38vh;
+    overflow-y: auto;
+  }
+
+  .waguri-container {
+    position: static;
+    height: clamp(260px, 40vh, 400px);
+    width: auto;
+    margin-top: 12px;
+  }
+
+  .vinyl-player-wrap {
+    position: static;
+    width: 80px;
+    height: 80px;
+    margin: 8px auto 0;
+  }
+
+  .kado-flower-frame { display: none; }
+
+  /* Tiny in waguri: above card */
+  .tiny-face.in-waguri {
+    left: 50%;
+    top: 6vh;
+    transform: translate(-50%, 0) scale(0.52);
+  }
+
+  /* Clover: stack vertically */
+  .clover-stage-wrap {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8vh 5vw;
+    gap: 16px;
+  }
+
+  .clover-garden {
+    width: clamp(140px, 50vw, 220px);
+    height: clamp(220px, 35vh, 350px);
+  }
+
   .clover-card-container {
-    width: 94%;
-    padding: 18px;
+    max-width: 90vw;
+    margin-left: 0;
+  }
+
+  /* Tiny in clover: top-right stays, just smaller */
+  .tiny-face.in-clover {
+    right: 2vw;
+    top: 2vh;
+    transform: translate(0,0) scale(0.38);
+    gap: 28px;
+  }
+
+  /* Tiny in corner: even smaller */
+  .tiny-face.in-corner-bl {
+    --tiny-corner-size: 60px;
+    transform: translate(-50%, 50%) scale(0.38);
+  }
+}
+
+/* Mobile: 480px */
+@media (max-width: 480px) {
+  .mission-stage-wrap { padding: 4vh 4vw 3vh; }
+
+  .mission-title { font-size: clamp(15px, 4vw, 22px); }
+
+  .wish-card {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .wish-para { font-size: 13px; }
+
+  .dialogue-bubble { padding: 18px 20px; gap: 12px; }
+  .dialogue-line { font-size: 13px; }
+
+  .clover-body-text p { font-size: 13px; }
+
+  .lyrics-zone { display: none; }
+}
+
+/* ================= REDUCED MOTION ================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.3s !important;
   }
 }
