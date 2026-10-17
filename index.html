@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 🌷</title>
+  <meta name="description" content="Món quà tương tác kỷ niệm Ngày Phụ nữ Việt Nam 20/10 gửi tặng cô giáo và các bạn nữ trong lớp học.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?t=1792243800">
+</head>
+<body class="theme-dark">
+  <!-- Audio Soundtrack -->
+  <audio id="bg-soundtrack" src="assets/soundtrack.mp3" preload="auto" loop></audio>
+
+  <!-- Top Floating Controls -->
+  <header class="app-header">
+    <button id="btn-audio-toggle" class="control-btn" aria-label="Bật/Tắt âm thanh" title="Bật/Tắt âm thanh">
+      <span class="icon">🎵</span>
+      <span class="label">Nhạc: <span id="audio-status">Bật</span></span>
+    </button>
+    <button id="btn-restart" class="control-btn" aria-label="Xem lại từ đầu" title="Xem lại từ đầu">
+      <span class="icon">🔄</span>
+      <span class="label">Từ đầu</span>
+    </button>
+  </header>
+
+  <!-- Background Environment & Ambience -->
+  <div id="ambient-backdrop" class="ambient-backdrop">
+    <div class="cosmos-stars"></div>
+    <div class="cosmos-glow"></div>
+    <div id="gold-flash" class="gold-flash"></div>
+    <div id="clover-blackout" class="clover-blackout"></div>
+  </div>
+
+  <!-- Interactive Experience Container -->
+  <main id="app-viewport" class="app-viewport">
+
+    <!-- Canvas layers for falling particles (Petals & Leaves) -->
+    <canvas id="canvas-petals" class="fx-canvas"></canvas>
+
+    <!-- Character Face / Tiny Robot Eyes -->
+    <div id="tiny-face" class="tiny-face" aria-label="Nhân vật Tiny biểu cảm">
+      <!-- Left Eye -->
+      <div class="eye-col eye-left">
+        <div class="eye-capsule default-eye"></div>
+        <svg class="eye-curve smile-eye" viewBox="0 0 160 70" aria-hidden="true">
+          <path d="M 18 39 Q 80 59 142 39" />
+        </svg>
+        <!-- Arrow pointing right (>) -->
+        <svg class="eye-chevron chevron-left" viewBox="0 0 160 160" aria-hidden="true">
+          <path d="M 35 30 L 115 80 L 35 130" fill="none" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="blush-mark">////</div>
+      </div>
+
+      <!-- Cute Center Dot / Cat Mouth -->
+      <div id="tiny-mouth" class="tiny-mouth" aria-hidden="true">
+        <div class="center-dot"></div>
+        <svg class="mouth-cat" viewBox="0 0 60 44" width="50" height="38">
+          <g transform="rotate(270 30 22)">
+            <path d="M 7 10 C 7 26 25 28 30 14 C 35 28 53 26 53 10" fill="none" stroke="#00f0ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Right Eye -->
+      <div class="eye-col eye-right">
+        <div class="eye-capsule default-eye"></div>
+        <svg class="eye-curve smile-eye" viewBox="0 0 160 70" aria-hidden="true">
+          <path d="M 18 39 Q 80 59 142 39" />
+        </svg>
+        <!-- Arrow pointing left (<) -->
+        <svg class="eye-chevron chevron-right" viewBox="0 0 160 160" aria-hidden="true">
+          <path d="M 125 30 L 45 80 L 125 130" fill="none" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="blush-mark">////</div>
+      </div>
+    </div>
+
+    <!-- Lyrics Floating Zone (Sync with Soundtrack) -->
+    <div id="lyrics-zone" class="lyrics-zone" aria-hidden="true">
+      <div id="lyric-line-1" class="lyric-line"></div>
+      <div id="lyric-line-2" class="lyric-line"></div>
+    </div>
+
+    <!-- ================= STAGE 0: OPENING / INTRO ================= -->
+    <section id="stage-intro" class="story-stage active-stage">
+      <div class="stage-content center-content">
+        <p class="intro-lead">
+          Có một điều nhỏ xíu...<br>
+          mình muốn gửi đến những người thật đặc biệt 💌
+        </p>
+        <button id="btn-start" class="primary-btn pulse-glow">
+          Khám phá món quà ✨
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 1: STORYTELLING 1 (Lớp học ấm áp) ================= -->
+    <section id="stage-story-1" class="story-stage">
+      <div class="stage-content text-banner">
+        <p class="dialogue-text">
+          Trong những ngày bình thường,<br>
+          có những người khiến lớp học trở nên ấm áp hơn.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 2: STORYTELLING 2 (Cô giáo - Trái tim & Sức khỏe) ================= -->
+    <section id="stage-story-2" class="story-stage">
+      <div class="split-stage-wrap">
+        <div class="left-col">
+          <div class="dialogue-box">
+            <h2 class="dialogue-text">Có người luôn tận tâm chỉ bảo chúng mình...</h2>
+            <p class="sub-lead">chúc cô thật nhiều sức khỏe, bình an và hạnh phúc 🌷</p>
+          </div>
+          <div class="heartbeat-wrap">
+            <div class="heartbeat-orb">♥</div>
+            <svg class="ekg-svg" viewBox="0 0 280 60">
+              <path d="M 0 30 L 70 30 L 85 10 L 100 50 L 115 20 L 125 38 L 135 30 L 280 30" fill="none" stroke="#ff7ca8" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="right-col art-side woman-heart-art">
+          <div class="flutter-butterflies">
+            <span class="bf bf1">🦋</span>
+            <span class="bf bf2">🦋</span>
+            <span class="bf bf3">🦋</span>
+          </div>
+          <img id="img-woman-heart" src="assets/woman_heart.png" alt="Tôn vinh cô giáo" class="heart-silhouette">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 3: STORYTELLING 3 (Các bạn nữ - Áo dài & Hoa rơi) ================= -->
+    <section id="stage-story-3" class="story-stage">
+      <div class="split-stage-wrap">
+        <div class="left-col">
+          <div class="dialogue-box">
+            <h2 class="dialogue-text">Và có những người mang đến tiếng cười...</h2>
+            <p class="sub-lead">niềm vui và những kỷ niệm thật đẹp mỗi ngày ✨</p>
+          </div>
+        </div>
+        <div class="right-col art-side two-girls-art">
+          <img id="img-two-girls" src="assets/two_girls.png" alt="Hai nữ sinh áo dài" class="aodai-silhouette">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 4: WAGURI SMILE & MAIN 20/10 WISH ================= -->
+    <section id="stage-waguri" class="story-stage">
+      <div class="waguri-stage-wrap">
+        <!-- Text Wish Card on the Left -->
+        <div class="wish-card-container">
+          <h1 class="wish-title">CHÚC MỪNG NGÀY 20/10 🌷</h1>
+          <div class="wish-body">
+            <p class="wish-para">
+              Chúc cô luôn mạnh khỏe, hạnh phúc, luôn giữ nụ cười trên môi và có thật nhiều niềm vui trên hành trình gieo những hạt mầm tri thức.
+            </p>
+            <p class="wish-para">
+              Chúc các bạn nữ của lớp mình luôn xinh tươi, tự tin, học giỏi, gặp nhiều may mắn và luôn được yêu thương.
+            </p>
+            <p class="wish-para">
+              Mong rằng mỗi ngày đến lớp đều có thật nhiều tiếng cười, những kỷ niệm đẹp và những điều đáng nhớ.
+            </p>
+          </div>
+        </div>
+
+        <!-- Retro Vinyl Turntable (Bottom Left) -->
+        <div class="vinyl-player-wrap" aria-hidden="true">
+          <svg class="vinyl-disc" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="vinylGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#efb2cc"/>
+                <stop offset=".52" stop-color="#d7a6d7"/>
+                <stop offset="1" stop-color="#f9d7a3"/>
+              </linearGradient>
+            </defs>
+            <circle class="disc-edge" cx="100" cy="100" r="95"/>
+            <circle class="disc-shine" cx="100" cy="100" r="79"/>
+            <circle class="groove" cx="100" cy="100" r="82"/>
+            <circle class="groove" cx="100" cy="100" r="74"/>
+            <circle class="groove" cx="100" cy="100" r="66"/>
+            <circle class="groove" cx="100" cy="100" r="58"/>
+            <circle class="groove" cx="100" cy="100" r="50"/>
+            <circle class="groove" cx="100" cy="100" r="43"/>
+            <circle class="label-disc" cx="100" cy="100" r="35"/>
+            <path class="label-heart" d="M 100 111 C 89 103 82 97 82 89 C 82 81 93 79 100 89 C 107 79 118 81 118 89 C 118 97 111 103 100 111 Z"/>
+            <circle class="spindle" cx="100" cy="100" r="3.5"/>
+          </svg>
+          <svg class="vinyl-arm" viewBox="0 0 100 100" fill="none">
+            <circle cx="86" cy="14" r="8" fill="#ffe4cf" fill-opacity=".9"/>
+            <path d="M 86 14 L 54 45 L 37 67" stroke="#ffe0bf" stroke-width="4.4" stroke-linecap="round"/>
+            <path d="M 35 63 L 30 73 L 44 79 L 48 68 Z" fill="#eeb4d4" stroke="#fff0d5" stroke-width="1.8"/>
+          </svg>
+          <div class="music-notes">
+            <span class="note n1">♪</span>
+            <span class="note n2">♫</span>
+            <span class="note n3">♬</span>
+            <span class="note n4">♪</span>
+          </div>
+        </div>
+
+        <!-- Waguri Anime Character (Right Side) -->
+        <div class="waguri-container">
+          <div class="waguri-aura"></div>
+          <!-- Video with alpha channel & physics hair sway -->
+          <video id="waguri-video" class="waguri-video" muted loop playsinline disablepictureinpicture preload="auto" src="assets/waguri_smile.webm" aria-label="Waguri mỉm cười tóc đung đưa theo gió"></video>
+
+          <!-- Sparkling Stars & Floating Hearts -->
+          <span class="glimmer g1">✧</span>
+          <span class="glimmer g2">✦</span>
+          <span class="glimmer g3">✧</span>
+          <span class="float-heart fh1">♥</span>
+          <span class="float-heart fh2">♥</span>
+          <span class="float-heart fh3">♥</span>
+          <span class="float-heart fh4">♥</span>
+
+          <!-- Left & Right Ornaments -->
+          <svg class="ornament orn-left" viewBox="0 0 300 410" aria-hidden="true">
+            <path class="trail" d="M 0 393 C 63 328, 103 322, 113 247 S 187 188 243 159 C 275 135 265 104 288 78"/>
+            <path class="orn-heart" d="M 148 308 C 108 265 85 289 111 316 L 147 345 L 180 319 C 210 288 183 268 148 308 Z"/>
+            <path class="orn-heart" d="M 248 172 C 220 137 202 154 216 177 L 247 207 L 274 179 C 293 155 265 143 248 172 Z"/>
+            <path class="orn-star" d="M 94 206 l 8 -22 9 22 21 8 -21 9 -9 21 -8 -21 -21 -9 Z"/>
+          </svg>
+          <svg class="ornament orn-right" viewBox="0 0 300 410" aria-hidden="true">
+            <path class="trail" d="M 0 393 C 63 328, 103 322, 113 247 S 187 188 243 159 C 275 135 265 104 288 78"/>
+            <path class="orn-heart" d="M 148 308 C 108 265 85 289 111 316 L 147 345 L 180 319 C 210 288 183 268 148 308 Z"/>
+            <path class="orn-heart" d="M 248 172 C 220 137 202 154 216 177 L 247 207 L 274 179 C 293 155 265 143 248 172 Z"/>
+            <path class="orn-star" d="M 94 206 l 8 -22 9 22 21 8 -21 9 -9 21 -8 -21 -21 -9 Z"/>
+          </svg>
+        </div>
+
+        <!-- Glowing Blooming Neon Flower on Right -->
+        <iframe id="kado-flower-frame" class="kado-flower-frame" src="flower.html" title="Bông hoa phát sáng nở rộ" tabindex="-1" sandbox="allow-scripts allow-same-origin" loading="lazy" aria-hidden="true"></iframe>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 5: CLOVER TEASER ================= -->
+    <section id="stage-teaser" class="story-stage">
+      <div class="stage-content text-banner">
+        <p class="dialogue-text highlight-lead">
+          Nhưng khoan đã...<br>
+          món quà vẫn còn một điều đặc biệt nữa 🌱
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= STAGE 6: THE FOUR-LEAF CLOVER GRAND FINALE ================= -->
+    <section id="stage-clover" class="story-stage">
+      <div class="clover-stage-wrap">
+        <div class="clover-ambient"></div>
+        <div id="clover-firefly-field" class="clover-firefly-field" aria-hidden="true"></div>
+
+        <!-- Left: Luminous Emerald Four-Leaf Clover Garden -->
+        <div id="clover-garden" class="clover-garden">
+          <div class="clover-glow-halo"></div>
+          <svg class="clover-svg" viewBox="0 0 240 400" role="img" aria-label="Ngọn cỏ bốn lá màu xanh phát sáng">
+            <defs>
+              <radialGradient id="clover-gradient" cx=".5" cy=".85" r=".95">
+                <stop offset="0" stop-color="#1fcf5a"/>
+                <stop offset=".6" stop-color="#4fee86"/>
+                <stop offset="1" stop-color="#a8ffc6"/>
+              </radialGradient>
+              <g id="clover-leaf-sym">
+                <path d="M0 0 C -6 -8 -22 -14 -22 -28 C -22 -38 -8 -42 0 -32 C 8 -42 22 -38 22 -28 C 22 -14 6 -8 0 0 Z" fill="url(#clover-gradient)" stroke="#c9ffdc" stroke-width="1.2"/>
+                <path d="M0 -3 L0 -30" stroke="rgba(0,90,40,.5)" stroke-width="1.1"/>
+              </g>
+            </defs>
+            <g class="clover-sway-group">
+              <g class="clover-plant">
+                <!-- Stalk -->
+                <path d="M121 90 C 158 168, 80 228, 116 298 C 142 348, 106 378, 126 396" fill="none" stroke="#33d96f" stroke-width="7" stroke-linecap="round"/>
+                <path d="M121 90 C 158 168, 80 228, 116 298 C 142 348, 106 378, 126 396" fill="none" stroke="#b7ffd0" stroke-width="1.8" stroke-linecap="round" opacity=".7"/>
+                
+                <!-- 4 Leaves Bloom -->
+                <g id="clover-bloom" transform="translate(121 84) rotate(-8) scale(1.95)">
+                  <g transform="rotate(45)"><g class="leaf-unit l1"><use href="#clover-leaf-sym"/></g></g>
+                  <g transform="rotate(135)"><g class="leaf-unit l2"><use href="#clover-leaf-sym"/></g></g>
+                  <g transform="rotate(225)"><g class="leaf-unit l3"><use href="#clover-leaf-sym"/></g></g>
+                  <g transform="rotate(315)"><g class="leaf-unit l4"><use href="#clover-leaf-sym"/></g></g>
+                  <circle r="3.4" fill="#eaffd8"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Right: Clover Message Card -->
+        <div class="clover-card-container">
+          <div class="clover-header-badge">
+            🍀 Một chút may mắn dành cho những người đặc biệt 🍀
+          </div>
+          <div class="clover-body-text">
+            Chúc cô và tất cả các bạn nữ<br>
+            luôn bình an, hạnh phúc,<br>
+            gặp thật nhiều điều tốt đẹp<br>
+            và luôn rực rỡ theo cách riêng của mình!
+          </div>
+          <div class="clover-signature-wrap">
+            <p class="final-greeting">Happy Vietnamese Women's Day — 20/10 💗</p>
+            <p class="author-signature">Một món quà nhỏ, được tự tay làm bằng tất cả sự chân thành.</p>
+          </div>
+          <button id="btn-replay-clover" class="secondary-btn">
+            Xem lại món quà ✨
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Next / Click Prompt Hint -->
+    <footer id="interaction-hint" class="interaction-hint" aria-live="polite">
+      <span class="hint-text">Chạm màn hình hoặc bấm để tiếp tục ✨</span>
+    </footer>
+
+  </main>
+
+  <script src="script.js?t=1792243800"></script>
+</body>
+</html>
