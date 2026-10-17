@@ -191,7 +191,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       const nextStage = stages[index];
-      if (nextStage) nextStage.classList.add('active-stage');
+      if (nextStage) {
+        nextStage.classList.add('active-stage');
+        nextStage.scrollTop = 0; // Reset scroll position to top
+      }
       isTransitioning = false;
     }, 420);
   }
@@ -624,9 +627,33 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnRestart) btnRestart.addEventListener('click', restartExperience);
   if (btnReplayClover) btnReplayClover.addEventListener('click', restartExperience);
 
+  // Touch & scroll tracking: NEVER advance stage if user is scrolling!
+  let touchStartY = 0;
+  let isScrollingTouch = false;
+
+  viewport.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartY = e.touches[0].clientY;
+      isScrollingTouch = false;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+      if (diffY > 8) {
+        isScrollingTouch = true;
+      }
+    }
+  }, { passive: true });
+
   // Viewport tap: only advance on tappable stages
   viewport.addEventListener('click', (e) => {
-    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col, .scene-dialogue-card, .control-btn, .glowing-envelope-wrap')) return;
+    if (isScrollingTouch) {
+      isScrollingTouch = false;
+      return; // Do not advance if user was scrolling!
+    }
+    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col, .scene-dialogue-card, .control-btn, .glowing-envelope-wrap, .dialogue-box')) return;
     initAudio();
     if (clickableStages.has(currentStageIndex)) nextStage();
   });

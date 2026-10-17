@@ -1923,3 +1923,272 @@ html, body {
   0% { opacity: 0; transform: translateY(30px) scale(0.96); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+
+/* ==========================================================================
+   MOBILE SCROLLING OVERHAUL & FULL-SCREEN VIEWPORT SUPPORT
+   ========================================================================== */
+
+/* Stage Scroll Container: Allow natural vertical scrolling on all devices */
+.story-stage {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain !important;
+  box-sizing: border-box !important;
+  padding: clamp(55px, 8vh, 75px) 14px clamp(50px, 9vh, 85px) !important;
+  touch-action: pan-y !important;
+}
+
+/* Elegant Scrollbars */
+.story-stage::-webkit-scrollbar {
+  width: 5px;
+}
+.story-stage::-webkit-scrollbar-track {
+  background: transparent;
+}
+.story-stage::-webkit-scrollbar-thumb {
+  background: rgba(244, 198, 220, 0.4);
+  border-radius: 10px;
+}
+
+/* Auto-Centering Inner Wrappers: Center when short, scroll naturally when tall */
+.scene-stacked-layout,
+.mission-stage-wrap,
+.waguri-stage-wrap,
+.clover-stage-wrap {
+  margin: auto 0 !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Scene Stacked Layout (Scenes 1-4) */
+.scene-stacked-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 680px !important;
+  padding: 16px 0 24px !important;
+  gap: clamp(12px, 2vh, 18px) !important;
+}
+
+/* Mission Layout (Scenes 5 & 6) */
+.mission-stage-wrap {
+  width: 100% !important;
+  max-width: 1050px !important;
+  height: auto !important;
+  min-height: min-content !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  padding: 10px 0 30px !important;
+  overflow: visible !important;
+}
+
+.mission-content-split {
+  display: flex !important;
+  gap: 4vw !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+.mission-card-col {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.wish-card {
+  position: relative !important;
+  background: rgba(33, 23, 25, 0.85) !important;
+  border: 1px solid rgba(244, 198, 220, 0.28) !important;
+  border-radius: 20px !important;
+  padding: clamp(18px, 2.5vh, 28px) clamp(18px, 3.5vw, 30px) !important;
+  backdrop-filter: blur(14px) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Waguri Stage (Scene 7) */
+.waguri-stage-wrap {
+  width: 100% !important;
+  max-width: 1050px !important;
+  height: auto !important;
+  min-height: min-content !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 0 40px !important;
+  overflow: visible !important;
+}
+
+/* Clover Stage (Scene 8) */
+.clover-stage-wrap {
+  width: 100% !important;
+  max-width: 1050px !important;
+  height: auto !important;
+  min-height: min-content !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5vw !important;
+  padding: 10px 0 50px !important;
+  overflow: visible !important;
+}
+
+/* ================= MOBILE BREAKPOINTS (<= 900px) ================= */
+@media (max-width: 900px) {
+  .story-stage {
+    padding: 55px 12px 65px !important;
+  }
+
+  /* Scenes 1-4 */
+  .scene-stacked-layout {
+    max-width: 540px !important;
+    padding-top: clamp(80px, 14vh, 120px) !important;
+  }
+
+  .tiny-face.in-scene1,
+  .tiny-face.in-scene2 {
+    top: clamp(75px, 11vh, 100px) !important;
+    transform: translate(-50%, -50%) scale(0.68) !important;
+    gap: 36px !important;
+  }
+
+  .tiny-face.in-scene3 {
+    top: clamp(65px, 9vh, 85px) !important;
+    transform: translate(-50%, -50%) scale(0.6) !important;
+    gap: 32px !important;
+  }
+
+  /* Scenes 5 & 6 (Cô Phú & Các bạn nữ) */
+  .mission-stage-wrap {
+    max-width: 540px !important;
+    padding: 0 0 30px !important;
+    gap: 12px !important;
+  }
+
+  .mission-content-split {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .mission-art-col {
+    width: 100% !important;
+    max-height: 110px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .teacher-art-img,
+  .girls-art-img {
+    max-height: 95px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  .wish-card {
+    padding: 16px 16px !important;
+    gap: 10px !important;
+  }
+
+  .wish-para {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .wish-salute {
+    font-size: 15px !important;
+  }
+
+  .wish-signature {
+    font-size: 14px !important;
+  }
+
+  .btn-stage-next {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+  }
+
+  /* Scene 7 (Waguri) */
+  .waguri-stage-wrap {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 0 0 35px !important;
+    gap: 14px !important;
+    max-width: 540px !important;
+  }
+
+  .waguri-container {
+    height: clamp(200px, 30vh, 260px) !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+  }
+
+  .wish-card-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Scene 8 (Cỏ bốn lá) */
+  .clover-stage-wrap {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    max-width: 540px !important;
+    padding: 0 0 50px !important;
+  }
+
+  .clover-garden {
+    width: clamp(120px, 35vw, 170px) !important;
+    height: clamp(150px, 22vh, 200px) !important;
+  }
+
+  .clover-card-container {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    overflow: visible !important;
+  }
+
+  .clover-actions-wrap {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .clover-wish-btn,
+  #btn-replay-clover {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
