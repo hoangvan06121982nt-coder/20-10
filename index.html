@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Ngày mai là 20/10 rồi đấy! 🍀 — Món quà bí mật từ Hội con trai 8B6</title>
-  <meta name="description" content="Món quà bí mật và những lời chúc chân thành từ hội con trai 8B6 gửi cô Phú và các bạn nữ nhân ngày 20/10.">
+  <title>Món quà 20/10 từ Bảo Long 🍀 — Gửi Cô Phú và các bạn nữ 8B6</title>
+  <meta name="description" content="Món quà bí mật và những lời chúc chân thành từ bạn Bảo Long gửi cô Phú và các bạn nữ 8B6 nhân ngày 20/10.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body class="theme-dark">
   <audio id="bg-soundtrack" src="assets/soundtrack.mp3" preload="auto" loop></audio>
@@ -37,7 +37,7 @@
     <canvas id="canvas-petals" class="fx-canvas"></canvas>
 
     <!-- Mascot Tiny Robot Face -->
-    <div id="tiny-face" class="tiny-face" aria-label="Nhân vật mascot Tiny">
+    <div id="tiny-face" class="tiny-face" aria-label="Nhân vật mascot Tiny đại diện cho Bảo Long">
       <div class="eye-col eye-left">
         <div class="eye-capsule default-eye"></div>
         <svg class="eye-curve smile-eye" viewBox="0 0 160 70" aria-hidden="true"><path d="M 18 39 Q 80 59 142 39" /></svg>
@@ -58,7 +58,7 @@
         <svg class="eye-chevron chevron-right" viewBox="0 0 160 160" aria-hidden="true"><path d="M 125 30 L 45 80 L 125 130" fill="none" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" /></svg>
         <div class="blush-mark">////</div>
       </div>
-      <!-- Floating shy star field around Tiny -->
+      <!-- Floating star field around Tiny -->
       <div class="tiny-star-field" aria-hidden="true">
         <span class="t-star ts1">&#10022;</span>
         <span class="t-star ts2">&#10023;</span>
@@ -75,83 +75,349 @@
       <div id="lyric-line-2" class="lyric-line"></div>
     </div>
 
-    <!-- CẢNH 1 — TINY XUẤT HIỆN VÀ GIỚI THIỆU -->
+    <!-- CẢNH 1 — TINY GIỚI THIỆU -->
     <section id="stage-scene-1" class="story-stage active-stage" data-stage="0">
       <div class="stage-content center-content scene-stacked-layout">
         <div class="scene-greeting-badge">
           <span class="badge-dot"></span> SÁNG 19/10 &bull; LỜI CHÀO TỪ TINY &#9728;&#65039;
         </div>
-        <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line lead-line">Xin chào cô và các bạn! Mình là Tiny – người dẫn chuyện hôm nay. &#128075;</p>
+        <div class="dialogue-box scene-dialogue-card" id="scene1-dialogue-card">
+          <div class="dialogue-turn active" id="scene1-turn-1">
+            <p class="dialogue-line lead-line">Xin chào cô Phú và các bạn nữ lớp 8B6! &#128075;</p>
+          </div>
+          <div class="dialogue-turn" id="scene1-turn-2">
+            <p class="dialogue-line">Mình là Tiny, nhân vật đại diện cho bạn Bảo Long.</p>
+            <p class="dialogue-line lead-line accent-line" style="margin-top: 10px;">Hôm nay, mình sẽ cùng mọi người khám phá một món quà đặc biệt mà Bảo Long đã chuẩn bị. Cùng xem nhé! &#10024;</p>
+          </div>
         </div>
-        <button id="btn-scene1-next" class="primary-btn pulse-glow">
-          Chào Tiny! &#10024;
-        </button>
+        <div class="tap-hint-pill" id="scene1-tap-hint">
+          <span class="tap-icon">&#128070;</span>
+          <span class="tap-label" id="scene1-hint-label">Chạm màn hình để tiếp tục</span>
+        </div>
       </div>
     </section>
 
-    <!-- CẢNH 2 — NGÀY MAI LÀ 20/10 -->
+    <!-- CẢNH 2 — “Ờ THÌ CŨNG SẮP 20/10 RỒI NHỈ” -->
     <section id="stage-scene-2" class="story-stage" data-stage="1">
-      <div class="stage-content center-content scene-stacked-layout">
-        <div class="scene-greeting-badge">
-          <span class="badge-dot"></span> BẬT MÍ NGÀY ĐẶC BIỆT &#128151;
+      <div class="scene2-stage-container">
+        <!-- Floating cyan rounded squares in center -->
+        <div class="scene2-cyan-square square-outer" aria-hidden="true"></div>
+        <div class="scene2-cyan-square square-inner" aria-hidden="true"></div>
+
+        <!-- Left / Center: Main Quote & Date -->
+        <div class="scene2-text-column">
+          <div class="scene-greeting-badge scene2-badge">
+            <span class="badge-dot"></span> SÁNG 19/10 &bull; BẬT MÍ &#127775;
+          </div>
+          <h2 class="scene2-glowing-title">
+            <span class="title-line-top">Ờ thì cũng sắp</span>
+            <span class="title-line-date">20/10 rồi nhỉ</span>
+          </h2>
+          <div class="tap-hint-pill">
+            <span class="tap-icon">&#128070;</span>
+            <span class="tap-label">Chạm màn hình để tiếp tục</span>
+          </div>
         </div>
-        <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line lead-line">Ngày mai đã là 20/10 rồi đấy!</p>
-          <p class="dialogue-line">Một dịp đặc biệt để gửi những lời chúc đến cô Phú và các bạn nữ lớp 8B6.</p>
-          <p class="dialogue-line accent-line">Và hình như hội con trai lớp mình đã chuẩn bị một điều bất ngờ rồi…</p>
+
+        <!-- Right: Two girls line art & falling golden leaves -->
+        <div class="scene2-art-column" aria-hidden="true">
+          <div class="scene2-girls-glow-wrap">
+            <img src="assets/two_girls.png" alt="Hai cô gái áo dài phát sáng" class="scene2-two-girls-img">
+            <div class="scene2-leaves-stream">
+              <span class="falling-leaf fl1">&#127810;</span>
+              <span class="falling-leaf fl2">&#127809;</span>
+              <span class="falling-leaf fl3">&#127810;</span>
+              <span class="falling-leaf fl4">&#127809;</span>
+              <span class="falling-leaf fl5">&#10024;</span>
+              <span class="falling-leaf fl6">&#127810;</span>
+            </div>
+          </div>
         </div>
-        <button id="btn-scene2-next" class="primary-btn pulse-glow">
-          Bất ngờ gì thế nhỉ? &#128064;
-        </button>
+
+        <!-- Bottom: Grass & multicolored glowing flowers -->
+        <div class="scene2-meadow-footer" aria-hidden="true">
+          <svg class="scene2-meadow-svg" viewBox="0 0 1440 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="grassGrad1" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#064e3b" stop-opacity="0.95"/>
+                <stop offset="60%" stop-color="#10b981" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#34d399" stop-opacity="1"/>
+              </linearGradient>
+              <linearGradient id="grassGrad2" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#022c22" stop-opacity="0.9"/>
+                <stop offset="70%" stop-color="#059669" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#6ee7b7" stop-opacity="0.95"/>
+              </linearGradient>
+              <filter id="flowerGlow">
+                <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path class="grass-back" d="M0,200 L0,120 Q60,95 120,135 T240,115 T360,140 T480,105 T600,135 T720,110 T840,135 T960,105 T1080,130 T1200,100 T1320,130 T1440,115 L1440,200 Z" fill="url(#grassGrad2)"/>
+            <path class="grass-front" d="M0,200 L0,145 Q80,125 160,155 T320,130 T480,160 T640,125 T800,155 T960,120 T1120,150 T1280,125 T1440,145 L1440,200 Z" fill="url(#grassGrad1)"/>
+            <!-- Glowing Colorful Flowers -->
+            <g transform="translate(140, 115)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="10" fill="#f43f5e" />
+              <circle cx="-6" cy="-4" r="6" fill="#fb7185" />
+              <circle cx="6" cy="-4" r="6" fill="#fb7185" />
+              <circle cx="0" cy="-8" r="6" fill="#fda4af" />
+              <circle cx="0" cy="0" r="4" fill="#fff1f2" />
+            </g>
+            <g transform="translate(290, 105)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="9" fill="#06b6d4" />
+              <circle cx="-5" cy="-5" r="5" fill="#22d3ee" />
+              <circle cx="5" cy="-5" r="5" fill="#22d3ee" />
+              <circle cx="0" cy="5" r="5" fill="#67e8f9" />
+              <circle cx="0" cy="0" r="3.5" fill="#ecfeff" />
+            </g>
+            <g transform="translate(430, 130)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="11" fill="#f59e0b" />
+              <circle cx="-6" cy="-4" r="6" fill="#fbbf24" />
+              <circle cx="6" cy="-4" r="6" fill="#fbbf24" />
+              <circle cx="0" cy="-7" r="6" fill="#fde68a" />
+              <circle cx="0" cy="0" r="4.5" fill="#fffbeb" />
+            </g>
+            <g transform="translate(580, 100)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="10" fill="#8b5cf6" />
+              <circle cx="-5" cy="-5" r="6" fill="#a78bfa" />
+              <circle cx="5" cy="-5" r="6" fill="#a78bfa" />
+              <circle cx="0" cy="6" r="6" fill="#c4b5fd" />
+              <circle cx="0" cy="0" r="3.5" fill="#faf5ff" />
+            </g>
+            <g transform="translate(730, 125)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="10" fill="#f97316" />
+              <circle cx="-5" cy="-4" r="6" fill="#fb923c" />
+              <circle cx="5" cy="-4" r="6" fill="#fb923c" />
+              <circle cx="0" cy="-6" r="6" fill="#fdba74" />
+              <circle cx="0" cy="0" r="3.8" fill="#fff7ed" />
+            </g>
+            <g transform="translate(880, 95)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="11" fill="#d946ef" />
+              <circle cx="-6" cy="-4" r="6.5" fill="#e879f9" />
+              <circle cx="6" cy="-4" r="6.5" fill="#e879f9" />
+              <circle cx="0" cy="-7" r="6.5" fill="#f0abfc" />
+              <circle cx="0" cy="0" r="4" fill="#fdf4ff" />
+            </g>
+            <g transform="translate(1030, 120)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="9" fill="#0284c7" />
+              <circle cx="-5" cy="-5" r="5.5" fill="#38bdf8" />
+              <circle cx="5" cy="-5" r="5.5" fill="#38bdf8" />
+              <circle cx="0" cy="5" r="5.5" fill="#7dd3fc" />
+              <circle cx="0" cy="0" r="3.5" fill="#f0f9ff" />
+            </g>
+            <g transform="translate(1180, 90)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="10" fill="#eab308" />
+              <circle cx="-5" cy="-5" r="6" fill="#facc15" />
+              <circle cx="5" cy="-5" r="6" fill="#facc15" />
+              <circle cx="0" cy="-6" r="6" fill="#fef08a" />
+              <circle cx="0" cy="0" r="4" fill="#fefce8" />
+            </g>
+            <g transform="translate(1320, 115)" filter="url(#flowerGlow)">
+              <circle cx="0" cy="0" r="10" fill="#ec4899" />
+              <circle cx="-5" cy="-4" r="6" fill="#f472b6" />
+              <circle cx="5" cy="-4" r="6" fill="#f472b6" />
+              <circle cx="0" cy="-6" r="6" fill="#fbcfe8" />
+              <circle cx="0" cy="0" r="4" fill="#fff1f2" />
+            </g>
+          </svg>
+        </div>
       </div>
     </section>
 
-    <!-- CẢNH 3 — TINY NGẠI NGÙNG, HIỆU ỨNG NGÔI SAO -->
+    <!-- CẢNH 3 — MÓN QUÀ ĐẶC BIỆT (LÕI PHA LÊ XANH CYAN) -->
     <section id="stage-scene-3" class="story-stage" data-stage="2">
-      <div class="stage-content center-content scene-stacked-layout">
-        <div class="scene-greeting-badge">
-          <span class="badge-dot"></span> TINY ĐANG GIẤU ĐIỀU GÌ ĐÓ? &#129325;
+      <div class="scene3-stage-container">
+        <!-- Constellations & Celestial Arcs Backdrop -->
+        <div class="scene3-celestial-canvas" aria-hidden="true">
+          <svg class="scene3-constellations-svg" viewBox="0 0 1200 800" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="cosmicArcGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.1"/>
+                <stop offset="50%" stop-color="#00f2fe" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1"/>
+              </linearGradient>
+            </defs>
+            <!-- Left curved space geodesics -->
+            <path d="M -50 150 C 250 200, 320 450, 200 750" fill="none" stroke="url(#cosmicArcGrad)" stroke-width="1.8" stroke-dasharray="4 6"/>
+            <path d="M 50 50 C 350 150, 420 500, 150 820" fill="none" stroke="url(#cosmicArcGrad)" stroke-width="1.2" opacity="0.6"/>
+            <!-- Right curved space geodesics -->
+            <path d="M 1250 150 C 950 200, 880 450, 1000 750" fill="none" stroke="url(#cosmicArcGrad)" stroke-width="1.8" stroke-dasharray="4 6"/>
+            <path d="M 1150 50 C 850 150, 780 500, 1050 820" fill="none" stroke="url(#cosmicArcGrad)" stroke-width="1.2" opacity="0.6"/>
+
+            <!-- Left Constellation Nodes & Connecting Lines -->
+            <g stroke="#00f2fe" stroke-width="1.2" opacity="0.65">
+              <line x1="80" y1="220" x2="160" y2="280" />
+              <line x1="160" y1="280" x2="140" y2="380" />
+              <line x1="140" y1="380" x2="230" y2="430" />
+              <line x1="230" y1="430" x2="200" y2="520" />
+              <line x1="160" y1="280" x2="250" y2="260" />
+            </g>
+            <g fill="#00f2fe">
+              <circle cx="80" cy="220" r="3.5" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="160" cy="280" r="4.5" filter="drop-shadow(0 0 6px #ffffff)"/>
+              <circle cx="140" cy="380" r="3.5" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="230" cy="430" r="4" filter="drop-shadow(0 0 5px #00f2fe)"/>
+              <circle cx="200" cy="520" r="3" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="250" cy="260" r="4" filter="drop-shadow(0 0 5px #ffffff)"/>
+            </g>
+
+            <!-- Right Constellation Nodes & Connecting Lines -->
+            <g stroke="#00f2fe" stroke-width="1.2" opacity="0.65">
+              <line x1="1120" y1="220" x2="1040" y2="280" />
+              <line x1="1040" y1="280" x2="1060" y2="380" />
+              <line x1="1060" y1="380" x2="970" y2="430" />
+              <line x1="970" y1="430" x2="1000" y2="520" />
+              <line x1="1040" y1="280" x2="950" y2="260" />
+            </g>
+            <g fill="#00f2fe">
+              <circle cx="1120" cy="220" r="3.5" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="1040" cy="280" r="4.5" filter="drop-shadow(0 0 6px #ffffff)"/>
+              <circle cx="1060" cy="380" r="3.5" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="970" cy="430" r="4" filter="drop-shadow(0 0 5px #00f2fe)"/>
+              <circle cx="1000" cy="520" r="3" filter="drop-shadow(0 0 4px #00f2fe)"/>
+              <circle cx="950" cy="260" r="4" filter="drop-shadow(0 0 5px #ffffff)"/>
+            </g>
+          </svg>
         </div>
-        <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line">Ơ… có vẻ Tiny đang giấu điều gì đó thì phải?</p>
-          <div class="tiny-speech-bubble-mini">
-            Bí mật một chút nhé! &#129325;
+
+        <!-- Upper: Cyan-White Glowing Message -->
+        <div class="scene3-message-header">
+          <div class="scene-greeting-badge scene3-badge">
+            <span class="badge-dot"></span> BẬT MÍ TỪ BẢO LONG &#10024;
+          </div>
+          <h2 class="scene3-glowing-title">
+            <span class="s3-line-1">Vậy nên, mình muốn gửi tặng</span>
+            <span class="s3-line-2">cô Phú và các bạn nữ 8B6</span>
+            <span class="s3-line-3">một món quà nhỏ!</span>
+          </h2>
+        </div>
+
+        <!-- Centerpiece: Cyan Crystal Core in Diamond / Rhombus with Elliptical Orbits -->
+        <div class="scene3-centerpiece-wrap" aria-hidden="true">
+          <!-- Tilted Glowing Elliptical Orbits -->
+          <div class="scene3-orbit orbit-tilted-1">
+            <div class="orbit-satellite sat-1"></div>
+          </div>
+          <div class="scene3-orbit orbit-tilted-2">
+            <div class="orbit-satellite sat-2"></div>
+          </div>
+          <div class="scene3-orbit orbit-tilted-3">
+            <div class="orbit-satellite sat-3"></div>
+          </div>
+
+          <!-- Glowing Rhombus (Hình thoi) -->
+          <div class="scene3-rhombus-diamond">
+            <div class="rhombus-border-outer"></div>
+            <div class="rhombus-border-inner"></div>
+          </div>
+
+          <!-- Cyan Crystal Core (Lõi pha lê phát sáng dần) -->
+          <div class="scene3-crystal-core">
+            <svg class="crystal-core-svg" viewBox="0 0 120 140">
+              <defs>
+                <linearGradient id="crystalFacetGrad1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="35%" stop-color="#cffafe"/>
+                  <stop offset="70%" stop-color="#00f2fe"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+                <linearGradient id="crystalFacetGrad2" x1="1" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e0faff"/>
+                  <stop offset="45%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#0369a1"/>
+                </linearGradient>
+                <filter id="coreSuperGlow">
+                  <feGaussianBlur stdDeviation="4" result="glow"/>
+                  <feMerge>
+                    <feMergeNode in="glow"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              <polygon points="60,6 108,44 108,96 60,134 12,96 12,44" fill="url(#crystalFacetGrad1)" filter="url(#coreSuperGlow)" stroke="#ffffff" stroke-width="2"/>
+              <polygon points="60,6 60,134 108,96 108,44" fill="url(#crystalFacetGrad2)" opacity="0.8"/>
+              <polygon points="60,6 60,68 12,44" fill="rgba(255,255,255,0.3)"/>
+              <polygon points="60,6 60,68 108,44" fill="rgba(255,255,255,0.15)"/>
+              <polygon points="60,68 12,96 60,134" fill="rgba(255,255,255,0.18)"/>
+              <polygon points="60,68 108,96 60,134" fill="rgba(0,180,216,0.3)"/>
+              <line x1="12" y1="44" x2="60" y2="68" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+              <line x1="108" y1="44" x2="60" y2="68" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+              <line x1="12" y1="96" x2="60" y2="68" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+              <line x1="108" y1="96" x2="60" y2="68" stroke="#ffffff" stroke-width="1.8" opacity="0.9"/>
+              <line x1="60" y1="6" x2="60" y2="134" stroke="#ffffff" stroke-width="2" opacity="0.95"/>
+            </svg>
+            <div class="crystal-radiance-burst"></div>
           </div>
         </div>
-        <button id="btn-scene3-next" class="primary-btn pulse-glow">
-          Bật mí đi nào! &#10024;
-        </button>
+
+        <div class="tap-hint-pill">
+          <span class="tap-icon">&#128070;</span>
+          <span class="tap-label">Chạm màn hình để tiếp tục</span>
+        </div>
       </div>
     </section>
 
-    <!-- CẢNH 4 — BẬT MÍ MÓN QUÀ -->
+    <!-- CẢNH 4 — HÉ LỘ PHONG THƯ -->
     <section id="stage-scene-4" class="story-stage" data-stage="3">
-      <div class="stage-content center-content scene-stacked-layout">
-        <div class="glowing-envelope-wrap" id="glowing-envelope-box">
-          <div class="envelope-halo"></div>
-          <div class="envelope-body">
-            <span class="envelope-stamp">&#127808;</span>
-            <div class="envelope-letter-peek">&#9993;</div>
-            <div class="envelope-flaps"></div>
-          </div>
-          <div class="envelope-glimmers">
-            <span class="eg-star eg1">&#10024;</span>
-            <span class="eg-star eg2">&#10022;</span>
-            <span class="eg-star eg3">&#10024;</span>
-          </div>
+      <div class="stage-content center-content scene-stacked-layout scene4-container">
+        <div class="scene-greeting-badge">
+          <span class="badge-dot"></span> BẬT MÍ MÓN QUÀ &#128140;
         </div>
+
         <div class="dialogue-box scene-dialogue-card">
-          <p class="dialogue-line lead-line">Bọn mình có một món quà muốn gửi tặng cô Phú và các bạn nữ 8B6!</p>
-          <p class="dialogue-line accent-line">Cùng mở ra xem nhé!</p>
+          <p class="dialogue-line lead-line">Bảo Long có một món quà muốn gửi đến cô và các bạn!</p>
+          <p class="dialogue-line accent-line" style="margin-top: 6px;">Cùng mở ra xem nhé!</p>
         </div>
-        <button id="btn-open-envelope" class="primary-btn pulse-glow envelope-action-btn">
-          Mở phong thư &#128140;
-        </button>
+
+        <!-- Interactive Envelope: Chạm trực tiếp để mở thư -->
+        <div class="interactive-envelope-wrap" id="interactive-envelope-box" role="button" tabindex="0" aria-label="Chạm trực tiếp vào phong thư để mở">
+          <div class="env-radiance-halo"></div>
+          <div class="env-main-pocket">
+            <div class="env-pocket-back"></div>
+            <!-- Letter Paper that slides out -->
+            <div class="env-letter-sheet" id="env-letter-sheet">
+              <div class="sheet-header">
+                <span class="sheet-tag">&#127808; 20/10</span>
+                <span class="sheet-heart">&#128151;</span>
+              </div>
+              <div class="sheet-line l1"></div>
+              <div class="sheet-line l2"></div>
+              <div class="sheet-line l3"></div>
+            </div>
+            <!-- Envelope Front Pocket folds -->
+            <div class="env-pocket-front">
+              <div class="env-side-left"></div>
+              <div class="env-side-right"></div>
+              <div class="env-bottom-flap"></div>
+            </div>
+            <!-- Envelope Top Flap that rotates open -->
+            <div class="env-top-flap" id="env-top-flap"></div>
+            <!-- Clover Wax Seal -->
+            <div class="env-wax-seal" id="env-wax-seal">
+              <span class="seal-icon">&#127808;</span>
+            </div>
+          </div>
+
+          <!-- Glimmers & Sparkles around envelope -->
+          <div class="env-glimmer-field" aria-hidden="true">
+            <span class="env-star es1">&#10024;</span>
+            <span class="env-star es2">&#10022;</span>
+            <span class="env-star es3">&#10024;</span>
+            <span class="env-star es4">&#128150;</span>
+          </div>
+
+          <div class="envelope-tap-prompt">
+            <span class="prompt-hand">&#128070;</span>
+            <span class="prompt-text">Chạm trực tiếp vào phong thư để mở 💌</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- CẢNH 5 — MỞ THƯ VÀ GỬI LỜI CHÚC ĐẾN CÔ PHÚ -->
+    <!-- CẢNH 5 — THƯ GỬI CÔ PHÚ -->
     <section id="stage-scene-5" class="story-stage" data-stage="4">
       <div class="mission-stage-wrap">
         <div class="mission-header">
@@ -184,24 +450,25 @@
                 <span class="burst-petal bp4">&#10023;</span>
               </div>
               <p class="wish-salute">Cô Phú kính mến!</p>
-              <p class="wish-para">Nhân ngày 20/10, chúng em xin gửi đến cô những lời chúc tốt đẹp nhất. Cảm ơn cô vì đã luôn dạy dỗ, quan tâm và đồng hành cùng chúng em.</p>
-              <p class="wish-para">Chúng em chúc cô luôn mạnh khỏe, vui vẻ, hạnh phúc và có thật nhiều niềm vui trong công việc cũng như cuộc sống. Mong rằng mỗi ngày đến lớp, cô đều nhận được thật nhiều nụ cười và những điều tốt đẹp!</p>
-              <p class="wish-signature">Hội con trai 8B6 gửi cô &#128151;</p>
+              <p class="wish-para">Nhân ngày 20/10, em muốn gửi đến cô những lời chúc tốt đẹp nhất. Em cảm ơn cô vì đã luôn tận tình dạy dỗ, quan tâm và giúp đỡ chúng em trong học tập.</p>
+              <p class="wish-para">Em chúc cô luôn mạnh khỏe, vui vẻ, hạnh phúc và có thật nhiều niềm vui trong công việc cũng như cuộc sống. Mong rằng mỗi ngày đến lớp, cô đều có thêm nhiều niềm vui và những kỷ niệm đẹp cùng học trò của mình.</p>
+              <p class="wish-signature">Bảo Long gửi cô &#128151;</p>
             </div>
-            <button id="btn-scene5-next" class="primary-btn btn-stage-next">
-              Xem lá thư tiếp theo &#128140;
-            </button>
+            <div class="tap-hint-pill card-tap-hint">
+              <span class="tap-icon">&#128070;</span>
+              <span class="tap-label">Chạm màn hình để xem tiếp</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CẢNH 6 — LỜI CHÚC CÁC BẠN NỮ 8B6 -->
+    <!-- CẢNH 6 — GỬI CÁC BẠN NỮ 8B6 -->
     <section id="stage-scene-6" class="story-stage" data-stage="5">
       <div class="mission-stage-wrap">
         <div class="mission-header">
           <div class="mission-badge mission-badge-pink">LÁ THƯ 02</div>
-          <h1 class="mission-title">GỬI NHỮNG CÔ GÁI 8B6 &#127799;</h1>
+          <h1 class="mission-title">GỬI CÁC BẠN NỮ 8B6 &#127799;</h1>
         </div>
         <div class="mission-content-split">
           <div class="mission-art-col" aria-hidden="true">
@@ -216,16 +483,15 @@
           </div>
           <div class="mission-card-col">
             <div class="wish-card girls-card letter-paper-unfold">
-              <p class="wish-salute">Gửi những cô gái của 8B6!</p>
-              <p class="wish-para">Bình thường bọn mình có thể hay trêu nhau, đôi lúc chí chóe vì những chuyện chẳng đâu vào đâu. Nhưng nhân ngày 20/10, hội con trai muốn nghiêm túc một lần để gửi đến các bạn những lời chúc thật tử tế.</p>
-              <p class="wish-para">Chúc các bạn luôn vui vẻ, tự tin, học tập tiến bộ, làm được những điều mình yêu thích và luôn có những người bạn tốt ở bên. Mong rằng các bạn sẽ luôn được tôn trọng, yêu thương và có thật nhiều kỷ niệm đẹp trong những năm tháng học trò.</p>
-              <p class="wish-para">Cảm ơn vì đã góp phần làm cho những ngày ở 8B6 trở nên vui vẻ và đáng nhớ hơn!</p>
-              <p class="wish-ps">P/S: Hôm nay bọn mình nghiêm túc thật đấy, không phải đang có âm mưu gì đâu nhé! &#128526;</p>
-              <p class="wish-signature">Hội con trai 8B6</p>
+              <p class="wish-salute">Gửi các bạn nữ 8B6!</p>
+              <p class="wish-para">Nhân ngày 20/10, chúc các bạn luôn vui vẻ, tự tin, học tập tiến bộ và làm được những điều mình yêu thích. Mong rằng mỗi ngày đến lớp đều có thật nhiều tiếng cười, những kỷ niệm đáng nhớ và những người bạn tốt bên cạnh.</p>
+              <p class="wish-para">Cảm ơn các bạn vì đã góp phần làm cho những ngày học ở 8B6 thêm vui vẻ và đáng nhớ nhé!</p>
+              <p class="wish-signature">&mdash; Bảo Long &#128151;</p>
             </div>
-            <button id="btn-scene6-next" class="primary-btn btn-stage-next">
-              Còn điều gì nữa nhỉ? &#10024;
-            </button>
+            <div class="tap-hint-pill card-tap-hint">
+              <span class="tap-icon">&#128070;</span>
+              <span class="tap-label">Chạm màn hình để tiếp tục</span>
+            </div>
           </div>
         </div>
       </div>
@@ -238,12 +504,13 @@
           <div class="mission-badge" style="margin-bottom:12px;">MỘT CHÚT DỊU DÀNG &#127800;</div>
           <h2 class="wish-title">Khoảnh khắc dễ thương</h2>
           <div class="wish-body">
-            <p class="wish-para">Đôi khi, chỉ một lời cảm ơn hay một nụ cười cũng đủ khiến ngày đặc biệt trở nên đáng nhớ hơn.</p>
-            <p class="wish-para">Hy vọng món quà nhỏ này sẽ mang đến cho cô và các bạn một chút niềm vui! &#128151;</p>
+            <p class="wish-para">Một món quà không cần quá cầu kỳ. Đôi khi, chỉ một lời chúc chân thành cũng đủ khiến ngày đặc biệt trở nên vui hơn.</p>
+            <p class="wish-para">Hy vọng cô và các bạn sẽ thích món quà nhỏ này nhé! &#128151;</p>
           </div>
-          <button id="btn-scene7-next" class="primary-btn btn-stage-next" style="margin-top: 18px;">
-            Đến món quà cỏ bốn lá &#127808;
-          </button>
+          <div class="tap-hint-pill card-tap-hint" style="margin-top: 18px;">
+            <span class="tap-icon">&#128070;</span>
+            <span class="tap-label">Chạm màn hình để đến món quà cỏ bốn lá</span>
+          </div>
         </div>
 
         <div class="vinyl-player-wrap" aria-hidden="true">
@@ -351,11 +618,11 @@
             GỬI CÔ PHÚ VÀ CÁC BẠN NỮ 8B6 &#127808;
           </div>
           <div class="clover-body-text">
-            <p class="clover-highlight-quote">“Dù món quà này có thể chưa hoàn hảo, nhưng những lời chúc trong đó đều là thật lòng.”</p>
+            <p class="clover-highlight-quote">“Món quà nhỏ thôi, nhưng mình đã dành tâm huyết để chuẩn bị. Chúc cô và các bạn có một ngày 20/10 thật vui vẻ, luôn gặp nhiều điều tốt đẹp và giữ mãi những nụ cười!”</p>
           </div>
           <div class="clover-signature-wrap">
-            <p class="final-greeting">Thương gửi từ hội con trai 8B6 &#128151;</p>
             <p class="author-signature">Chúc mừng ngày Phụ nữ Việt Nam – 20/10!</p>
+            <p class="final-greeting">&mdash; Bảo Long &#128151;</p>
           </div>
 
           <div class="clover-actions-wrap">
@@ -372,10 +639,10 @@
     </section>
 
     <footer id="interaction-hint" class="interaction-hint" aria-live="polite">
-      <span class="hint-text">Chạm màn hình hoặc bấm để tiếp tục &#10024;</span>
+      <span class="hint-text">Chạm màn hình để tiếp tục &#10024;</span>
     </footer>
   </main>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

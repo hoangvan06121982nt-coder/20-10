@@ -1,7 +1,7 @@
 /**
- * Ngày mai là 20/10 rồi đấy! 🍀
- * Món quà bí mật từ Hội Con Trai 8B6
- * Interactive Experience Controller v5 (8 Scenes)
+ * Món quà 20/10 từ Bảo Long 🍀
+ * Gửi Cô Phú và các bạn nữ 8B6
+ * Interactive Controller v7 (8 Scenes)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioStatus = document.getElementById('audio-status');
   const btnRestart = document.getElementById('btn-restart');
 
-  // Scene navigation buttons
-  const btnScene1Next = document.getElementById('btn-scene1-next');
-  const btnScene2Next = document.getElementById('btn-scene2-next');
-  const btnScene3Next = document.getElementById('btn-scene3-next');
-  const btnOpenEnvelope = document.getElementById('btn-open-envelope');
-  const glowingEnvelopeBox = document.getElementById('glowing-envelope-box');
-  const btnScene5Next = document.getElementById('btn-scene5-next');
-  const btnScene6Next = document.getElementById('btn-scene6-next');
-  const btnScene7Next = document.getElementById('btn-scene7-next');
+  // Scene 1 Dialogue Turns
+  const scene1Turn1 = document.getElementById('scene1-turn-1');
+  const scene1Turn2 = document.getElementById('scene1-turn-2');
+  const scene1HintLabel = document.getElementById('scene1-hint-label');
+
+  // Scene 4 Interactive Envelope
+  const interactiveEnvelopeBox = document.getElementById('interactive-envelope-box');
+
+  // Scene 8 Action buttons
   const btnMakeWish = document.getElementById('btn-make-wish');
   const btnReplayClover = document.getElementById('btn-replay-clover');
 
@@ -43,21 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const lyricLine2 = document.getElementById('lyric-line-2');
 
   const stages = [
-    document.getElementById('stage-scene-1'), // 0: Cảnh 1 - Tiny xuất hiện & giới thiệu
-    document.getElementById('stage-scene-2'), // 1: Cảnh 2 - Ngày mai là 20/10
-    document.getElementById('stage-scene-3'), // 2: Cảnh 3 - Tiny ngại ngùng, hiệu ứng ngôi sao
-    document.getElementById('stage-scene-4'), // 3: Cảnh 4 - Bật mí món quà (phong thư)
-    document.getElementById('stage-scene-5'), // 4: Cảnh 5 - Mở thư & gửi lời chúc cô Phú
-    document.getElementById('stage-scene-6'), // 5: Cảnh 6 - Lời chúc các bạn nữ 8B6
+    document.getElementById('stage-scene-1'), // 0: Cảnh 1 - Tiny giới thiệu (2 lượt thoại)
+    document.getElementById('stage-scene-2'), // 1: Cảnh 2 - “Ờ thì cũng sắp 20/10 rồi nhỉ”
+    document.getElementById('stage-scene-3'), // 2: Cảnh 3 - Món quà đặc biệt (Lõi pha lê xanh cyan)
+    document.getElementById('stage-scene-4'), // 3: Cảnh 4 - Hé lộ phong thư (Chạm mở thư)
+    document.getElementById('stage-scene-5'), // 4: Cảnh 5 - Thư gửi cô Phú
+    document.getElementById('stage-scene-6'), // 5: Cảnh 6 - Gửi các bạn nữ 8B6
     document.getElementById('stage-scene-7'), // 6: Cảnh 7 - Video Waguri & khoảnh khắc dễ thương
     document.getElementById('stage-scene-8')  // 7: Cảnh 8 - Kết thúc với cỏ bốn lá
   ];
 
-  // Stages where tapping viewport advances
-  const clickableStages = new Set([0, 1, 2, 6]);
-
   let currentStageIndex = 0;
+  let scene1Step = 0; // 0: Lượt thoại 1, 1: Lượt thoại 2
   let isTransitioning = false;
+  let isOpeningEnvelope = false;
+  let dialogueCooldown = false;
+  let tapCooldown = false;
+
   let audioPlaying = false;
   let blinkTimer = null;
   let fireflyInterval = null;
@@ -180,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function goToStage(index) {
     if (index < 0 || index >= stages.length || isTransitioning) return;
     isTransitioning = true;
+    tapCooldown = true;
 
     initAudio();
 
@@ -197,6 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       isTransitioning = false;
     }, 420);
+
+    // Prevent accidental double-taps immediately after entering a new stage
+    setTimeout(() => {
+      tapCooldown = false;
+    }, 550);
   }
 
   function setupSceneSpecifics(idx) {
@@ -220,9 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (idx === 0) waguriVideo.currentTime = 0;
     }
 
-    // SCENE 1 (Stage 0): Tiny xuất hiện & giới thiệu
+    // SCENE 1 (Stage 0): Tiny giới thiệu
     if (idx === 0) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene1';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene1 mode-smile';
       startBlinking();
       ambientBackdrop.classList.remove('clover-mode');
       cloverBlackout.classList.remove('active');
@@ -232,29 +240,31 @@ document.addEventListener('DOMContentLoaded', () => {
       startBgStars();
     }
 
-    // SCENE 2 (Stage 1): Ngày mai là 20/10
+    // SCENE 2 (Stage 1): “Ờ thì cũng sắp 20/10 rồi nhỉ”
     else if (idx === 1) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 show-mouth';
       startBlinking();
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // SCENE 3 (Stage 2): Tiny ngại ngùng, hiệu ứng ngôi sao & lõi phát sáng
+    // SCENE 3 (Stage 2): Món quà đặc biệt (Lõi pha lê xanh cyan)
     else if (idx === 2) {
-      stopBlinking();
-      // mode-shy triggers core pulse, stars twinkle, head tilt, blushing & wink
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 mode-shy mode-wink blushing show-mouth';
-      if (interactionHint) interactionHint.classList.remove('visible');
-    }
-
-    // SCENE 4 (Stage 3): Bật mí món quà (phong thư phát sáng)
-    else if (idx === 3) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 mode-smile blushing show-mouth';
       startBlinking();
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // SCENE 5 (Stage 4): Mở thư & gửi lời chúc cô Phú
+    // SCENE 4 (Stage 3): Hé lộ phong thư
+    else if (idx === 3) {
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
+      startBlinking();
+      if (interactionHint) interactionHint.classList.remove('visible');
+      // Reset envelope opening state if returning
+      isOpeningEnvelope = false;
+      if (interactiveEnvelopeBox) interactiveEnvelopeBox.classList.remove('is-opening');
+    }
+
+    // SCENE 5 (Stage 4): Thư gửi cô Phú
     else if (idx === 4) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing';
       startBlinking();
@@ -262,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (interactionHint) interactionHint.classList.remove('visible');
     }
 
-    // SCENE 6 (Stage 5): Lời chúc các bạn nữ 8B6 — Petals fall
+    // SCENE 6 (Stage 5): Gửi các bạn nữ 8B6 (Cánh hoa rơi)
     else if (idx === 5) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing show-mouth';
       goldFlash.classList.add('active');
@@ -300,17 +310,111 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function nextStage() {
-    if (currentStageIndex < stages.length - 1) {
+  // =================== INTERACTIVE SCENE ADVANCE ===================
+  function handleSceneAdvance() {
+    if (isTransitioning || isOpeningEnvelope || tapCooldown) return;
+
+    initAudio();
+
+    // Scene 1 (Stage 0): Chuyển từng lượt thoại trước
+    if (currentStageIndex === 0) {
+      if (dialogueCooldown) return;
+      if (scene1Step === 0) {
+        scene1Step = 1;
+        dialogueCooldown = true;
+        if (scene1Turn1) scene1Turn1.classList.remove('active');
+        if (scene1Turn2) scene1Turn2.classList.add('active');
+        if (scene1HintLabel) scene1HintLabel.textContent = "Chạm màn hình để tiếp tục ✨";
+
+        // Tiny biểu cảm nháy mắt vui mừng khi nói lượt thoại 2
+        if (tinyFace) {
+          tinyFace.classList.add('mode-wink');
+          setTimeout(() => {
+            if (tinyFace) tinyFace.classList.remove('mode-wink');
+          }, 900);
+        }
+
+        setTimeout(() => {
+          dialogueCooldown = false;
+        }, 450);
+        return;
+      } else if (scene1Step === 1) {
+        // Sau lượt thoại 2 hiển thị xong, lần chạm tiếp theo mới chuyển sang Cảnh 2
+        goToStage(1);
+        return;
+      }
+    }
+
+    // Scene 4 (Stage 3): Phong thư phải chạm trực tiếp để mở!
+    if (currentStageIndex === 3) {
+      // Chạm ra ngoài không làm bỏ qua animation mở thư, chỉ lắc nhẹ phong thư nhắc nhở
+      if (interactiveEnvelopeBox) {
+        interactiveEnvelopeBox.style.animation = 'none';
+        void interactiveEnvelopeBox.offsetWidth;
+        interactiveEnvelopeBox.style.animation = 'envelopeTemptFloat 0.6s ease 2';
+      }
+      return;
+    }
+
+    // Các cảnh 2, 3, 5, 6, 7: Chạm bất kỳ đâu trên màn hình để sang cảnh tiếp theo
+    if (currentStageIndex < 7) {
       goToStage(currentStageIndex + 1);
     }
   }
 
+  // =================== CẢNH 4: CHẠM TRỰC TIẾP VÀO PHONG THƯ ===================
+  function handleOpenEnvelope(e) {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    if (isOpeningEnvelope || currentStageIndex !== 3) return;
+    isOpeningEnvelope = true;
+
+    initAudio();
+
+    if (interactiveEnvelopeBox) {
+      interactiveEnvelopeBox.classList.add('is-opening');
+    }
+
+    if (tinyFace) {
+      tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
+    }
+
+    // Animation mở nắp thư, tờ giấy trượt lên và tỏa sáng trong 1.2s trước khi chuyển sang Cảnh 5
+    setTimeout(() => {
+      isOpeningEnvelope = false;
+      goToStage(4); // Cảnh 5: Thư gửi cô Phú
+    }, 1200);
+  }
+
+  if (interactiveEnvelopeBox) {
+    interactiveEnvelopeBox.addEventListener('click', handleOpenEnvelope);
+    interactiveEnvelopeBox.addEventListener('keydown', (e) => {
+      if (['Enter', 'Space'].includes(e.code)) {
+        handleOpenEnvelope(e);
+      }
+    });
+  }
+
+  // =================== RESTART EXPERIENCE ===================
   function restartExperience(e) {
     if (e) e.stopPropagation();
     lastLyricIndex = -1;
+    scene1Step = 0;
+    isOpeningEnvelope = false;
+
+    if (scene1Turn1) scene1Turn1.classList.add('active');
+    if (scene1Turn2) scene1Turn2.classList.remove('active');
+    if (scene1HintLabel) scene1HintLabel.textContent = "Chạm màn hình để tiếp tục";
+
+    if (interactiveEnvelopeBox) {
+      interactiveEnvelopeBox.classList.remove('is-opening');
+    }
+
     if (lyricLine1) { lyricLine1.textContent = ''; lyricLine1.style.opacity = '0'; }
     if (lyricLine2) { lyricLine2.textContent = ''; lyricLine2.style.opacity = '0'; }
+
     goToStage(0);
   }
 
@@ -567,56 +671,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =================== EVENT LISTENERS ===================
 
-  // Cảnh 1 -> 2
-  if (btnScene1Next) btnScene1Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(1);
-  });
-
-  // Cảnh 2 -> 3
-  if (btnScene2Next) btnScene2Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(2);
-  });
-
-  // Cảnh 3 -> 4
-  if (btnScene3Next) btnScene3Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(3);
-  });
-
-  // Cảnh 4 -> 5 (Mở phong thư 💌)
-  function handleOpenEnvelope(e) {
-    if (e) e.stopPropagation();
-    if (glowingEnvelopeBox) {
-      glowingEnvelopeBox.style.transform = 'scale(1.18) rotate(3deg)';
-      glowingEnvelopeBox.style.transition = 'transform 0.45s ease';
-    }
-    setTimeout(() => {
-      goToStage(4);
-    }, 400);
-  }
-  if (btnOpenEnvelope) btnOpenEnvelope.addEventListener('click', handleOpenEnvelope);
-  if (glowingEnvelopeBox) glowingEnvelopeBox.addEventListener('click', handleOpenEnvelope);
-
-  // Cảnh 5 -> 6 (Xem lá thư tiếp theo)
-  if (btnScene5Next) btnScene5Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(5);
-  });
-
-  // Cảnh 6 -> 7 (Còn điều gì nữa nhỉ?)
-  if (btnScene6Next) btnScene6Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(6);
-  });
-
-  // Cảnh 7 -> 8 (Đến món quà cỏ bốn lá)
-  if (btnScene7Next) btnScene7Next.addEventListener('click', (e) => {
-    e.stopPropagation();
-    goToStage(7);
-  });
-
   // Gửi một điều ước (Cảnh 8)
   if (btnMakeWish) btnMakeWish.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -627,13 +681,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnRestart) btnRestart.addEventListener('click', restartExperience);
   if (btnReplayClover) btnReplayClover.addEventListener('click', restartExperience);
 
-  // Touch & scroll tracking: NEVER advance stage if user is scrolling!
+  // Touch & scroll tracking: NEVER advance stage if user is scrolling or dragging!
   let touchStartY = 0;
+  let touchStartX = 0;
   let isScrollingTouch = false;
 
   viewport.addEventListener('touchstart', (e) => {
     if (e.touches && e.touches[0]) {
       touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
       isScrollingTouch = false;
     }
   }, { passive: true });
@@ -641,31 +697,36 @@ document.addEventListener('DOMContentLoaded', () => {
   viewport.addEventListener('touchmove', (e) => {
     if (e.touches && e.touches[0]) {
       const diffY = Math.abs(e.touches[0].clientY - touchStartY);
-      if (diffY > 8) {
+      const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+      if (diffY > 10 || diffX > 10) {
         isScrollingTouch = true;
       }
     }
   }, { passive: true });
 
-  // Viewport tap: only advance on tappable stages
+  // Viewport tap / click advances dialogue or scene
   viewport.addEventListener('click', (e) => {
     if (isScrollingTouch) {
       isScrollingTouch = false;
       return; // Do not advance if user was scrolling!
     }
-    if (e.target.closest('button, .wish-card, .clover-card-container, .wish-card-container, .mission-card-col, .scene-dialogue-card, .control-btn, .glowing-envelope-wrap, .dialogue-box')) return;
-    initAudio();
-    if (clickableStages.has(currentStageIndex)) nextStage();
+    // Ignore clicks on header buttons, envelope (which has its own direct handler), or final action buttons
+    if (e.target.closest('button, .control-btn, #interactive-envelope-box, .clover-actions-wrap')) return;
+
+    handleSceneAdvance();
   });
 
-  // Keyboard navigation
+  // Keyboard navigation (Space, ArrowRight, Enter)
   document.addEventListener('keydown', (e) => {
     if (['Space', 'ArrowRight', 'Enter'].includes(e.code)) {
-      initAudio();
-      if (clickableStages.has(currentStageIndex)) nextStage();
+      if (currentStageIndex === 3) {
+        handleOpenEnvelope(e);
+      } else {
+        handleSceneAdvance();
+      }
     }
   });
 
-  // =================== INIT ===================
+  // =================== INITIALIZATION ===================
   goToStage(0);
 });
