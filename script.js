@@ -237,21 +237,21 @@ document.addEventListener('DOMContentLoaded', () => {
       startBgStars();
     }
 
-    // SCENE 2 (Stage 1): “Ờ thì cũng sắp 20/10 rồi nhỉ”
+    // SCENE 2 (Stage 1): “Ờ thì cũng sắp 20/10 rồi nhỉ” (2 mắt vuông cyan + má hồng theo ảnh mẫu 2)
     else if (idx === 1) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 show-mouth';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 blushing';
       startBlinking();
     }
 
-    // SCENE 3 (Stage 2): Món quà đặc biệt (Lõi pha lê xanh cyan)
+    // SCENE 3 (Stage 2): Món quà đặc biệt (2 mắt cười cyan cong trên lõi pha lê theo ảnh mẫu 1)
     else if (idx === 2) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 mode-smile blushing show-mouth';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 mode-smile';
       startBlinking();
     }
 
     // SCENE 4 (Stage 3): Hé lộ phong thư
     else if (idx === 3) {
-      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
+      if (tinyFace) tinyFace.className = 'tiny-face visible in-scene4 blushing mode-smile';
       startBlinking();
       // Reset envelope opening state if returning
       isOpeningEnvelope = false;

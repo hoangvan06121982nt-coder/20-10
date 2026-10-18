@@ -187,42 +187,98 @@ html, body {
 
 .tiny-face.visible { opacity: 1; }
 
-/* New 7-Scene Tiny Placements */
+/* ================= TINY ROBOT SCENE PLACEMENTS ================= */
+/* Scene 1: Tiny ở phía trên khung thoại, căn giữa màn hình, hoàn toàn không che chữ */
 .tiny-face.in-scene1 {
-  left: 50%;
-  top: clamp(120px, 20vh, 170px);
-  transform: translate(-50%, -50%) scale(0.85);
-  gap: clamp(40px, 6.5vw, 90px);
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: clamp(90px, 15vh, 130px) !important;
+  transform: translate(-50%, -50%) scale(0.75) !important;
+  gap: clamp(38px, 6vw, 70px) !important;
   animation: tinyFloatWave 3s ease-in-out infinite alternate;
 }
 
-/* Scene 1: Tiny ở góc trái trên, đủ xa dialogue box bên dưới */
-.tiny-face.in-scene1 {
-  left: clamp(60px, 8vw, 120px);
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  gap: clamp(40px, 6.5vw, 88px);
-  animation: tinyFloatWave 3s ease-in-out infinite alternate;
-}
-
-/* Scene 2: Tiny ở góc dưới trái, nhỏ gọn — không che text ở trái màn hình */
+/* Scene 2: Tiny ở giữa (theo ảnh mẫu 2) — 2 mắt vuông cyan bo góc phát sáng & má hồng, nằm ở khoảng trống giữa chữ và 2 cô gái */
 .tiny-face.in-scene2 {
-  left: clamp(80px, 10vw, 130px);
-  bottom: clamp(100px, 18vh, 160px);
-  top: auto;
-  transform: translate(-50%, 50%) scale(0.62);
-  gap: clamp(36px, 5.5vw, 78px);
+  left: clamp(52%, 55vw, 57%) !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: 48% !important;
+  transform: translate(-50%, -50%) scale(0.82) !important;
+  gap: clamp(34px, 4.5vw, 55px) !important;
   animation: tinyFloatWave 3.5s ease-in-out infinite alternate;
 }
 
-/* Scene 3: Tiny ở góc dưới phải — không che text trung tâm / trên cùng */
+.tiny-face.in-scene2 .eye-capsule {
+  width: clamp(72px, 8.5vw, 100px) !important;
+  height: clamp(72px, 8.5vw, 100px) !important;
+  border-radius: clamp(20px, 2.6vw, 28px) !important;
+  background: #00f2fe !important;
+  box-shadow: 0 0 30px #00f2fe, 0 0 65px rgba(0, 242, 254, 0.75), 0 0 100px rgba(0, 242, 254, 0.45) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+.tiny-face.in-scene2 .eye-curve,
+.tiny-face.in-scene2 .eye-chevron {
+  display: none !important;
+}
+
+.tiny-face.in-scene2 .blush-mark {
+  opacity: 1 !important;
+  bottom: -32px !important;
+  color: #ff6699 !important;
+  font-size: clamp(20px, 2.5vw, 28px) !important;
+  letter-spacing: 3px !important;
+  text-shadow: 0 0 12px #ff6699, 0 0 25px rgba(255, 102, 153, 0.7) !important;
+}
+
+.tiny-face.in-scene2 .tiny-mouth {
+  display: none !important;
+}
+
+/* Scene 3: Tiny ở giữa (theo ảnh mẫu 1) — 2 mắt cười cyan cong phát sáng, nằm giữa tiêu đề và viên pha lê */
 .tiny-face.in-scene3 {
-  right: clamp(40px, 5vw, 80px);
-  left: auto;
-  bottom: clamp(60px, 12vh, 120px);
-  top: auto;
-  transform: translate(50%, 50%) scale(0.58);
-  gap: clamp(34px, 5.5vw, 76px);
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: clamp(275px, 46vh, 325px) !important;
+  transform: translate(-50%, -50%) scale(0.68) !important;
+  gap: clamp(38px, 5.5vw, 68px) !important;
+  animation: tinyFloatWave 3.2s ease-in-out infinite alternate;
+}
+
+.tiny-face.in-scene3 .eye-capsule {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.tiny-face.in-scene3 .eye-curve {
+  opacity: 1 !important;
+  visibility: visible !important;
+  stroke: #00f2fe !important;
+  stroke-width: 14 !important;
+  filter: drop-shadow(0 0 14px #00f2fe) drop-shadow(0 0 32px rgba(0, 242, 254, 0.75)) !important;
+}
+
+.tiny-face.in-scene3 .blush-mark {
+  display: none !important;
+}
+
+.tiny-face.in-scene3 .tiny-mouth {
+  display: none !important;
+}
+
+/* Scene 4: Tiny ở góc phải trên, nhường trọn không gian cho phong thư */
+.tiny-face.in-scene4 {
+  right: clamp(35px, 6vw, 80px) !important;
+  left: auto !important;
+  bottom: auto !important;
+  top: clamp(75px, 12vh, 110px) !important;
+  transform: scale(0.52) !important;
+  gap: 36px !important;
 }
 
 /* WINK MODE (Cảnh 2) */
@@ -295,13 +351,14 @@ html, body {
   gap: clamp(44px, 7vw, 100px);
 }
 
-/* Stages 2 & 3: Tiny is tiny, tucked in bottom-left corner — content is right */
+/* Stages 2 & 3: Tiny is tiny, tucked safely in bottom-left corner */
 .tiny-face.in-corner-bl {
-  left: var(--tiny-corner-size);
-  bottom: var(--tiny-corner-size);
+  left: clamp(28px, 4vw, 50px);
+  bottom: clamp(14px, 2.5vh, 26px);
   top: auto;
-  transform: translate(-50%, 50%) scale(0.5);
-  gap: 40px;
+  right: auto;
+  transform: translate(-50%, 50%) scale(0.36);
+  gap: 28px;
 }
 
 /* Stage 4 (Waguri): Tiny is above wish card, small, does NOT float over card */
@@ -2092,31 +2149,46 @@ html, body {
   /* Scenes 1-4 */
   .scene-stacked-layout {
     max-width: 540px !important;
-    padding-top: clamp(80px, 14vh, 120px) !important;
+    padding-top: clamp(140px, 24vh, 180px) !important;
   }
 
+  /* Scene 1: Tiny ở trên khung thoại, căn giữa màn hình, cách xa khung chữ */
   .tiny-face.in-scene1 {
-    left: clamp(40px, 6vw, 80px);
-    top: 50% !important;
-    transform: translate(-50%, -50%) scale(0.65) !important;
-    gap: 32px !important;
-  }
-
-  .tiny-face.in-scene2 {
-    left: clamp(50px, 7vw, 80px) !important;
-    bottom: clamp(80px, 14vh, 130px) !important;
-    top: auto !important;
-    transform: translate(-50%, 50%) scale(0.5) !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: clamp(75px, 13vh, 105px) !important;
+    transform: translate(-50%, -50%) scale(0.58) !important;
     gap: 28px !important;
   }
 
+  /* Scene 2: Tiny ở giữa màn hình (theo ảnh mẫu 2), phía dưới tiêu đề và phía trên cánh đồng hoa */
+  .tiny-face.in-scene2 {
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: clamp(210px, 37vh, 255px) !important;
+    transform: translate(-50%, -50%) scale(0.6) !important;
+    gap: 28px !important;
+  }
+
+  /* Scene 3: Tiny ở giữa màn hình (theo ảnh mẫu 1), nằm ngay phía trên viên pha lê */
   .tiny-face.in-scene3 {
-    right: clamp(20px, 3vw, 50px) !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: clamp(200px, 38vh, 235px) !important;
+    transform: translate(-50%, -50%) scale(0.55) !important;
+    gap: 30px !important;
+  }
+
+  /* Scene 4: Tiny ở góc phải trên */
+  .tiny-face.in-scene4 {
+    right: clamp(15px, 4vw, 25px) !important;
     left: auto !important;
-    bottom: clamp(50px, 10vh, 100px) !important;
-    top: auto !important;
-    transform: translate(50%, 50%) scale(0.48) !important;
-    gap: 26px !important;
+    bottom: auto !important;
+    top: clamp(55px, 9vh, 75px) !important;
+    transform: scale(0.4) !important;
   }
 
   /* Scenes 5 & 6 (Cô Phú & Các bạn nữ) */
@@ -2265,55 +2337,16 @@ html, body {
   margin: auto 0;
 }
 
-/* Two Cyan Rounded Squares floating in central area */
-.scene2-cyan-square {
-  position: absolute;
-  left: 45%;
-  top: 45%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.scene2-cyan-square.square-outer {
-  width: clamp(220px, 32vw, 360px);
-  height: clamp(220px, 32vw, 360px);
-  border-radius: clamp(30px, 4.5vw, 48px);
-  border: 2px solid rgba(0, 242, 254, 0.65);
-  box-shadow: 0 0 30px rgba(0, 242, 254, 0.4), inset 0 0 20px rgba(0, 242, 254, 0.15);
-  transform: translate(-50%, -50%) rotate(-8deg);
-  animation: cyanBoxSway1 7s ease-in-out infinite alternate;
-}
-
-.scene2-cyan-square.square-inner {
-  width: clamp(170px, 25vw, 280px);
-  height: clamp(170px, 25vw, 280px);
-  border-radius: clamp(24px, 3.5vw, 40px);
-  border: 1.8px solid rgba(0, 242, 254, 0.5);
-  box-shadow: 0 0 22px rgba(0, 242, 254, 0.35), inset 0 0 16px rgba(0, 242, 254, 0.12);
-  transform: translate(-50%, -50%) rotate(14deg);
-  animation: cyanBoxSway2 8s ease-in-out infinite alternate;
-}
-
-@keyframes cyanBoxSway1 {
-  0% { transform: translate(-50%, -50%) rotate(-8deg) scale(1); }
-  50% { transform: translate(-50%, -52%) rotate(-5deg) scale(1.02); }
-  100% { transform: translate(-50%, -48%) rotate(-11deg) scale(0.98); }
-}
-
-@keyframes cyanBoxSway2 {
-  0% { transform: translate(-50%, -50%) rotate(14deg) scale(1); }
-  50% { transform: translate(-50%, -48%) rotate(18deg) scale(1.03); }
-  100% { transform: translate(-50%, -52%) rotate(10deg) scale(0.97); }
-}
-
-/* Scene 2 Left Column: Text */
+/* Scene 2 Left Column: Text (theo ảnh mẫu 2) */
 .scene2-text-column {
-  position: relative;
+  position: absolute;
+  left: clamp(30px, 6vw, 80px);
+  top: clamp(80px, 16vh, 140px);
   z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: clamp(14px, 2.5vh, 22px);
+  gap: clamp(10px, 1.8vh, 16px);
   max-width: 520px;
 }
 
@@ -2326,30 +2359,32 @@ html, body {
 .scene2-glowing-title {
   display: flex;
   flex-direction: column;
-  gap: clamp(8px, 1.5vh, 14px);
-  font-family: var(--font-sans);
-  line-height: 1.25;
+  gap: clamp(6px, 1.2vh, 10px);
+  font-family: var(--font-typewriter) !important;
+  line-height: 1.35;
 }
 
 .title-line-top {
-  font-size: clamp(30px, 4.6vw, 54px);
+  font-size: clamp(20px, 2.8vw, 32px);
   font-weight: 500;
-  color: #fbcfe8;
-  text-shadow: 0 0 16px rgba(251, 207, 232, 0.8), 0 0 35px rgba(244, 114, 182, 0.45);
-  letter-spacing: 0.5px;
+  color: #ffb7c5;
+  text-shadow: 0 0 14px rgba(255, 183, 197, 0.75), 0 0 30px rgba(255, 183, 197, 0.4);
+  letter-spacing: 2px;
 }
 
 .title-line-date {
-  font-size: clamp(40px, 6.5vw, 76px);
+  font-size: clamp(26px, 3.8vw, 42px);
   font-weight: 700;
-  color: #ffd6ea;
-  text-shadow: 0 0 22px rgba(255, 160, 210, 0.95), 0 0 55px rgba(236, 72, 153, 0.55), 0 0 90px rgba(219, 39, 119, 0.35);
-  letter-spacing: 1.5px;
+  color: #ffccd5;
+  text-shadow: 0 0 18px rgba(255, 183, 197, 0.85), 0 0 40px rgba(255, 183, 197, 0.45);
+  letter-spacing: 2.5px;
 }
 
-/* Scene 2 Right Column: Art & Leaves */
+/* Scene 2 Right Column: Two Girls Art & Leaves (theo ảnh mẫu 2) */
 .scene2-art-column {
-  position: relative;
+  position: absolute;
+  right: clamp(25px, 5vw, 70px);
+  bottom: clamp(70px, 14vh, 120px);
   z-index: 4;
   display: flex;
   justify-content: flex-end;
@@ -2364,9 +2399,9 @@ html, body {
 .scene2-two-girls-img {
   width: 100%;
   height: auto;
-  max-height: clamp(360px, 54vh, 520px);
+  max-height: clamp(340px, 50vh, 500px);
   object-fit: contain;
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.7)) drop-shadow(0 0 35px rgba(255, 220, 130, 0.35));
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 35px rgba(255, 220, 130, 0.4));
   animation: girlsGlowBreath 4.5s ease-in-out infinite alternate;
 }
 
@@ -2403,13 +2438,13 @@ html, body {
   100% { transform: translateY(-24px) rotate(-10deg) scale(0.95); opacity: 0.8; }
 }
 
-/* Scene 2 Bottom Botanical Meadow & Flowers */
+/* Scene 2 Bottom Botanical Meadow & Flowers (theo ảnh mẫu 2) */
 .scene2-meadow-footer {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: clamp(80px, 15vh, 140px);
+  height: clamp(120px, 20vh, 180px);
   pointer-events: none;
   z-index: 3;
   overflow: hidden;
@@ -2551,18 +2586,17 @@ html, body {
 }
 
 
-/* --- CẢNH 3: BỐ CỤC THEO ẢNH MẪU 2 (LÕI PHA LÊ XANH CYAN) --- */
+/* --- CẢNH 3: BỐ CỤC THEO ẢNH MẪU 1 (LÕI PHA LÊ XANH CYAN) --- */
 .scene3-stage-container {
   position: relative;
   width: 100%;
   max-width: 1100px;
-  min-height: 80vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(16px, 3vh, 32px);
-  padding: 20px;
+  justify-content: flex-start;
+  padding-top: clamp(35px, 6vh, 60px);
   box-sizing: border-box;
   margin: auto 0;
 }
@@ -2585,11 +2619,11 @@ html, body {
   position: relative;
   z-index: 5;
   text-align: center;
-  max-width: 750px;
+  max-width: 780px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(8px, 1.5vh, 12px);
+  gap: clamp(6px, 1.2vh, 10px);
 }
 
 .scene3-badge {
@@ -2602,37 +2636,39 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-family: var(--font-sans);
+  font-family: var(--font-typewriter) !important;
   color: #e0f9ff;
-  text-shadow: 0 0 15px rgba(0, 242, 254, 0.75), 0 0 35px rgba(0, 242, 254, 0.4);
   line-height: 1.35;
 }
 
-.s3-line-1,
-.s3-line-3 {
-  font-size: clamp(20px, 3.2vw, 34px);
+.s3-line-1 {
+  font-size: clamp(16px, 2.3vw, 22px);
   font-weight: 400;
   color: #cffafe;
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.75);
+  letter-spacing: 1.5px;
 }
 
 .s3-line-2 {
-  font-size: clamp(24px, 4vw, 42px);
+  font-size: clamp(18px, 2.9vw, 28px);
   font-weight: 700;
   color: #ffffff;
-  text-shadow: 0 0 20px rgba(0, 242, 254, 0.95), 0 0 45px rgba(56, 189, 248, 0.7), 0 0 70px rgba(0, 242, 254, 0.45);
-  letter-spacing: 0.5px;
+  text-shadow: 0 0 18px rgba(0, 242, 254, 0.95), 0 0 40px rgba(56, 189, 248, 0.7);
+  letter-spacing: 2px;
 }
 
-/* Centerpiece: Cyan Crystal Core in Diamond / Rhombus with Elliptical Orbits */
+/* Centerpiece: Cyan Crystal Core in Diamond / Rhombus with Elliptical Orbits (theo ảnh mẫu 1) */
 .scene3-centerpiece-wrap {
-  position: relative;
-  width: clamp(280px, 42vw, 400px);
-  height: clamp(220px, 34vh, 320px);
+  position: absolute;
+  left: 50%;
+  top: clamp(475px, 75vh, 540px);
+  transform: translate(-50%, -50%);
+  width: clamp(230px, 32vw, 320px);
+  height: clamp(170px, 25vh, 230px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 4;
-  margin: 10px 0;
 }
 
 /* Tilted Glowing Elliptical Orbits */
@@ -2693,68 +2729,35 @@ html, body {
   100% { transform: rotate(438deg); }
 }
 
-/* Glowing Rhombus (Hình thoi phát sáng) */
+/* Glowing Rhombus & 4-Point Star Diamond Core (theo ảnh mẫu 1) */
 .scene3-rhombus-diamond {
-  position: absolute;
-  width: clamp(115px, 17vw, 155px);
-  height: clamp(115px, 17vw, 155px);
+  position: relative;
+  width: clamp(130px, 18vw, 175px);
+  height: clamp(130px, 18vw, 175px);
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  z-index: 5;
 }
 
-.rhombus-border-outer {
-  position: absolute;
-  inset: 0;
-  transform: rotate(45deg);
-  border: 2.2px solid rgba(0, 242, 254, 0.85);
-  border-radius: 14px;
-  box-shadow: 0 0 26px rgba(0, 242, 254, 0.7), inset 0 0 18px rgba(0, 242, 254, 0.35);
-  animation: rhombusBreathGlow 3s ease-in-out infinite alternate;
-}
-
-.rhombus-border-inner {
-  position: absolute;
-  inset: 12px;
-  transform: rotate(45deg);
-  border: 1.2px dashed rgba(255, 255, 255, 0.55);
-  border-radius: 8px;
-}
-
-@keyframes rhombusBreathGlow {
-  0% { transform: rotate(45deg) scale(0.96); box-shadow: 0 0 20px rgba(0, 242, 254, 0.6); }
-  100% { transform: rotate(45deg) scale(1.04); box-shadow: 0 0 34px rgba(0, 242, 254, 0.9), inset 0 0 24px rgba(0, 242, 254, 0.5); }
-}
-
-/* Cyan Crystal Core */
-.scene3-crystal-core {
-  position: relative;
-  z-index: 6;
-  width: clamp(80px, 12vw, 110px);
-  height: clamp(95px, 14vw, 130px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.crystal-core-svg {
+.rhombus-diamond-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 22px rgba(0, 242, 254, 0.95)) drop-shadow(0 0 45px rgba(0, 242, 254, 0.7));
-  animation: crystalCorePulse 2.5s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.85));
+  animation: crystalCorePulse 2.8s ease-in-out infinite alternate;
 }
 
 @keyframes crystalCorePulse {
-  0% { transform: scale(0.94); filter: drop-shadow(0 0 18px rgba(0, 242, 254, 0.85)) drop-shadow(0 0 35px rgba(0, 242, 254, 0.5)); }
-  100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(0, 242, 254, 1)) drop-shadow(0 0 60px rgba(0, 242, 254, 0.85)); }
+  0% { transform: scale(0.95); filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.8)) drop-shadow(0 0 35px rgba(0, 242, 254, 0.5)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 0 28px rgba(0, 242, 254, 1)) drop-shadow(0 0 55px rgba(0, 242, 254, 0.8)); }
 }
 
 .crystal-radiance-burst {
   position: absolute;
   inset: -25px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 242, 254, 0.55) 0%, rgba(56, 189, 248, 0.25) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.5) 0%, rgba(56, 189, 248, 0.22) 50%, transparent 75%);
   filter: blur(14px);
   pointer-events: none;
   animation: radianceBurstPulse 2.5s ease-in-out infinite alternate;
@@ -3042,59 +3045,81 @@ html, body {
 }
 
 /* --- Media Queries for Scenes 2 & 3 Mobile --- */
+/* --- Media Queries for Scenes 2 & 3 Mobile --- */
 @media (max-width: 900px) {
   .scene2-stage-container {
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     text-align: center !important;
-    padding: 10px 10px 80px !important;
-    gap: 16px !important;
+    padding: 20px 12px 100px !important;
+    gap: 0 !important;
   }
 
   .scene2-text-column {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
     align-items: center !important;
     text-align: center !important;
-    max-width: 100% !important;
+    width: 100% !important;
+    margin-top: clamp(45px, 9vh, 65px) !important;
+    margin-bottom: clamp(100px, 15vh, 135px) !important;
+  }
+
+  .title-line-top {
+    font-size: clamp(20px, 4.5vw, 26px) !important;
+  }
+
+  .title-line-date {
+    font-size: clamp(26px, 6vw, 36px) !important;
   }
 
   .scene2-art-column {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
     width: 100% !important;
     justify-content: center !important;
-    max-width: 260px !important;
+    max-width: 220px !important;
+    margin: 0 auto !important;
   }
 
   .scene2-two-girls-img {
-    max-height: 250px !important;
+    max-height: clamp(160px, 25vh, 210px) !important;
   }
 
-  .scene2-cyan-square {
-    left: 50% !important;
+  .scene2-meadow-footer {
+    height: clamp(90px, 15vh, 120px) !important;
   }
 
   .scene3-stage-container {
-    padding: 10px 10px 40px !important;
-    gap: 14px !important;
+    padding: clamp(50px, 9vh, 70px) 12px 40px !important;
+    gap: 8px !important;
+    justify-content: flex-start !important;
+  }
+
+  .scene3-message-header {
+    margin-bottom: clamp(85px, 14vh, 115px) !important;
   }
 
   .scene3-centerpiece-wrap {
-    width: 270px !important;
-    height: 200px !important;
-    margin: 4px 0 !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: 250px !important;
+    height: 180px !important;
+    margin: 10px auto 0 !important;
   }
 
-  .orbit-tilted-1 { width: 230px !important; height: 85px !important; }
-  .orbit-tilted-2 { width: 250px !important; height: 95px !important; }
-  .orbit-tilted-3 { width: 270px !important; height: 105px !important; }
+  .orbit-tilted-1 { width: 200px !important; height: 75px !important; }
+  .orbit-tilted-2 { width: 220px !important; height: 85px !important; }
+  .orbit-tilted-3 { width: 240px !important; height: 95px !important; }
 
   .scene3-rhombus-diamond {
     width: 110px !important;
     height: 110px !important;
-  }
-
-  .scene3-crystal-core {
-    width: 75px !important;
-    height: 90px !important;
   }
 }
 
