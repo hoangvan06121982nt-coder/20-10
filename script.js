@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Scene 1 Dialogue Turns
   const scene1Turn1 = document.getElementById('scene1-turn-1');
   const scene1Turn2 = document.getElementById('scene1-turn-2');
-  const scene1HintLabel = document.getElementById('scene1-hint-label');
 
   // Scene 4 Interactive Envelope
   const interactiveEnvelopeBox = document.getElementById('interactive-envelope-box');
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const ambientBackdrop = document.getElementById('ambient-backdrop');
   const goldFlash = document.getElementById('gold-flash');
   const cloverBlackout = document.getElementById('clover-blackout');
-  const interactionHint = document.getElementById('interaction-hint');
 
   const tinyFace = document.getElementById('tiny-face');
   const waguriVideo = document.getElementById('waguri-video');
@@ -235,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ambientBackdrop.classList.remove('clover-mode');
       cloverBlackout.classList.remove('active');
       goldFlash.classList.remove('active');
-      if (interactionHint) interactionHint.classList.remove('visible');
       fadeAudioVolume(0.65);
       startBgStars();
     }
@@ -244,21 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (idx === 1) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-scene2 show-mouth';
       startBlinking();
-      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
     // SCENE 3 (Stage 2): Món quà đặc biệt (Lõi pha lê xanh cyan)
     else if (idx === 2) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 mode-smile blushing show-mouth';
       startBlinking();
-      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
     // SCENE 4 (Stage 3): Hé lộ phong thư
     else if (idx === 3) {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-scene3 blushing mode-smile';
       startBlinking();
-      if (interactionHint) interactionHint.classList.remove('visible');
       // Reset envelope opening state if returning
       isOpeningEnvelope = false;
       if (interactiveEnvelopeBox) interactiveEnvelopeBox.classList.remove('is-opening');
@@ -269,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tinyFace) tinyFace.className = 'tiny-face visible in-corner-bl blushing';
       startBlinking();
       goldFlash.classList.remove('active');
-      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
     // SCENE 6 (Stage 5): Gửi các bạn nữ 8B6 (Cánh hoa rơi)
@@ -278,7 +271,6 @@ document.addEventListener('DOMContentLoaded', () => {
       goldFlash.classList.add('active');
       if (canvasPetals) canvasPetals.classList.add('active');
       startPetals();
-      if (interactionHint) interactionHint.classList.remove('visible');
     }
 
     // SCENE 7 (Stage 6): Video Waguri & khoảnh khắc dễ thương
@@ -286,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
       goldFlash.classList.remove('active');
       if (tinyFace) tinyFace.className = 'tiny-face visible in-waguri blushing mode-smile';
       if (lyricsZone) lyricsZone.classList.add('active');
-      if (interactionHint) interactionHint.classList.add('visible');
       fadeAudioVolume(0.42);
       if (waguriVideo) {
         waguriVideo.play().catch(e => {
@@ -306,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
       fadeAudioVolume(0.65);
       startFireflies();
       startCloverOrbit();
-      if (interactionHint) interactionHint.classList.remove('visible');
     }
   }
 
@@ -324,7 +314,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dialogueCooldown = true;
         if (scene1Turn1) scene1Turn1.classList.remove('active');
         if (scene1Turn2) scene1Turn2.classList.add('active');
-        if (scene1HintLabel) scene1HintLabel.textContent = "Chạm màn hình để tiếp tục ✨";
 
         // Tiny biểu cảm nháy mắt vui mừng khi nói lượt thoại 2
         if (tinyFace) {
@@ -406,7 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scene1Turn1) scene1Turn1.classList.add('active');
     if (scene1Turn2) scene1Turn2.classList.remove('active');
-    if (scene1HintLabel) scene1HintLabel.textContent = "Chạm màn hình để tiếp tục";
 
     if (interactiveEnvelopeBox) {
       interactiveEnvelopeBox.classList.remove('is-opening');

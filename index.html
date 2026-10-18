@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body class="theme-dark">
   <audio id="bg-soundtrack" src="assets/soundtrack.mp3" preload="auto" loop></audio>
@@ -90,15 +90,18 @@
             <p class="dialogue-line lead-line accent-line" style="margin-top: 10px;">Hôm nay, mình sẽ cùng mọi người khám phá một món quà đặc biệt mà Bảo Long đã chuẩn bị. Cùng xem nhé! &#10024;</p>
           </div>
         </div>
-        <div class="tap-hint-pill" id="scene1-tap-hint">
-          <span class="tap-icon">&#128070;</span>
-          <span class="tap-label" id="scene1-hint-label">Chạm màn hình để tiếp tục</span>
-        </div>
+
       </div>
     </section>
 
     <!-- CẢNH 2 — “Ờ THÌ CŨNG SẮP 20/10 RỒI NHỈ” -->
     <section id="stage-scene-2" class="story-stage" data-stage="1">
+      <!-- Shooting Stars Scene 2 -->
+      <div class="scene2-shooting-stars" aria-hidden="true">
+        <div class="shooting-star ss2-a"></div>
+        <div class="shooting-star ss2-b"></div>
+        <div class="shooting-star ss2-c"></div>
+      </div>
       <div class="scene2-stage-container">
         <!-- Floating cyan rounded squares in center -->
         <div class="scene2-cyan-square square-outer" aria-hidden="true"></div>
@@ -113,10 +116,6 @@
             <span class="title-line-top">Ờ thì cũng sắp</span>
             <span class="title-line-date">20/10 rồi nhỉ</span>
           </h2>
-          <div class="tap-hint-pill">
-            <span class="tap-icon">&#128070;</span>
-            <span class="tap-label">Chạm màn hình để tiếp tục</span>
-          </div>
         </div>
 
         <!-- Right: Two girls line art & falling golden leaves -->
@@ -229,6 +228,11 @@
 
     <!-- CẢNH 3 — MÓN QUÀ ĐẶC BIỆT (LÕI PHA LÊ XANH CYAN) -->
     <section id="stage-scene-3" class="story-stage" data-stage="2">
+      <!-- Shooting Stars Scene 3 -->
+      <div class="scene3-shooting-stars" aria-hidden="true">
+        <div class="shooting-star ss3-a"></div>
+        <div class="shooting-star ss3-b"></div>
+      </div>
       <div class="scene3-stage-container">
         <!-- Constellations & Celestial Arcs Backdrop -->
         <div class="scene3-celestial-canvas" aria-hidden="true">
@@ -353,10 +357,6 @@
           </div>
         </div>
 
-        <div class="tap-hint-pill">
-          <span class="tap-icon">&#128070;</span>
-          <span class="tap-label">Chạm màn hình để tiếp tục</span>
-        </div>
       </div>
     </section>
 
@@ -454,10 +454,6 @@
               <p class="wish-para">Em chúc cô luôn mạnh khỏe, vui vẻ, hạnh phúc và có thật nhiều niềm vui trong công việc cũng như cuộc sống. Mong rằng mỗi ngày đến lớp, cô đều có thêm nhiều niềm vui và những kỷ niệm đẹp cùng học trò của mình.</p>
               <p class="wish-signature">Bảo Long gửi cô &#128151;</p>
             </div>
-            <div class="tap-hint-pill card-tap-hint">
-              <span class="tap-icon">&#128070;</span>
-              <span class="tap-label">Chạm màn hình để xem tiếp</span>
-            </div>
           </div>
         </div>
       </div>
@@ -488,10 +484,6 @@
               <p class="wish-para">Cảm ơn các bạn vì đã góp phần làm cho những ngày học ở 8B6 thêm vui vẻ và đáng nhớ nhé!</p>
               <p class="wish-signature">&mdash; Bảo Long &#128151;</p>
             </div>
-            <div class="tap-hint-pill card-tap-hint">
-              <span class="tap-icon">&#128070;</span>
-              <span class="tap-label">Chạm màn hình để tiếp tục</span>
-            </div>
           </div>
         </div>
       </div>
@@ -506,10 +498,6 @@
           <div class="wish-body">
             <p class="wish-para">Một món quà không cần quá cầu kỳ. Đôi khi, chỉ một lời chúc chân thành cũng đủ khiến ngày đặc biệt trở nên vui hơn.</p>
             <p class="wish-para">Hy vọng cô và các bạn sẽ thích món quà nhỏ này nhé! &#128151;</p>
-          </div>
-          <div class="tap-hint-pill card-tap-hint" style="margin-top: 18px;">
-            <span class="tap-icon">&#128070;</span>
-            <span class="tap-label">Chạm màn hình để đến món quà cỏ bốn lá</span>
           </div>
         </div>
 
@@ -638,11 +626,9 @@
       </div>
     </section>
 
-    <footer id="interaction-hint" class="interaction-hint" aria-live="polite">
-      <span class="hint-text">Chạm màn hình để tiếp tục &#10024;</span>
-    </footer>
+
   </main>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

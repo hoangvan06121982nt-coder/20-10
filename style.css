@@ -196,17 +196,32 @@ html, body {
   animation: tinyFloatWave 3s ease-in-out infinite alternate;
 }
 
-.tiny-face.in-scene2 {
-  left: 50%;
-  top: clamp(120px, 20vh, 170px);
-  transform: translate(-50%, -50%) scale(0.85);
-  gap: clamp(40px, 6.5vw, 90px);
+/* Scene 1: Tiny ở góc trái trên, đủ xa dialogue box bên dưới */
+.tiny-face.in-scene1 {
+  left: clamp(60px, 8vw, 120px);
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  gap: clamp(40px, 6.5vw, 88px);
+  animation: tinyFloatWave 3s ease-in-out infinite alternate;
 }
 
+/* Scene 2: Tiny ở góc dưới trái, nhỏ gọn — không che text ở trái màn hình */
+.tiny-face.in-scene2 {
+  left: clamp(80px, 10vw, 130px);
+  bottom: clamp(100px, 18vh, 160px);
+  top: auto;
+  transform: translate(-50%, 50%) scale(0.62);
+  gap: clamp(36px, 5.5vw, 78px);
+  animation: tinyFloatWave 3.5s ease-in-out infinite alternate;
+}
+
+/* Scene 3: Tiny ở góc dưới phải — không che text trung tâm / trên cùng */
 .tiny-face.in-scene3 {
-  left: 50%;
-  top: clamp(100px, 15vh, 130px);
-  transform: translate(-50%, -50%) scale(0.72);
+  right: clamp(40px, 5vw, 80px);
+  left: auto;
+  bottom: clamp(60px, 12vh, 120px);
+  top: auto;
+  transform: translate(50%, 50%) scale(0.58);
   gap: clamp(34px, 5.5vw, 76px);
 }
 
@@ -1793,14 +1808,23 @@ html, body {
     padding-top: clamp(140px, 20vh, 180px);
     padding-bottom: 24px;
   }
-  .tiny-face.in-scene1,
+  .tiny-face.in-scene1 {
+    left: clamp(35px, 5vw, 60px);
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
   .tiny-face.in-scene2 {
-    top: 15vh;
-    transform: translate(-50%, -50%) scale(0.72);
+    left: clamp(35px, 5vw, 60px);
+    bottom: clamp(60px, 12vh, 100px);
+    top: auto;
+    transform: translate(-50%, 50%) scale(0.48);
   }
   .tiny-face.in-scene3 {
-    top: 12vh;
-    transform: translate(-50%, -50%) scale(0.62);
+    right: clamp(15px, 2vw, 35px);
+    left: auto;
+    bottom: clamp(40px, 8vh, 80px);
+    top: auto;
+    transform: translate(50%, 50%) scale(0.45);
   }
 }
 
@@ -2071,17 +2095,28 @@ html, body {
     padding-top: clamp(80px, 14vh, 120px) !important;
   }
 
-  .tiny-face.in-scene1,
+  .tiny-face.in-scene1 {
+    left: clamp(40px, 6vw, 80px);
+    top: 50% !important;
+    transform: translate(-50%, -50%) scale(0.65) !important;
+    gap: 32px !important;
+  }
+
   .tiny-face.in-scene2 {
-    top: clamp(75px, 11vh, 100px) !important;
-    transform: translate(-50%, -50%) scale(0.68) !important;
-    gap: 36px !important;
+    left: clamp(50px, 7vw, 80px) !important;
+    bottom: clamp(80px, 14vh, 130px) !important;
+    top: auto !important;
+    transform: translate(-50%, 50%) scale(0.5) !important;
+    gap: 28px !important;
   }
 
   .tiny-face.in-scene3 {
-    top: clamp(65px, 9vh, 85px) !important;
-    transform: translate(-50%, -50%) scale(0.6) !important;
-    gap: 32px !important;
+    right: clamp(20px, 3vw, 50px) !important;
+    left: auto !important;
+    bottom: clamp(50px, 10vh, 100px) !important;
+    top: auto !important;
+    transform: translate(50%, 50%) scale(0.48) !important;
+    gap: 26px !important;
   }
 
   /* Scenes 5 & 6 (Cô Phú & Các bạn nữ) */
@@ -2211,39 +2246,9 @@ html, body {
   transform: translateY(0);
 }
 
-/* --- Tap Hint Pill --- */
+/* --- Tap Hint Pill: ẨN hoàn toàn --- */
 .tap-hint-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-radius: 20px;
-  background: rgba(33, 23, 25, 0.75);
-  border: 1px solid rgba(244, 198, 220, 0.35);
-  backdrop-filter: blur(8px);
-  color: var(--accent-pink);
-  font-family: var(--font-typewriter);
-  font-size: clamp(12px, 1.4vw, 13.5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  animation: tapHintFloat 2.4s ease-in-out infinite alternate;
-  pointer-events: none;
-  user-select: none;
-}
-
-.tap-hint-pill .tap-icon {
-  font-size: 15px;
-  animation: fingerTap 1.2s ease-in-out infinite alternate;
-}
-
-@keyframes tapHintFloat {
-  0% { transform: translateY(0); opacity: 0.85; border-color: rgba(244, 198, 220, 0.3); }
-  100% { transform: translateY(-4px); opacity: 1; border-color: rgba(0, 242, 254, 0.6); box-shadow: 0 4px 18px rgba(0, 242, 254, 0.25); }
-}
-
-@keyframes fingerTap {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-3px); }
+  display: none !important;
 }
 
 /* --- CẢNH 2: BỐ CỤC THEO ẢNH MẪU 1 --- */
@@ -2414,6 +2419,135 @@ html, body {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.45));
+}
+
+/* ===== SHOOTING STARS (Scene 2 & 3) ===== */
+.shooting-star {
+  position: absolute;
+  width: clamp(60px, 10vw, 120px);
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 60%, rgba(0,242,254,0.6) 100%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Scene 2 shooting stars container */
+.scene2-shooting-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Scene 3 shooting stars container */
+.scene3-shooting-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Scene 2 stars — diagonal streaks matching reference image */
+.ss2-a {
+  top: 8%;
+  left: 30%;
+  width: clamp(80px, 14vw, 160px);
+  transform: rotate(-28deg);
+  animation: shootingStarFly 4s ease-out 0.5s infinite;
+}
+.ss2-b {
+  top: 16%;
+  left: 10%;
+  width: clamp(50px, 8vw, 100px);
+  transform: rotate(-28deg);
+  animation: shootingStarFly 4s ease-out 2s infinite;
+}
+.ss2-c {
+  top: 5%;
+  right: 15%;
+  width: clamp(40px, 6vw, 80px);
+  transform: rotate(-20deg);
+  animation: shootingStarFly 5s ease-out 3.5s infinite;
+}
+
+/* Scene 3 stars */
+.ss3-a {
+  top: 12%;
+  left: 35%;
+  width: clamp(90px, 15vw, 160px);
+  transform: rotate(-30deg);
+  animation: shootingStarFly 5s ease-out 1s infinite;
+}
+.ss3-b {
+  top: 22%;
+  left: 55%;
+  width: clamp(50px, 8vw, 90px);
+  transform: rotate(-22deg);
+  animation: shootingStarFly 5s ease-out 3s infinite;
+}
+
+@keyframes shootingStarFly {
+  0%   { opacity: 0; transform: rotate(-28deg) translateX(-60px); }
+  8%   { opacity: 1; }
+  35%  { opacity: 1; transform: rotate(-28deg) translateX(40vw); }
+  36%  { opacity: 0; }
+  100% { opacity: 0; transform: rotate(-28deg) translateX(40vw); }
+}
+
+/* Keep per-element rotation */
+.ss2-b { animation-name: shootingStarFly2; }
+.ss2-c { animation-name: shootingStarFly3; }
+.ss3-b { animation-name: shootingStarFly3; }
+
+@keyframes shootingStarFly2 {
+  0%   { opacity: 0; transform: rotate(-28deg) translateX(-40px); }
+  8%   { opacity: 1; }
+  35%  { opacity: 1; transform: rotate(-28deg) translateX(35vw); }
+  36%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes shootingStarFly3 {
+  0%   { opacity: 0; transform: rotate(-20deg) translateX(-30px); }
+  8%   { opacity: 1; }
+  35%  { opacity: 1; transform: rotate(-20deg) translateX(30vw); }
+  36%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* ===== SCENE 2 — CONSTELLATION LAYER (theo ảnh mẫu 2) ===== */
+.scene2-stage-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 22%, rgba(255,255,255,0.7) 50%, transparent),
+    radial-gradient(1px 1px at 18% 60%, rgba(255,255,255,0.5) 50%, transparent),
+    radial-gradient(2px 2px at 28% 35%, rgba(255,255,255,0.8) 50%, transparent),
+    radial-gradient(1px 1px at 48% 70%, rgba(255,255,255,0.4) 50%, transparent),
+    radial-gradient(1.5px 1.5px at 62% 20%, rgba(255,255,255,0.7) 50%, transparent),
+    radial-gradient(1px 1px at 72% 45%, rgba(255,255,255,0.6) 50%, transparent),
+    radial-gradient(2px 2px at 85% 30%, rgba(200,240,255,0.8) 50%, transparent),
+    radial-gradient(1px 1px at 92% 65%, rgba(255,255,255,0.5) 50%, transparent),
+    radial-gradient(1.2px 1.2px at 5% 80%, rgba(255,255,255,0.4) 50%, transparent);
+  background-size: 100% 100%;
+}
+
+/* Constellation lines overlay Scene 2 (chòm sao đường kẻ) */
+.scene2-stage-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(115deg, transparent 20%, rgba(0,242,254,0.06) 40%, transparent 42%),
+    linear-gradient(125deg, transparent 30%, rgba(0,242,254,0.05) 55%, transparent 57%);
+  opacity: 0.6;
 }
 
 
