@@ -207,7 +207,7 @@ html, body {
   top: 48% !important;
   transform: translate(-50%, -50%) scale(0.82) !important;
   gap: clamp(34px, 4.5vw, 55px) !important;
-  animation: tinyFloatWave 3.5s ease-in-out infinite alternate;
+  animation: tinyFloatScene2 3.5s ease-in-out infinite alternate !important;
 }
 
 .tiny-face.in-scene2 .eye-capsule {
@@ -340,6 +340,18 @@ html, body {
 @keyframes tinyFloatWave {
   0% { transform: translate(-50%, -50%) scale(0.85) translateY(0); }
   100% { transform: translate(-50%, -50%) scale(0.85) translateY(-8px); }
+}
+
+/* Scene 2 dedicated float — desktop: preserves the translate(-50%,-50%) center anchor */
+@keyframes tinyFloatScene2 {
+  0% { transform: translate(-50%, -50%) scale(0.82) translateY(0); }
+  100% { transform: translate(-50%, -50%) scale(0.82) translateY(-7px); }
+}
+
+/* Scene 2 dedicated float — mobile: NO translate(-50%,-50%) because Tiny uses right/top positioning */
+@keyframes tinyFloatScene2Mobile {
+  0% { transform: scale(0.45) translateY(0); }
+  100% { transform: scale(0.45) translateY(-5px); }
 }
 
 
@@ -1871,10 +1883,12 @@ html, body {
     transform: translate(-50%, -50%) scale(0.6);
   }
   .tiny-face.in-scene2 {
-    left: clamp(35px, 5vw, 60px);
-    bottom: clamp(60px, 12vh, 100px);
-    top: auto;
-    transform: translate(-50%, 50%) scale(0.48);
+    right: 10px;
+    left: auto;
+    bottom: auto;
+    top: clamp(50px, 8vh, 70px);
+    transform: scale(0.4);
+    animation: tinyFloatScene2Mobile 3.5s ease-in-out infinite alternate !important;
   }
   .tiny-face.in-scene3 {
     right: clamp(15px, 2vw, 35px);
@@ -2162,14 +2176,15 @@ html, body {
     gap: 28px !important;
   }
 
-  /* Scene 2: Tiny ở giữa màn hình (theo ảnh mẫu 2), phía dưới tiêu đề và phía trên cánh đồng hoa */
+  /* Scene 2: Tiny ở góc phải trên, tránh xa chữ ở giữa */
   .tiny-face.in-scene2 {
-    left: 50% !important;
-    right: auto !important;
+    right: clamp(8px, 2vw, 18px) !important;
+    left: auto !important;
     bottom: auto !important;
-    top: clamp(210px, 37vh, 255px) !important;
-    transform: translate(-50%, -50%) scale(0.6) !important;
-    gap: 28px !important;
+    top: clamp(55px, 9vh, 75px) !important;
+    transform: scale(0.45) !important;
+    gap: 22px !important;
+    animation: tinyFloatScene2Mobile 3.5s ease-in-out infinite alternate !important;
   }
 
   /* Scene 3: Tiny ở giữa màn hình (theo ảnh mẫu 1), nằm ngay phía trên viên pha lê */
@@ -3090,7 +3105,9 @@ html, body {
   }
 
   .scene2-meadow-footer {
-    height: clamp(90px, 15vh, 120px) !important;
+    height: clamp(80px, 13vh, 110px) !important;
+    overflow: hidden !important;
+    z-index: 3 !important;
   }
 
   .scene3-stage-container {
